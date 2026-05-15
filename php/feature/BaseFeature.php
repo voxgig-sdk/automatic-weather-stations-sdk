@@ -1,0 +1,37 @@
+<?php
+declare(strict_types=1);
+
+// AutomaticWeatherStations SDK base feature
+
+class AutomaticWeatherStationsBaseFeature
+{
+    public string $version;
+    public string $name;
+    public bool $active;
+
+    public function __construct()
+    {
+        $this->version = '0.0.1';
+        $this->name = 'base';
+        $this->active = true;
+    }
+
+    public function get_version(): string { return $this->version; }
+    public function get_name(): string { return $this->name; }
+    public function get_active(): bool { return $this->active; }
+
+    public function init(AutomaticWeatherStationsContext $ctx, array $options): void {}
+    public function PostConstruct(AutomaticWeatherStationsContext $ctx): void {}
+    public function PostConstructEntity(AutomaticWeatherStationsContext $ctx): void {}
+    public function SetData(AutomaticWeatherStationsContext $ctx): void {}
+    public function GetData(AutomaticWeatherStationsContext $ctx): void {}
+    public function GetMatch(AutomaticWeatherStationsContext $ctx): void {}
+    public function SetMatch(AutomaticWeatherStationsContext $ctx): void {}
+    public function PrePoint(AutomaticWeatherStationsContext $ctx): void {}
+    public function PreSpec(AutomaticWeatherStationsContext $ctx): void {}
+    public function PreRequest(AutomaticWeatherStationsContext $ctx): void {}
+    public function PreResponse(AutomaticWeatherStationsContext $ctx): void {}
+    public function PreResult(AutomaticWeatherStationsContext $ctx): void {}
+    public function PreDone(AutomaticWeatherStationsContext $ctx): void {}
+    public function PreUnexpected(AutomaticWeatherStationsContext $ctx): void {}
+}

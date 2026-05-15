@@ -1,0 +1,22 @@
+# BasicFeatureCollectionFlow
+
+main: kit: flow: BasicFeatureCollectionFlow:
+{
+  entity: "feature_collection",
+  kind: "basic",
+  name: "BasicFeatureCollectionFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "feature_collection_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicFeatureCollectionFlow"
+}

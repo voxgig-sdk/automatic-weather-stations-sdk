@@ -1,0 +1,525 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Automatic Weather Stations",
+    "description": "The Automatic Weather Stations API provides access to data from around 160 automatic measurement stations within the SwissMetNet network. It delivers vital meteorological data including temperature, precipitation, wind speed, and humidity every 10 minutes to support weather forecasting and environmental monitoring.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "MeteoSwiss",
+      "url": "https://opendatadocs.meteoswiss.ch/a-data-groundbased/a1-automatic-weather-stations"
+    },
+    "license": {
+      "name": "Open Data",
+      "url": "https://opendatadocs.meteoswiss.ch"
+    },
+    "termsOfService": "https://opendatadocs.meteoswiss.ch"
+  },
+  "servers": [
+    {
+      "url": "https://data.geo.admin.ch/api/stac/v1",
+      "description": "FSDI REST API for Swiss Meteorological Data"
+    }
+  ],
+  "paths": {
+    "/collections/ch.meteoschweiz.ogd-smn": {
+      "get": {
+        "summary": "Get Automatic Weather Stations Collection",
+        "description": "Retrieve metadata and information about the automatic weather stations collection from the SwissMetNet network.",
+        "operationId": "getWeatherStationsCollection",
+        "tags": [
+          "Weather Stations"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with collection metadata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collection"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Collection not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/collections/ch.meteoschweiz.ogd-smn/items": {
+      "get": {
+        "summary": "Get Weather Station Data Items",
+        "description": "Retrieve weather station data items from the SwissMetNet network. Data includes temperature, precipitation, wind speed, humidity, radiation, and pressure measurements available at 10-minute, hourly, daily, monthly, and yearly granularities.",
+        "operationId": "getWeatherStationItems",
+        "tags": [
+          "Weather Stations"
+        ],
+        "parameters": [
+          {
+            "name": "bbox",
+            "in": "query",
+            "description": "Bounding box to filter stations by geographic area (minLon,minLat,maxLon,maxLat)",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "style": "form",
+            "explode": false
+          },
+          {
+            "name": "datetime",
+            "in": "query",
+            "description": "Filter by datetime or datetime range (ISO 8601 format)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of items to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000,
+              "default": 10
+            }
+          },
+          {
+            "name": "station",
+            "in": "query",
+            "description": "Three-letter station identifier (e.g., BER for Bern/Zollikofen, LUG for Lugano)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            }
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "Data granularity: 10-minute (t), hourly (h), daily (d), monthly (m), or yearly (y)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "t",
+                "h",
+                "d",
+                "m",
+                "y"
+              ]
+            }
+          },
+          {
+            "name": "updateFrequency",
+            "in": "query",
+            "description": "Update frequency: current (now), recent, or historical data",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "now",
+                "recent",
+                "historical"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with weather station data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeatureCollection"
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "description": "CSV format weather data (≤5.3 MB per file)"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters"
+          },
+          "404": {
+            "description": "No data found for the specified criteria"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/collections/ch.meteoschweiz.ogd-smn/items/{itemId}": {
+      "get": {
+        "summary": "Get Specific Weather Station Data Item",
+        "description": "Retrieve a specific weather station data item by its identifier.",
+        "operationId": "getWeatherStationItem",
+        "tags": [
+          "Weather Stations"
+        ],
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "description": "Unique identifier for the weather station data item",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with specific weather station data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Feature"
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Collection": {
+        "type": "object",
+        "description": "STAC Collection metadata for the automatic weather stations",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "ch.meteoschweiz.ogd-smn"
+          },
+          "type": {
+            "type": "string",
+            "example": "Collection"
+          },
+          "title": {
+            "type": "string",
+            "example": "Automatic Weather Stations - SwissMetNet"
+          },
+          "description": {
+            "type": "string",
+            "example": "Data from around 160 automatic measurement stations within the SwissMetNet network"
+          },
+          "extent": {
+            "type": "object",
+            "properties": {
+              "spatial": {
+                "type": "object",
+                "properties": {
+                  "bbox": {
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              },
+              "temporal": {
+                "type": "object",
+                "properties": {
+                  "interval": {
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "license": {
+            "type": "string",
+            "example": "Open Data"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
+          }
+        }
+      },
+      "FeatureCollection": {
+        "type": "object",
+        "description": "GeoJSON FeatureCollection of weather station data",
+        "required": [
+          "type",
+          "features"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "FeatureCollection"
+            ]
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Feature"
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
+          },
+          "numberMatched": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "numberReturned": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "Feature": {
+        "type": "object",
+        "description": "GeoJSON Feature representing weather station data",
+        "required": [
+          "type",
+          "geometry",
+          "properties"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "Feature"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "geometry": {
+            "$ref": "#/components/schemas/Geometry"
+          },
+          "properties": {
+            "$ref": "#/components/schemas/WeatherStationProperties"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
+          }
+        }
+      },
+      "Geometry": {
+        "type": "object",
+        "description": "GeoJSON Geometry",
+        "required": [
+          "type",
+          "coordinates"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "Point"
+            ]
+          },
+          "coordinates": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 3
+          }
+        }
+      },
+      "WeatherStationProperties": {
+        "type": "object",
+        "description": "Weather station measurement properties",
+        "properties": {
+          "stationId": {
+            "type": "string",
+            "description": "Three-letter station identifier",
+            "example": "BER"
+          },
+          "stationName": {
+            "type": "string",
+            "description": "Station name",
+            "example": "Bern/Zollikofen"
+          },
+          "canton": {
+            "type": "string",
+            "description": "Swiss canton code"
+          },
+          "wigosId": {
+            "type": "string",
+            "description": "WIGOS (WMO Integrated Global Observing System) identifier"
+          },
+          "altitude": {
+            "type": "number",
+            "description": "Station altitude in meters above sea level"
+          },
+          "datetime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Measurement timestamp in UTC"
+          },
+          "tre200s0": {
+            "type": "number",
+            "description": "Air temperature 2m above ground; current value (°C)"
+          },
+          "rre150z0": {
+            "type": "number",
+            "description": "Precipitation; ten minutes total (mm)"
+          },
+          "sre000z0": {
+            "type": "number",
+            "description": "Sunshine duration; ten minutes total (min)"
+          },
+          "gre000z0": {
+            "type": "number",
+            "description": "Global radiation; ten minutes mean (W/m²)"
+          },
+          "ure200s0": {
+            "type": "number",
+            "description": "Relative air humidity 2m above ground; current value (%)"
+          },
+          "tde200s0": {
+            "type": "number",
+            "description": "Dew point 2m above ground; current value (°C)"
+          },
+          "dkl010z0": {
+            "type": "number",
+            "description": "Wind direction; ten minutes mean (degrees)"
+          },
+          "fu3010z0": {
+            "type": "number",
+            "description": "Wind speed; ten minutes mean (km/h)"
+          },
+          "fu3010z1": {
+            "type": "number",
+            "description": "Gust peak (one second); maximum (km/h)"
+          },
+          "prestas0": {
+            "type": "number",
+            "description": "Atmospheric pressure at barometric altitude (QFE); current value (hPa)"
+          },
+          "pp0qffs0": {
+            "type": "number",
+            "description": "Pressure reduced to sea level (QFF); current value (hPa)"
+          },
+          "pp0qnhs0": {
+            "type": "number",
+            "description": "Pressure reduced to sea level according to standard atmosphere (QNH); current value (hPa)"
+          },
+          "ppz850s0": {
+            "type": "number",
+            "description": "Geopotential height of the 850 hPa level; current value (m)"
+          },
+          "ppz700s0": {
+            "type": "number",
+            "description": "Geopotential height of the 700 hPa level; current value (m)"
+          },
+          "dv1towz0": {
+            "type": "number",
+            "description": "Wind direction vectorial tower; ten minutes mean (degrees)"
+          },
+          "fu3towz0": {
+            "type": "number",
+            "description": "Wind speed scalar tower; ten minutes mean (km/h)"
+          },
+          "u3towz1": {
+            "type": "number",
+            "description": "Gust peak (one second) tower; maximum (km/h)"
+          },
+          "ta1tows0": {
+            "type": "number",
+            "description": "Air temperature tower; current value (°C)"
+          },
+          "uretows0": {
+            "type": "number",
+            "description": "Relative air humidity tower; current value (%)"
+          },
+          "tdetows0": {
+            "type": "number",
+            "description": "Dew point tower; current value (°C)"
+          }
+        }
+      },
+      "Link": {
+        "type": "object",
+        "required": [
+          "href",
+          "rel"
+        ],
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "rel": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Weather Stations",
+      "description": "Operations related to automatic weather stations from the SwissMetNet network",
+      "externalDocs": {
+        "description": "Official documentation",
+        "url": "https://opendatadocs.meteoswiss.ch/a-data-groundbased/a1-automatic-weather-stations"
+      }
+    }
+  ],
+  "externalDocs": {
+    "description": "Automatic Weather Stations Documentation",
+    "url": "https://opendatadocs.meteoswiss.ch/a-data-groundbased/a1-automatic-weather-stations"
+  }
+}

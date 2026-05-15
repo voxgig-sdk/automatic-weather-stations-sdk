@@ -1,0 +1,38 @@
+{
+  "existing": {
+    "feature_collection": {
+      "FEATURE_COLLECTION00": {
+        "feature": [],
+        "link": [],
+        "number_matched": "s34",
+        "number_returned": "s35",
+        "type": "s36"
+      },
+      "FEATURE_COLLECTION01": {
+        "feature": [],
+        "link": [],
+        "number_matched": "s66",
+        "number_returned": "s67",
+        "type": "s68"
+      },
+      "FEATURE_COLLECTION02": {
+        "feature": [],
+        "link": [],
+        "number_matched": "s98",
+        "number_returned": "s99",
+        "type": "s9a"
+      }
+    }
+  },
+  "new": {
+    "feature_collection": {
+      "feature_collection_ref01": {
+        "feature": [],
+        "link": [],
+        "number_matched": "sca",
+        "number_returned": "scb",
+        "type": "scc"
+      }
+    }
+  }
+}

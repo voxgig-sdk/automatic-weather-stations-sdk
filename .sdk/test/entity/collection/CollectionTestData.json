@@ -1,0 +1,34 @@
+{
+  "existing": {
+    "collection": {
+      "COLLECTION00": {
+        "href": "s28",
+        "rel": "s29",
+        "title": "s2a",
+        "type": "s2b"
+      },
+      "COLLECTION01": {
+        "href": "s50",
+        "rel": "s51",
+        "title": "s52",
+        "type": "s53"
+      },
+      "COLLECTION02": {
+        "href": "s78",
+        "rel": "s79",
+        "title": "s7a",
+        "type": "s7b"
+      }
+    }
+  },
+  "new": {
+    "collection": {
+      "collection_ref01": {
+        "href": "sa0",
+        "rel": "sa1",
+        "title": "sa2",
+        "type": "sa3"
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+# Entity: collection
+
+main: kit: entity: collection: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "href"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "rel"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "title"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "type"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  name: "collection"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          method: "GET"
+          orig: "/collections/ch.meteoschweiz.ogd-smn"
+          parts: [
+            "collections"
+            "ch.meteoschweiz.ogd-smn"
+          ]
+          select: {
+            "$action": "chmeteoschweizogd_smn"
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}
