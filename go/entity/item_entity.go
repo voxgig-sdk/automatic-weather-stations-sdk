@@ -1,9 +1,9 @@
 package entity
 
 import (
-	"github.com/voxgig-sdk/automatic-weather-stations-sdk/core"
+	"github.com/voxgig-sdk/automatic-weather-stations-sdk/go/core"
 
-	vs "github.com/voxgig/struct"
+	vs "github.com/voxgig-sdk/automatic-weather-stations-sdk/go/utility/struct"
 )
 
 type ItemEntity struct {

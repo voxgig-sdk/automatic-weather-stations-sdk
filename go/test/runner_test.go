@@ -12,9 +12,9 @@ import (
 	"sync"
 	"testing"
 
-	sdk "github.com/voxgig-sdk/automatic-weather-stations-sdk"
+	sdk "github.com/voxgig-sdk/automatic-weather-stations-sdk/go"
 
-	vs "github.com/voxgig/struct"
+	vs "github.com/voxgig-sdk/automatic-weather-stations-sdk/go/utility/struct"
 )
 
 var envLocalOnce sync.Once

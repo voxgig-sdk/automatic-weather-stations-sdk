@@ -1,6 +1,6 @@
 package utility
 
-import "github.com/voxgig-sdk/automatic-weather-stations-sdk/core"
+import "github.com/voxgig-sdk/automatic-weather-stations-sdk/go/core"
 
 func cleanUtil(ctx *core.Context, val any) any {
 	return val

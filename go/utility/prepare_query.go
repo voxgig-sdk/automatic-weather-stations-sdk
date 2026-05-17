@@ -1,9 +1,9 @@
 package utility
 
 import (
-	vs "github.com/voxgig/struct"
+	vs "github.com/voxgig-sdk/automatic-weather-stations-sdk/go/utility/struct"
 
-	"github.com/voxgig-sdk/automatic-weather-stations-sdk/core"
+	"github.com/voxgig-sdk/automatic-weather-stations-sdk/go/core"
 )
 
 func prepareQueryUtil(ctx *core.Context) map[string]any {

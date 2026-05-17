@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	sdk "github.com/voxgig-sdk/automatic-weather-stations-sdk"
-	"github.com/voxgig-sdk/automatic-weather-stations-sdk/core"
+	sdk "github.com/voxgig-sdk/automatic-weather-stations-sdk/go"
+	"github.com/voxgig-sdk/automatic-weather-stations-sdk/go/core"
 )
 
 func TestItemDirect(t *testing.T) {

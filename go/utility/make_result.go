@@ -1,6 +1,6 @@
 package utility
 
-import "github.com/voxgig-sdk/automatic-weather-stations-sdk/core"
+import "github.com/voxgig-sdk/automatic-weather-stations-sdk/go/core"
 
 func makeResultUtil(ctx *core.Context) (*core.Result, error) {
 	if ctx.Out["result"] != nil {

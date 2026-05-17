@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	sdk "github.com/voxgig-sdk/automatic-weather-stations-sdk"
-	"github.com/voxgig-sdk/automatic-weather-stations-sdk/core"
+	sdk "github.com/voxgig-sdk/automatic-weather-stations-sdk/go"
+	"github.com/voxgig-sdk/automatic-weather-stations-sdk/go/core"
 
-	vs "github.com/voxgig/struct"
+	vs "github.com/voxgig-sdk/automatic-weather-stations-sdk/go/utility/struct"
 )
 
 func TestCollectionEntity(t *testing.T) {

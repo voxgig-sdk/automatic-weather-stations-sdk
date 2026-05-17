@@ -3,7 +3,7 @@ package utility
 import (
 	"reflect"
 
-	"github.com/voxgig-sdk/automatic-weather-stations-sdk/core"
+	"github.com/voxgig-sdk/automatic-weather-stations-sdk/go/core"
 )
 
 func featureHookUtil(ctx *core.Context, name string) {
