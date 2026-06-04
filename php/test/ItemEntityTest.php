@@ -89,7 +89,6 @@ function item_basic_setup($extra)
         "AUTOMATICWEATHERSTATIONS_TEST_ITEM_ENTID" => $idmap,
         "AUTOMATICWEATHERSTATIONS_TEST_LIVE" => "FALSE",
         "AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN" => "FALSE",
-        "AUTOMATICWEATHERSTATIONS_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -101,7 +100,6 @@ function item_basic_setup($extra)
     if ($env["AUTOMATICWEATHERSTATIONS_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
-                "apikey" => $env["AUTOMATICWEATHERSTATIONS_APIKEY"],
             ],
             $extra ?? [],
         ]);

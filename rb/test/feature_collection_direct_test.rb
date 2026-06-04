@@ -62,14 +62,12 @@ def feature_collection_direct_setup(mockres)
   env = Runner.env_override({
     "AUTOMATICWEATHERSTATIONS_TEST_FEATURE_COLLECTION_ENTID" => {},
     "AUTOMATICWEATHERSTATIONS_TEST_LIVE" => "FALSE",
-    "AUTOMATICWEATHERSTATIONS_APIKEY" => "NONE",
   })
 
   live = env["AUTOMATICWEATHERSTATIONS_TEST_LIVE"] == "TRUE"
 
   if live
     merged_opts = {
-      "apikey" => env["AUTOMATICWEATHERSTATIONS_APIKEY"],
     }
     client = AutomaticWeatherStationsSDK.new(merged_opts)
     return {

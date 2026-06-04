@@ -20,9 +20,6 @@ class AutomaticWeatherStationsConfig
             ],
             "options" => [
                 "base" => "https://data.geo.admin.ch/api/stac/v1",
-                "auth" => [
-                    "prefix" => "Bearer",
-                ],
                 "headers" => [
           'content-type' => 'application/json',
         ],
