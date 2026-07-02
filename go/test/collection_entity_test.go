@@ -119,6 +119,7 @@ func collectionBasicSetup(extra map[string]any) *entityTestSetup {
 		"AUTOMATICWEATHERSTATIONS_TEST_COLLECTION_ENTID": idmap,
 		"AUTOMATICWEATHERSTATIONS_TEST_LIVE":      "FALSE",
 		"AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN":   "FALSE",
+		"AUTOMATICWEATHERSTATIONS_APIKEY":         "NONE",
 	})
 
 	idmapResolved := core.ToMapAny(env["AUTOMATICWEATHERSTATIONS_TEST_COLLECTION_ENTID"])
@@ -129,6 +130,7 @@ func collectionBasicSetup(extra map[string]any) *entityTestSetup {
 	if env["AUTOMATICWEATHERSTATIONS_TEST_LIVE"] == "TRUE" {
 		mergedOpts := vs.Merge([]any{
 			map[string]any{
+				"apikey": env["AUTOMATICWEATHERSTATIONS_APIKEY"],
 			},
 			extra,
 		})

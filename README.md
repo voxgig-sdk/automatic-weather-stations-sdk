@@ -1,21 +1,8 @@
 # AutomaticWeatherStations SDK
 
-Ten-minute readings from ~160 SwissMetNet automatic weather stations, served as a STAC catalog
+Automatic Weather Stations client, generated from the OpenAPI spec.
 
 > TypeScript, Python, PHP, Golang, Ruby, Lua SDKs, a CLI, an interactive REPL, and an MCP server for AI agents — all generated from one OpenAPI spec by [@voxgig/sdkgen](https://github.com/voxgig/sdkgen).
-
-## About Automatic Weather Stations
-
-This SDK wraps the `ch.meteoschweiz.ogd-smn` collection of the [Swiss Federal Spatial Data Infrastructure STAC API](https://data.geo.admin.ch/api/stac/v1), operated by the [Federal Office of Meteorology and Climatology MeteoSwiss](https://www.meteoswiss.admin.ch/). It surfaces measurements from SwissMetNet, the network of around 160 automatic monitoring stations distributed across Switzerland.
-
-What you get from the API:
-
-- Current and historical observations at 10-minute, hourly, daily, monthly, and yearly resolutions
-- Parameters including temperature, precipitation, wind, pressure, snow, humidity, sunshine duration, and radiation
-- Per-collection metadata assets covering the data inventory, parameter definitions, and station locations
-- Spatial coverage of Switzerland (roughly 6.10°E–10.43°E, 45.84°N–47.70°N), with historical archives organised in 10-year increments
-
-The API is a STAC (SpatioTemporal Asset Catalog) v1.0.0 endpoint that also conforms to OGC API — Features 1.0, so collections, items, and search are reachable via standard STAC paths under `https://data.geo.admin.ch/api/stac/v1`. CORS is enabled and responses are GeoJSON; no authentication is documented for read access.
 
 ## Try it
 
@@ -49,29 +36,31 @@ gem install automatic-weather-stations-sdk
 luarocks install automatic-weather-stations-sdk
 ```
 
-## 30-second quickstart
+## Quickstart
 
 ### TypeScript
 
 ```ts
 import { AutomaticWeatherStationsSDK } from 'automatic-weather-stations'
 
-const client = new AutomaticWeatherStationsSDK({})
+const client = new AutomaticWeatherStationsSDK({
+  apikey: process.env.AUTOMATIC-WEATHER-STATIONS_APIKEY,
+})
 
 // List all collections
 const collections = await client.Collection().list()
+console.log(collections.data)
 ```
 
-See the [TypeScript README](ts/README.md) for the
-full guide, or scroll down for the same example in other languages.
+See the [TypeScript README](ts/README.md) for the full guide.
 
-## What's in the box
+## Surfaces
 
-| Surface | Use it for | Path |
-| --- | --- | --- |
-| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | App integration | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
-| **CLI** | Scripts, CI, ops, one-off API calls | `go-cli/` |
-| **MCP server** | AI agents (Claude, Cursor, Cline) | `go-mcp/` |
+| Surface | Path |
+| --- | --- |
+| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
+| **CLI** | `go-cli/` |
+| **MCP server** | `go-mcp/` |
 
 ## Use it from an AI agent (MCP)
 
@@ -101,9 +90,9 @@ The API exposes 3 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Collection** | A STAC Collection describing the SwissMetNet automatic weather stations dataset, listed under `/collections` and addressable as `/collections/ch.meteoschweiz.ogd-smn`. | `/collections/ch.meteoschweiz.ogd-smn` |
-| **FeatureCollection** | A GeoJSON FeatureCollection of STAC Items returned by `/collections/ch.meteoschweiz.ogd-smn/items`, paging through the stations and their observation assets. | `/collections/ch.meteoschweiz.ogd-smn/items` |
-| **Item** | An individual STAC Item (GeoJSON Feature) for a station or observation snapshot, retrieved from `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}` with links to the underlying measurement and metadata assets. | `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}` |
+| **Collection** |  | `/collections/ch.meteoschweiz.ogd-smn` |
+| **FeatureCollection** |  | `/collections/ch.meteoschweiz.ogd-smn/items` |
+| **Item** |  | `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}` |
 
 Each entity supports the following operations where available: **load**,
 **list**, **create**, **update**, and **remove**.
@@ -113,12 +102,16 @@ Each entity supports the following operations where available: **load**,
 ### Python
 
 ```python
+import os
 from automaticweatherstations_sdk import AutomaticWeatherStationsSDK
 
-client = AutomaticWeatherStationsSDK({})
+client = AutomaticWeatherStationsSDK({
+    "apikey": os.environ.get("AUTOMATIC-WEATHER-STATIONS_APIKEY"),
+})
 
 # List all collections
-collections, err = client.Collection(None).list(None, None)
+collections, err = client.Collection().list()
+print(collections)
 ```
 
 ### PHP
@@ -127,10 +120,13 @@ collections, err = client.Collection(None).list(None, None)
 <?php
 require_once 'automaticweatherstations_sdk.php';
 
-$client = new AutomaticWeatherStationsSDK([]);
+$client = new AutomaticWeatherStationsSDK([
+    "apikey" => getenv("AUTOMATIC-WEATHER-STATIONS_APIKEY"),
+]);
 
 // List all collections
-[$collections, $err] = $client->Collection(null)->list(null, null);
+[$collections, $err] = $client->Collection()->list();
+print_r($collections);
 ```
 
 ### Golang
@@ -138,10 +134,13 @@ $client = new AutomaticWeatherStationsSDK([]);
 ```go
 import sdk "github.com/voxgig-sdk/automatic-weather-stations-sdk/go"
 
-client := sdk.NewAutomaticWeatherStationsSDK(map[string]any{})
+client := sdk.NewAutomaticWeatherStationsSDK(map[string]any{
+    "apikey": os.Getenv("AUTOMATIC-WEATHER-STATIONS_APIKEY"),
+})
 
 // List all collections
 collections, err := client.Collection(nil).List(nil, nil)
+fmt.Println(collections)
 ```
 
 ### Ruby
@@ -149,10 +148,13 @@ collections, err := client.Collection(nil).List(nil, nil)
 ```ruby
 require_relative "AutomaticWeatherStations_sdk"
 
-client = AutomaticWeatherStationsSDK.new({})
+client = AutomaticWeatherStationsSDK.new({
+  "apikey" => ENV["AUTOMATIC-WEATHER-STATIONS_APIKEY"],
+})
 
 # List all collections
-collections, err = client.Collection(nil).list(nil, nil)
+collections, err = client.Collection().list
+puts collections
 ```
 
 ### Lua
@@ -160,10 +162,13 @@ collections, err = client.Collection(nil).list(nil, nil)
 ```lua
 local sdk = require("automatic-weather-stations_sdk")
 
-local client = sdk.new({})
+local client = sdk.new({
+  apikey = os.getenv("AUTOMATIC-WEATHER-STATIONS_APIKEY"),
+})
 
 -- List all collections
-local collections, err = client:Collection(nil):list(nil, nil)
+local collections, err = client:Collection():list()
+print(collections)
 ```
 
 ## Unit testing in offline mode
@@ -182,25 +187,21 @@ const result = await client.Collection().load({ id: 'test01' })
 ### Python
 
 ```python
-client = AutomaticWeatherStationsSDK.test(None, None)
-result, err = client.Collection(None).load(
-    {"id": "test01"}, None
-)
+client = AutomaticWeatherStationsSDK.test()
+result, err = client.Collection().load({"id": "test01"})
 ```
 
 ### PHP
 
 ```php
-$client = AutomaticWeatherStationsSDK::test(null, null);
-[$result, $err] = $client->Collection(null)->load(
-    ["id" => "test01"], null
-);
+$client = AutomaticWeatherStationsSDK::test();
+[$result, $err] = $client->Collection()->load(["id" => "test01"]);
 ```
 
 ### Golang
 
 ```go
-client := sdk.TestSDK(nil, nil)
+client := sdk.Test()
 result, err := client.Collection(nil).Load(
     map[string]any{"id": "test01"}, nil,
 )
@@ -209,19 +210,15 @@ result, err := client.Collection(nil).Load(
 ### Ruby
 
 ```ruby
-client = AutomaticWeatherStationsSDK.test(nil, nil)
-result, err = client.Collection(nil).load(
-  { "id" => "test01" }, nil
-)
+client = AutomaticWeatherStationsSDK.test
+result, err = client.Collection().load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
-local client = sdk.test(nil, nil)
-local result, err = client:Collection(nil):load(
-  { id = "test01" }, nil
-)
+local client = sdk.test()
+local result, err = client:Collection():load({ id = "test01" })
 ```
 
 ## How it works
@@ -325,16 +322,6 @@ local result, err = client:direct({
 - [Golang](go/README.md)
 - [Ruby](rb/README.md)
 - [Lua](lua/README.md)
-
-## Using the Automatic Weather Stations
-
-- Upstream: [https://data.geo.admin.ch/api/stac/v1](https://data.geo.admin.ch/api/stac/v1)
-- API docs: [https://data.geo.admin.ch/api/stac/v1/collections/ch.meteoschweiz.ogd-smn](https://data.geo.admin.ch/api/stac/v1/collections/ch.meteoschweiz.ogd-smn)
-
-- Data is published as Swiss Open Government Data under a Creative Commons Attribution (CC-BY) licence
-- Attribute the Federal Office of Meteorology and Climatology MeteoSwiss as the source
-- The underlying STAC catalog is part of the Swiss Federal Spatial Data Infrastructure (`data.geo.admin.ch`)
-- Verify current terms on the collection page before redistributing data
 
 ---
 

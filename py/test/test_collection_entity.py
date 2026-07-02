@@ -92,6 +92,7 @@ def _collection_basic_setup(extra):
         "AUTOMATICWEATHERSTATIONS_TEST_COLLECTION_ENTID": idmap,
         "AUTOMATICWEATHERSTATIONS_TEST_LIVE": "FALSE",
         "AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN": "FALSE",
+        "AUTOMATICWEATHERSTATIONS_APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -102,6 +103,7 @@ def _collection_basic_setup(extra):
     if env.get("AUTOMATICWEATHERSTATIONS_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
+                "apikey": env.get("AUTOMATICWEATHERSTATIONS_APIKEY"),
             },
             extra or {},
         ])

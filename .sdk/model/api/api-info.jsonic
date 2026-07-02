@@ -22,30 +22,7 @@ main: {
       termsOfService: "https://opendatadocs.meteoswiss.ch"
       title: "Automatic Weather Stations"
       version: "1.0.0"
-      tagline: "Ten-minute readings from ~160 SwissMetNet automatic weather stations, served as a STAC catalog"
-      homepage: "https://data.geo.admin.ch/api/stac/v1"
-      docs_url: "https://data.geo.admin.ch/api/stac/v1/collections/ch.meteoschweiz.ogd-smn"
-      license_short: "Creative Commons Attribution (CC-BY) — MeteoSwiss / Swiss Federal Spatial Data Infrastructure"
-      license_md: `- Data is published as Swiss Open Government Data under a Creative Commons Attribution (CC-BY) licence
-- Attribute the Federal Office of Meteorology and Climatology MeteoSwiss as the source
-- The underlying STAC catalog is part of the Swiss Federal Spatial Data Infrastructure (\`data.geo.admin.ch\`)
-- Verify current terms on the collection page before redistributing data`
-      about_md: `This SDK wraps the \`ch.meteoschweiz.ogd-smn\` collection of the [Swiss Federal Spatial Data Infrastructure STAC API](https://data.geo.admin.ch/api/stac/v1), operated by the [Federal Office of Meteorology and Climatology MeteoSwiss](https://www.meteoswiss.admin.ch/). It surfaces measurements from SwissMetNet, the network of around 160 automatic monitoring stations distributed across Switzerland.
-
-What you get from the API:
-
-- Current and historical observations at 10-minute, hourly, daily, monthly, and yearly resolutions
-- Parameters including temperature, precipitation, wind, pressure, snow, humidity, sunshine duration, and radiation
-- Per-collection metadata assets covering the data inventory, parameter definitions, and station locations
-- Spatial coverage of Switzerland (roughly 6.10°E–10.43°E, 45.84°N–47.70°N), with historical archives organised in 10-year increments
-
-The API is a STAC (SpatioTemporal Asset Catalog) v1.0.0 endpoint that also conforms to OGC API — Features 1.0, so collections, items, and search are reachable via standard STAC paths under \`https://data.geo.admin.ch/api/stac/v1\`. CORS is enabled and responses are GeoJSON; no authentication is documented for read access.`
-      entity_desc: {
-        collection: "A STAC Collection describing the SwissMetNet automatic weather stations dataset, listed under `/collections` and addressable as `/collections/ch.meteoschweiz.ogd-smn`."
-        feature_collection: "A GeoJSON FeatureCollection of STAC Items returned by `/collections/ch.meteoschweiz.ogd-smn/items`, paging through the stations and their observation assets."
-        item: "An individual STAC Item (GeoJSON Feature) for a station or observation snapshot, retrieved from `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}` with links to the underlying measurement and metadata assets."
-      }
-      auth: false
     }
   }
 }
+

@@ -1,47 +1,13 @@
 {
-  "name": "automatic-weather-stations",
-  "origin": "voxgig-sdk",
   "def": "automatic-weather-stations_0.1.0.json",
   "main": {
+    "def": {
+      "desc": ""
+    },
     "kit": {
-      "info": {
-        "contact": {
-          "name": "MeteoSwiss",
-          "url": "https://opendatadocs.meteoswiss.ch/a-data-groundbased/a1-automatic-weather-stations"
-        },
-        "description": "The Automatic Weather Stations API provides access to data from around 160 automatic measurement stations within the SwissMetNet network. It delivers vital meteorological data including temperature, precipitation, wind speed, and humidity every 10 minutes to support weather forecasting and environmental monitoring.",
-        "license": {
-          "name": "Open Data",
-          "url": "https://opendatadocs.meteoswiss.ch"
-        },
-        "servers": [
-          {
-            "description": "FSDI REST API for Swiss Meteorological Data",
-            "url": "https://data.geo.admin.ch/api/stac/v1"
-          }
-        ],
-        "termsOfService": "https://opendatadocs.meteoswiss.ch",
-        "title": "Automatic Weather Stations",
-        "version": "1.0.0",
-        "tagline": "Ten-minute readings from ~160 SwissMetNet automatic weather stations, served as a STAC catalog",
-        "homepage": "https://data.geo.admin.ch/api/stac/v1",
-        "docs_url": "https://data.geo.admin.ch/api/stac/v1/collections/ch.meteoschweiz.ogd-smn",
-        "license_short": "Creative Commons Attribution (CC-BY) — MeteoSwiss / Swiss Federal Spatial Data Infrastructure",
-        "license_md": "- Data is published as Swiss Open Government Data under a Creative Commons Attribution (CC-BY) licence\n- Attribute the Federal Office of Meteorology and Climatology MeteoSwiss as the source\n- The underlying STAC catalog is part of the Swiss Federal Spatial Data Infrastructure (`data.geo.admin.ch`)\n- Verify current terms on the collection page before redistributing data",
-        "about_md": "This SDK wraps the `ch.meteoschweiz.ogd-smn` collection of the [Swiss Federal Spatial Data Infrastructure STAC API](https://data.geo.admin.ch/api/stac/v1), operated by the [Federal Office of Meteorology and Climatology MeteoSwiss](https://www.meteoswiss.admin.ch/). It surfaces measurements from SwissMetNet, the network of around 160 automatic monitoring stations distributed across Switzerland.\n\nWhat you get from the API:\n\n- Current and historical observations at 10-minute, hourly, daily, monthly, and yearly resolutions\n- Parameters including temperature, precipitation, wind, pressure, snow, humidity, sunshine duration, and radiation\n- Per-collection metadata assets covering the data inventory, parameter definitions, and station locations\n- Spatial coverage of Switzerland (roughly 6.10°E–10.43°E, 45.84°N–47.70°N), with historical archives organised in 10-year increments\n\nThe API is a STAC (SpatioTemporal Asset Catalog) v1.0.0 endpoint that also conforms to OGC API — Features 1.0, so collections, items, and search are reachable via standard STAC paths under `https://data.geo.admin.ch/api/stac/v1`. CORS is enabled and responses are GeoJSON; no authentication is documented for read access.",
-        "entity_desc": {
-          "collection": "A STAC Collection describing the SwissMetNet automatic weather stations dataset, listed under `/collections` and addressable as `/collections/ch.meteoschweiz.ogd-smn`.",
-          "feature_collection": "A GeoJSON FeatureCollection of STAC Items returned by `/collections/ch.meteoschweiz.ogd-smn/items`, paging through the stations and their observation assets.",
-          "item": "An individual STAC Item (GeoJSON Feature) for a station or observation snapshot, retrieved from `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}` with links to the underlying measurement and metadata assets."
-        },
-        "auth": false
-      },
       "config": {
         "auth": {
           "prefix": "Bearer"
-        },
-        "headers": {
-          "content-type": "application/json"
         },
         "docs_order": [
           "ts",
@@ -50,45 +16,52 @@
           "go",
           "rb",
           "lua"
-        ]
+        ],
+        "headers": {
+          "content-type": "application/json"
+        }
       },
       "entity": {
         "collection": {
+          "active": true,
           "alias": {
             "field": {}
           },
           "fields": [
             {
+              "active": true,
               "name": "href",
               "req": true,
-              "type": "`$STRING`",
-              "active": true
+              "type": "`$STRING`"
             },
             {
+              "active": true,
               "name": "rel",
               "req": true,
-              "type": "`$STRING`",
-              "active": true
+              "type": "`$STRING`"
             },
             {
+              "active": true,
               "name": "title",
               "req": false,
-              "type": "`$STRING`",
-              "active": true
+              "type": "`$STRING`"
             },
             {
+              "active": true,
               "name": "type",
               "req": false,
-              "type": "`$STRING`",
-              "active": true
+              "type": "`$STRING`"
             }
           ],
           "name": "collection",
           "op": {
             "list": {
+              "input": "data",
               "name": "list",
               "points": [
                 {
+                  "active": true,
+                  "args": {},
                   "method": "GET",
                   "orig": "/collections/ch.meteoschweiz.ogd-smn",
                   "parts": [
@@ -101,111 +74,110 @@
                   "transform": {
                     "req": "`reqdata`",
                     "res": "`body`"
-                  },
-                  "active": true,
-                  "args": {}
+                  }
                 }
-              ],
-              "input": "data"
+              ]
             }
           },
-          "active": true,
           "relations": {
             "ancestors": []
           }
         },
         "feature_collection": {
+          "active": true,
           "alias": {
             "field": {}
           },
           "fields": [
             {
+              "active": true,
               "name": "feature",
               "req": true,
-              "type": "`$ARRAY`",
-              "active": true
+              "type": "`$ARRAY`"
             },
             {
+              "active": true,
               "name": "link",
               "req": false,
-              "type": "`$ARRAY`",
-              "active": true
+              "type": "`$ARRAY`"
             },
             {
+              "active": true,
               "name": "number_matched",
               "req": false,
-              "type": "`$INTEGER`",
-              "active": true
+              "type": "`$INTEGER`"
             },
             {
+              "active": true,
               "name": "number_returned",
               "req": false,
-              "type": "`$INTEGER`",
-              "active": true
+              "type": "`$INTEGER`"
             },
             {
+              "active": true,
               "name": "type",
               "req": true,
-              "type": "`$STRING`",
-              "active": true
+              "type": "`$STRING`"
             }
           ],
           "name": "feature_collection",
           "op": {
             "list": {
+              "input": "data",
               "name": "list",
               "points": [
                 {
+                  "active": true,
                   "args": {
                     "query": [
                       {
+                        "active": true,
                         "kind": "query",
                         "name": "bbox",
                         "orig": "bbox",
                         "reqd": false,
-                        "type": "`$ARRAY`",
-                        "active": true
+                        "type": "`$ARRAY`"
                       },
                       {
+                        "active": true,
                         "kind": "query",
                         "name": "datetime",
                         "orig": "datetime",
                         "reqd": false,
-                        "type": "`$STRING`",
-                        "active": true
+                        "type": "`$STRING`"
                       },
                       {
+                        "active": true,
                         "kind": "query",
                         "name": "granularity",
                         "orig": "granularity",
                         "reqd": false,
-                        "type": "`$STRING`",
-                        "active": true
+                        "type": "`$STRING`"
                       },
                       {
+                        "active": true,
                         "example": 10,
                         "kind": "query",
                         "name": "limit",
                         "orig": "limit",
                         "reqd": false,
-                        "type": "`$INTEGER`",
-                        "active": true
+                        "type": "`$INTEGER`"
                       },
                       {
+                        "active": true,
                         "kind": "query",
                         "name": "station",
                         "orig": "station",
                         "reqd": false,
-                        "type": "`$STRING`",
-                        "active": true
+                        "type": "`$STRING`"
                       },
                       {
+                        "active": true,
                         "kind": "query",
                         "name": "update_frequency",
                         "orig": "update_frequency",
                         "reqd": false,
-                        "type": "`$STRING`",
-                        "active": true
+                        "type": "`$STRING`"
                       }
                     ]
                   },
@@ -229,52 +201,50 @@
                   "transform": {
                     "req": "`reqdata`",
                     "res": "`body`"
-                  },
-                  "active": true
+                  }
                 }
-              ],
-              "input": "data"
+              ]
             }
           },
-          "active": true,
           "relations": {
             "ancestors": []
           }
         },
         "item": {
+          "active": true,
           "alias": {
             "field": {}
           },
           "fields": [
             {
+              "active": true,
               "name": "geometry",
               "req": true,
-              "type": "`$OBJECT`",
-              "active": true
+              "type": "`$OBJECT`"
             },
             {
+              "active": true,
               "name": "id",
               "req": false,
-              "type": "`$STRING`",
-              "active": true
+              "type": "`$STRING`"
             },
             {
+              "active": true,
               "name": "link",
               "req": false,
-              "type": "`$ARRAY`",
-              "active": true
+              "type": "`$ARRAY`"
             },
             {
+              "active": true,
               "name": "property",
               "req": true,
-              "type": "`$OBJECT`",
-              "active": true
+              "type": "`$OBJECT`"
             },
             {
+              "active": true,
               "name": "type",
               "req": true,
-              "type": "`$STRING`",
-              "active": true
+              "type": "`$STRING`"
             }
           ],
           "id": {
@@ -284,18 +254,20 @@
           "name": "item",
           "op": {
             "load": {
+              "input": "data",
               "name": "load",
               "points": [
                 {
+                  "active": true,
                   "args": {
                     "params": [
                       {
+                        "active": true,
                         "kind": "param",
                         "name": "id",
                         "orig": "item_id",
                         "reqd": true,
-                        "type": "`$STRING`",
-                        "active": true
+                        "type": "`$STRING`"
                       }
                     ]
                   },
@@ -320,14 +292,11 @@
                   "transform": {
                     "req": "`reqdata`",
                     "res": "`body`"
-                  },
-                  "active": true
+                  }
                 }
-              ],
-              "input": "data"
+              ]
             }
           },
-          "active": true,
           "relations": {
             "ancestors": []
           }
@@ -335,9 +304,6 @@
       },
       "feature": {
         "test": {
-          "name": "test",
-          "title": "In-memory mock transport for testing without a live server",
-          "version": "0.0.1",
           "active": true,
           "config": {
             "options": {
@@ -345,6 +311,14 @@
             }
           },
           "hook": {
+            "GetData": {
+              "active": true,
+              "await": false
+            },
+            "GetMatch": {
+              "active": true,
+              "await": false
+            },
             "PostConstruct": {
               "active": true,
               "await": false
@@ -353,25 +327,11 @@
               "active": true,
               "await": false
             },
-            "SetData": {
-              "active": true,
-              "await": false
-            },
-            "GetData": {
-              "active": true,
-              "await": false
-            },
-            "SetMatch": {
-              "active": true
-            },
-            "GetMatch": {
-              "active": true,
+            "PostOperation": {
+              "active": false,
               "await": false
             },
             "PrePoint": {
-              "active": true
-            },
-            "PreSpec": {
               "active": true,
               "await": false
             },
@@ -387,20 +347,32 @@
               "active": true,
               "await": false
             },
+            "PreSpec": {
+              "active": true,
+              "await": false
+            },
             "PreTarget": {
               "active": false,
               "await": false
             },
-            "PostOperation": {
-              "active": false,
+            "SetData": {
+              "active": true,
+              "await": false
+            },
+            "SetMatch": {
+              "active": true,
               "await": false
             }
           },
+          "name": "test",
           "target": {
-            "ts": {
+            "go": {
               "deps": {}
             },
-            "go": {
+            "go-cli": {
+              "deps": {}
+            },
+            "go-mcp": {
               "deps": {}
             },
             "lua": {
@@ -415,23 +387,30 @@
             "rb": {
               "deps": {}
             },
-            "go-cli": {
-              "deps": {}
-            },
-            "go-mcp": {
+            "ts": {
               "deps": {}
             }
-          }
+          },
+          "title": "In-memory mock transport for testing without a live server",
+          "version": "0.0.1"
         }
       },
       "flow": {
         "BasicCollectionFlow": {
+          "active": true,
           "entity": "collection",
+          "key$": "BasicCollectionFlow",
           "kind": "basic",
           "name": "BasicCollectionFlow",
+          "param": {},
           "step": [
             {
+              "active": true,
+              "data": {},
+              "input": {},
+              "match": {},
               "op": "list",
+              "spec": [],
               "valid": [
                 {
                   "apply": "ItemExists",
@@ -439,25 +418,25 @@
                     "ref": "collection_ref01"
                   }
                 }
-              ],
-              "active": true,
-              "match": {},
-              "data": {},
-              "input": {},
-              "spec": []
+              ]
             }
-          ],
-          "key$": "BasicCollectionFlow",
-          "active": true,
-          "param": {}
+          ]
         },
         "BasicFeatureCollectionFlow": {
+          "active": true,
           "entity": "feature_collection",
+          "key$": "BasicFeatureCollectionFlow",
           "kind": "basic",
           "name": "BasicFeatureCollectionFlow",
+          "param": {},
           "step": [
             {
+              "active": true,
+              "data": {},
+              "input": {},
+              "match": {},
               "op": "list",
+              "spec": [],
               "valid": [
                 {
                   "apply": "ItemExists",
@@ -465,24 +444,21 @@
                     "ref": "feature_collection_ref01"
                   }
                 }
-              ],
-              "active": true,
-              "match": {},
-              "data": {},
-              "input": {},
-              "spec": []
+              ]
             }
-          ],
-          "key$": "BasicFeatureCollectionFlow",
-          "active": true,
-          "param": {}
+          ]
         },
         "BasicItemFlow": {
+          "active": true,
           "entity": "item",
+          "key$": "BasicItemFlow",
           "kind": "basic",
           "name": "BasicItemFlow",
+          "param": {},
           "step": [
             {
+              "active": true,
+              "data": {},
               "input": {
                 "ref": "item_ref01",
                 "srcdatavar": "item_ref01_data",
@@ -492,6 +468,7 @@
                 "id": "item01"
               },
               "op": "load",
+              "spec": [],
               "valid": [
                 {
                   "apply": "TextFieldMark",
@@ -499,27 +476,58 @@
                     "mark": "Mark01-item_ref01"
                   }
                 }
-              ],
-              "active": true,
-              "data": {},
-              "spec": []
+              ]
             }
-          ],
-          "key$": "BasicItemFlow",
-          "active": true,
-          "param": {}
+          ]
         }
       },
+      "info": {
+        "contact": {
+          "name": "MeteoSwiss",
+          "url": "https://opendatadocs.meteoswiss.ch/a-data-groundbased/a1-automatic-weather-stations"
+        },
+        "description": "The Automatic Weather Stations API provides access to data from around 160 automatic measurement stations within the SwissMetNet network. It delivers vital meteorological data including temperature, precipitation, wind speed, and humidity every 10 minutes to support weather forecasting and environmental monitoring.",
+        "license": {
+          "name": "Open Data",
+          "url": "https://opendatadocs.meteoswiss.ch"
+        },
+        "servers": [
+          {
+            "description": "FSDI REST API for Swiss Meteorological Data",
+            "url": "https://data.geo.admin.ch/api/stac/v1"
+          }
+        ],
+        "termsOfService": "https://opendatadocs.meteoswiss.ch",
+        "title": "Automatic Weather Stations",
+        "version": "1.0.0"
+      },
+      "option": {},
       "target": {
-        "go-cli": {
-          "title": "Go CLI",
-          "ext": "go",
+        "go": {
+          "active": true,
           "comment": {
             "line": "//"
           },
+          "deps": {},
+          "ext": "go",
           "module": {
             "name": "automatic-weather-stations"
           },
+          "name": "go",
+          "srcfeature": false,
+          "title": "Golang"
+        },
+        "go-cli": {
+          "active": true,
+          "comment": {
+            "line": "//"
+          },
+          "deps": {},
+          "ext": "go",
+          "module": {
+            "name": "automatic-weather-stations"
+          },
+          "name": "go-cli",
           "phase": {
             "entity": {
               "active": false
@@ -534,19 +542,19 @@
               "active": false
             }
           },
-          "deps": {},
-          "name": "go-cli",
-          "active": true
+          "title": "Go CLI"
         },
         "go-mcp": {
-          "title": "Go MCP server",
-          "ext": "go",
+          "active": true,
           "comment": {
             "line": "//"
           },
+          "deps": {},
+          "ext": "go",
           "module": {
             "name": "automatic-weather-stations"
           },
+          "name": "go-mcp",
           "phase": {
             "entity": {
               "active": false
@@ -561,138 +569,120 @@
               "active": false
             }
           },
-          "deps": {},
-          "name": "go-mcp",
-          "active": true
-        },
-        "ts": {
-          "title": "TypeScript",
-          "ext": "ts",
-          "comment": {
-            "line": "//"
-          },
-          "module": {
-            "name": "automatic-weather-stations"
-          },
-          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
-          "deps": {
-            "dotenv": {
-              "active": true,
-              "version": "^17.4.2",
-              "kind": "dev"
-            },
-            "typescript": {
-              "active": true,
-              "version": "^5.9.3",
-              "kind": "dev"
-            },
-            "@types/node": {
-              "active": true,
-              "version": "^25.6.0",
-              "kind": "dev"
-            }
-          },
-          "name": "ts",
-          "active": true
-        },
-        "go": {
-          "title": "Golang",
-          "ext": "go",
-          "comment": {
-            "line": "//"
-          },
-          "module": {
-            "name": "automatic-weather-stations"
-          },
-          "srcfeature": false,
-          "deps": {},
-          "name": "go",
-          "active": true
+          "title": "Go MCP server"
         },
         "lua": {
-          "title": "Lua",
-          "ext": "lua",
+          "active": true,
           "comment": {
             "line": "--"
           },
-          "module": {
-            "name": "automatic-weather-stations"
-          },
-          "srcfeature": false,
           "deps": {
             "dkjson": {
               "active": true,
-              "version": "2.5",
-              "kind": "prod"
+              "kind": "prod",
+              "version": "2.5"
             }
           },
+          "ext": "lua",
+          "module": {
+            "name": "automatic-weather-stations"
+          },
           "name": "lua",
-          "active": true
+          "srcfeature": false,
+          "title": "Lua"
         },
         "php": {
-          "title": "PHP",
-          "ext": "php",
+          "active": true,
           "comment": {
             "line": "//"
           },
+          "deps": {},
+          "ext": "php",
           "module": {
             "name": "automatic-weather-stations"
           },
-          "srcfeature": false,
-          "deps": {},
           "name": "php",
-          "active": true
+          "srcfeature": false,
+          "title": "PHP"
         },
         "py": {
-          "title": "Python",
-          "ext": "py",
+          "active": true,
           "comment": {
             "line": "#"
           },
-          "module": {
-            "name": "automatic-weather-stations"
-          },
-          "srcfeature": false,
           "deps": {
             "requests": {
               "active": true,
-              "version": "2.33",
-              "kind": "prod"
+              "kind": "prod",
+              "version": "2.33"
             }
           },
-          "name": "py",
-          "active": true
-        },
-        "rb": {
-          "title": "Ruby",
-          "ext": "rb",
-          "comment": {
-            "line": "#"
-          },
+          "ext": "py",
           "module": {
             "name": "automatic-weather-stations"
           },
+          "name": "py",
           "srcfeature": false,
+          "title": "Python"
+        },
+        "rb": {
+          "active": true,
+          "comment": {
+            "line": "#"
+          },
           "deps": {
-            "voxgig-struct": {
-              "active": true,
-              "version": "0.0.10",
-              "kind": "prod"
-            },
             "json": {
               "active": true,
-              "version": "0",
-              "kind": "prod"
+              "kind": "prod",
+              "version": "0"
+            },
+            "voxgig-struct": {
+              "active": true,
+              "kind": "prod",
+              "version": "0.0.10"
             }
           },
+          "ext": "rb",
+          "module": {
+            "name": "automatic-weather-stations"
+          },
           "name": "rb",
-          "active": true
+          "srcfeature": false,
+          "title": "Ruby"
+        },
+        "ts": {
+          "active": true,
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
+          "comment": {
+            "line": "//"
+          },
+          "deps": {
+            "@types/node": {
+              "active": true,
+              "kind": "dev",
+              "version": "^25.6.0"
+            },
+            "dotenv": {
+              "active": true,
+              "kind": "dev",
+              "version": "^17.4.2"
+            },
+            "typescript": {
+              "active": true,
+              "kind": "dev",
+              "version": "^5.9.3"
+            }
+          },
+          "ext": "ts",
+          "module": {
+            "name": "automatic-weather-stations"
+          },
+          "name": "ts",
+          "title": "TypeScript"
         }
-      },
-      "option": {}
-    },
-    "def": {
-      "desc": ""
+      }
     }
-  }
+  },
+  "name": "automatic-weather-stations",
+  "origin": "voxgig-sdk"
 }

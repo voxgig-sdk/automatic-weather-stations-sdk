@@ -93,12 +93,14 @@ func collectionDirectSetup(mockres any) *collectionDirectSetupResult {
 	env := envOverride(map[string]any{
 		"AUTOMATICWEATHERSTATIONS_TEST_COLLECTION_ENTID": map[string]any{},
 		"AUTOMATICWEATHERSTATIONS_TEST_LIVE":    "FALSE",
+		"AUTOMATICWEATHERSTATIONS_APIKEY":       "NONE",
 	})
 
 	live := env["AUTOMATICWEATHERSTATIONS_TEST_LIVE"] == "TRUE"
 
 	if live {
 		mergedOpts := map[string]any{
+			"apikey": env["AUTOMATICWEATHERSTATIONS_APIKEY"],
 		}
 		client := sdk.NewAutomaticWeatherStationsSDK(mergedOpts)
 
