@@ -10,7 +10,7 @@ The PHP SDK for the AutomaticWeatherStations API — an entity-oriented client u
 
 ## Install
 ```bash
-composer require voxgig/automatic-weather-stations-sdk
+composer require voxgig-sdk/automatic-weather-stations
 ```
 
 

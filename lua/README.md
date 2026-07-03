@@ -10,7 +10,7 @@ The Lua SDK for the AutomaticWeatherStations API — an entity-oriented client u
 
 ## Install
 ```bash
-luarocks install automatic-weather-stations-sdk
+luarocks install voxgig-sdk-automatic-weather-stations
 ```
 
 If the module is not yet published, add the source directory to

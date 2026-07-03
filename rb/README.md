@@ -10,13 +10,13 @@ The Ruby SDK for the AutomaticWeatherStations API — an entity-oriented client 
 
 ## Install
 ```bash
-gem install automatic-weather-stations-sdk
+gem install voxgig-sdk-automatic-weather-stations
 ```
 
 Or add to your `Gemfile`:
 
 ```ruby
-gem "automatic-weather-stations-sdk"
+gem "voxgig-sdk-automatic-weather-stations"
 ```
 
 Then run:

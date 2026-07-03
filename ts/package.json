@@ -1,7 +1,23 @@
 {
   "name": "@voxgig-sdk/automatic-weather-stations",
   "version": "0.0.1",
-  "description": "DESCRIPTION",
+  "description": "Unofficial generated TypeScript SDK for the Automatic Weather Stations public API. Not affiliated with or endorsed by the upstream API provider.",
+  "keywords": [
+    "voxgig",
+    "sdk",
+    "generated-sdk",
+    "openapi",
+    "api-client",
+    "automatic-weather-stations"
+  ],
+  "homepage": "https://github.com/voxgig-sdk/automatic-weather-stations-sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/voxgig-sdk/automatic-weather-stations-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/voxgig-sdk/automatic-weather-stations-sdk/issues"
+  },
   "main": "dist/AutomaticWeatherStationsSDK.js",
   "type": "commonjs",
   "types": "dist/AutomaticWeatherStationsSDK.d.ts",
@@ -14,7 +30,10 @@
     "clean": "rm -rf node_modules yarn.lock package-lock.json",
     "reset": "npm run clean && npm i && npm run build && npm test"
   },
-  "author": "AutomaticWeatherStations",
+  "author": {
+    "name": "Voxgig",
+    "url": "https://voxgig.com"
+  },
   "license": "MIT",
   "dependencies": {},
   "peerDependencies": {},

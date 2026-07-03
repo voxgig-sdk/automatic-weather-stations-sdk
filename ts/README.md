@@ -10,7 +10,7 @@ The TypeScript SDK for the AutomaticWeatherStations API — a type-safe, entity-
 
 ## Install
 ```bash
-npm install automatic-weather-stations
+npm install @voxgig-sdk/automatic-weather-stations
 ```
 ## Tutorial: your first API call
 

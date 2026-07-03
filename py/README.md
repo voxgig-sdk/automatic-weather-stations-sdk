@@ -10,7 +10,7 @@ The Python SDK for the AutomaticWeatherStations API — an entity-oriented clien
 
 ## Install
 ```bash
-pip install automatic-weather-stations-sdk
+pip install voxgig-sdk-automatic-weather-stations
 ```
 
 Or install from source:

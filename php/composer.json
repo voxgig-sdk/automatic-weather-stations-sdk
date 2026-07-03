@@ -1,8 +1,17 @@
 {
   "name": "voxgig-sdk/automatic-weather-stations",
-  "description": "AutomaticWeatherStations SDK for PHP",
+  "description": "Unofficial generated PHP SDK for the Automatic Weather Stations public API. Not affiliated with or endorsed by the upstream API provider.",
   "type": "library",
+  "keywords": ["voxgig", "sdk", "generated-sdk", "openapi", "api-client", "automatic-weather-stations"],
+  "homepage": "https://github.com/voxgig-sdk/automatic-weather-stations-sdk",
   "license": "MIT",
+  "authors": [
+    { "name": "Voxgig", "homepage": "https://voxgig.com" }
+  ],
+  "support": {
+    "issues": "https://github.com/voxgig-sdk/automatic-weather-stations-sdk/issues",
+    "source": "https://github.com/voxgig-sdk/automatic-weather-stations-sdk"
+  },
   "minimum-stability": "stable",
   "require": {
     "php": ">=8.2"
