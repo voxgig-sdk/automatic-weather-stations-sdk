@@ -31,14 +31,16 @@ from automaticweatherstations_sdk import AutomaticWeatherStationsSDK
 client = AutomaticWeatherStationsSDK()
 ```
 
-### 2. List collections
+### 2. List collection records
+
+`list()` returns a `list` of records (each a `dict`) and raises on
+error — iterate it directly.
 
 ```python
 try:
-    result = client.collection.list()
-    for item in result:
-        d = item.data_get()
-        print(d["id"], d["name"])
+    collections = client.Collection().list({})
+    for collection in collections:
+        print(collection)
 except Exception as err:
     print(f"list failed: {err}")
 ```
@@ -86,8 +88,9 @@ Create a mock client for unit testing — no server required:
 ```python
 client = AutomaticWeatherStationsSDK.test()
 
-result = client.collection.load({"id": "test01"})
-# result contains mock response data
+# Entity ops return the bare record and raise on error.
+collection = client.Collection().load({"id": "test01"})
+# collection contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -165,7 +168,7 @@ Creates a test-mode client with mock transport. Both arguments may be `None`.
 | `direct` | `(fetchargs) -> dict` | Build and send an HTTP request. Returns a result dict (branch on `ok`). |
 | `Collection` | `(data) -> CollectionEntity` | Create a Collection entity instance. |
 | `FeatureCollection` | `(data) -> FeatureCollectionEntity` | Create a FeatureCollection entity instance. |
-| `Item` | `(data) -> ItemEntity` | Create a Item entity instance. |
+| `Item` | `(data) -> ItemEntity` | Create an Item entity instance. |
 
 ### Entity interface
 
@@ -253,7 +256,7 @@ API path: `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}`
 
 ### Collection
 
-Create an instance: `const collection = client.collection`
+Create an instance: `collection = client.Collection()`
 
 #### Operations
 
@@ -272,14 +275,14 @@ Create an instance: `const collection = client.collection`
 
 #### Example: List
 
-```ts
-const collections = await client.collection.list()
+```python
+collections = client.Collection().list({})
 ```
 
 
 ### FeatureCollection
 
-Create an instance: `const feature_collection = client.feature_collection`
+Create an instance: `feature_collection = client.FeatureCollection()`
 
 #### Operations
 
@@ -299,14 +302,14 @@ Create an instance: `const feature_collection = client.feature_collection`
 
 #### Example: List
 
-```ts
-const feature_collections = await client.feature_collection.list()
+```python
+feature_collections = client.FeatureCollection().list({})
 ```
 
 
 ### Item
 
-Create an instance: `const item = client.item`
+Create an instance: `item = client.Item()`
 
 #### Operations
 
@@ -326,8 +329,8 @@ Create an instance: `const item = client.item`
 
 #### Example: Load
 
-```ts
-const item = await client.item.load({ id: 'item_id' })
+```python
+item = client.Item().load({"id": "item_id"})
 ```
 
 
@@ -401,7 +404,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-collection = client.collection
+collection = client.Collection()
 collection.load({"id": "example_id"})
 
 # collection.data_get() now returns the loaded collection data

@@ -208,39 +208,21 @@ class AutomaticWeatherStationsSDK
   end
 
 
-  # Idiomatic facade: client.collection.list / client.collection.load({ "id" => ... })
-  def collection
-    require_relative 'entity/collection_entity'
-    @collection ||= CollectionEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.collection instead.
+  # Canonical facade: client.Collection.list / client.Collection.load({ "id" => ... })
   def Collection(data = nil)
     require_relative 'entity/collection_entity'
     CollectionEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.feature_collection.list / client.feature_collection.load({ "id" => ... })
-  def feature_collection
-    require_relative 'entity/feature_collection_entity'
-    @feature_collection ||= FeatureCollectionEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.feature_collection instead.
+  # Canonical facade: client.FeatureCollection.list / client.FeatureCollection.load({ "id" => ... })
   def FeatureCollection(data = nil)
     require_relative 'entity/feature_collection_entity'
     FeatureCollectionEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.item.list / client.item.load({ "id" => ... })
-  def item
-    require_relative 'entity/item_entity'
-    @item ||= ItemEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.item instead.
+  # Canonical facade: client.Item.list / client.Item.load({ "id" => ... })
   def Item(data = nil)
     require_relative 'entity/item_entity'
     ItemEntity.new(self, data)

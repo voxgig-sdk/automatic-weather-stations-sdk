@@ -29,18 +29,16 @@ require_once 'automaticweatherstations_sdk.php';
 $client = new AutomaticWeatherStationsSDK();
 ```
 
-### 2. List collections
+### 2. List collection records
 
 ```php
 try {
-    $result = $client->collection()->list();
-    if (is_array($result)) {
-        foreach ($result as $item) {
-            $d = $item->data_get();
-            echo $d["id"] . " " . $d["name"] . "\n";
-        }
+    // list() returns an array of Collection records — iterate directly.
+    $collections = $client->Collection()->list();
+    foreach ($collections as $item) {
+        echo $item["id"] . " " . $item["name"] . "\n";
     }
-} catch (\Exception $err) {
+} catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
 ```
@@ -86,13 +84,17 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```php
-$client = AutomaticWeatherStationsSDK::test();
+$client = AutomaticWeatherStationsSDK::test([
+    "entity" => ["collection" => ["test01" => ["id" => "test01"]]],
+]);
 
-$result = $client->collection()->load(["id" => "test01"]);
-// $result contains mock response data
+// load() returns the bare mock record (throws on error).
+$collection = $client->Collection()->load(["id" => "test01"]);
+print_r($collection);
 ```
 
 ### Use a custom fetch function
@@ -173,7 +175,7 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `direct` | `(array $fetchargs): array` | Build and send an HTTP request. |
 | `Collection` | `($data): CollectionEntity` | Create a Collection entity instance. |
 | `FeatureCollection` | `($data): FeatureCollectionEntity` | Create a FeatureCollection entity instance. |
-| `Item` | `($data): ItemEntity` | Create a Item entity instance. |
+| `Item` | `($data): ItemEntity` | Create an Item entity instance. |
 
 ### Entity interface
 
@@ -261,7 +263,7 @@ API path: `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}`
 
 ### Collection
 
-Create an instance: `const collection = client.collection`
+Create an instance: `$collection = $client->Collection();`
 
 #### Operations
 
@@ -280,14 +282,15 @@ Create an instance: `const collection = client.collection`
 
 #### Example: List
 
-```ts
-const collections = await client.collection.list()
+```php
+// list() returns an array of Collection records (throws on error).
+$collections = $client->Collection()->list();
 ```
 
 
 ### FeatureCollection
 
-Create an instance: `const feature_collection = client.feature_collection`
+Create an instance: `$feature_collection = $client->FeatureCollection();`
 
 #### Operations
 
@@ -307,14 +310,15 @@ Create an instance: `const feature_collection = client.feature_collection`
 
 #### Example: List
 
-```ts
-const feature_collections = await client.feature_collection.list()
+```php
+// list() returns an array of FeatureCollection records (throws on error).
+$feature_collections = $client->FeatureCollection()->list();
 ```
 
 
 ### Item
 
-Create an instance: `const item = client.item`
+Create an instance: `$item = $client->Item();`
 
 #### Operations
 
@@ -334,8 +338,9 @@ Create an instance: `const item = client.item`
 
 #### Example: Load
 
-```ts
-const item = await client.item.load({ id: 'item_id' })
+```php
+// load() returns the bare Item record (throws on error).
+$item = $client->Item()->load(["id" => "item_id"]);
 ```
 
 
@@ -410,7 +415,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$collection = $client->collection();
+$collection = $client->Collection();
 $collection->load(["id" => "example_id"]);
 
 // $collection->dataGet() now returns the loaded collection data

@@ -244,8 +244,9 @@ end
 
 
 
--- Idiomatic facade: client:collection():list() / client:collection():load({ id = ... })
-function AutomaticWeatherStationsSDK:collection(data)
+-- Idiomatic facade: client:Collection():list() / client:Collection():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function AutomaticWeatherStationsSDK:Collection(data)
   local EntityMod = require("entity.collection_entity")
   if data == nil then
     if self._collection == nil then
@@ -256,15 +257,10 @@ function AutomaticWeatherStationsSDK:collection(data)
   return EntityMod.new(self, data)
 end
 
--- Deprecated: use client:collection() instead.
-function AutomaticWeatherStationsSDK:Collection(data)
-  local EntityMod = require("entity.collection_entity")
-  return EntityMod.new(self, data)
-end
 
-
--- Idiomatic facade: client:feature_collection():list() / client:feature_collection():load({ id = ... })
-function AutomaticWeatherStationsSDK:feature_collection(data)
+-- Idiomatic facade: client:FeatureCollection():list() / client:FeatureCollection():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function AutomaticWeatherStationsSDK:FeatureCollection(data)
   local EntityMod = require("entity.feature_collection_entity")
   if data == nil then
     if self._feature_collection == nil then
@@ -275,15 +271,10 @@ function AutomaticWeatherStationsSDK:feature_collection(data)
   return EntityMod.new(self, data)
 end
 
--- Deprecated: use client:feature_collection() instead.
-function AutomaticWeatherStationsSDK:FeatureCollection(data)
-  local EntityMod = require("entity.feature_collection_entity")
-  return EntityMod.new(self, data)
-end
 
-
--- Idiomatic facade: client:item():list() / client:item():load({ id = ... })
-function AutomaticWeatherStationsSDK:item(data)
+-- Idiomatic facade: client:Item():list() / client:Item():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function AutomaticWeatherStationsSDK:Item(data)
   local EntityMod = require("entity.item_entity")
   if data == nil then
     if self._item == nil then
@@ -291,12 +282,6 @@ function AutomaticWeatherStationsSDK:item(data)
     end
     return self._item
   end
-  return EntityMod.new(self, data)
-end
-
--- Deprecated: use client:item() instead.
-function AutomaticWeatherStationsSDK:Item(data)
-  local EntityMod = require("entity.item_entity")
   return EntityMod.new(self, data)
 end
 

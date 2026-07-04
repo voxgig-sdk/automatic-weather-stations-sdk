@@ -4,57 +4,64 @@
 # params (op.<name>.points[].args.params[]). Field/param types come from the
 # canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 # @voxgig/apidef VALID_CANON). Do not edit by hand.
+#
+# These are TypedDicts, not dataclasses: the SDK ops return/accept plain dicts
+# at runtime, and a TypedDict IS a dict shape, so the types match the runtime.
+# Optional (req:false) keys are modelled as TypedDict key-optionality
+# (total=False), split into a required base + total=False subclass when a type
+# has both required and optional keys.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Optional, Any
+from typing import TypedDict, Any
 
 
-@dataclass
-class Collection:
+class CollectionRequired(TypedDict):
     href: str
     rel: str
-    title: Optional[str] = None
-    type: Optional[str] = None
 
 
-@dataclass
-class CollectionListMatch:
-    href: Optional[str] = None
-    rel: Optional[str] = None
-    title: Optional[str] = None
-    type: Optional[str] = None
+class Collection(CollectionRequired, total=False):
+    title: str
+    type: str
 
 
-@dataclass
-class FeatureCollection:
+class CollectionListMatch(TypedDict, total=False):
+    href: str
+    rel: str
+    title: str
+    type: str
+
+
+class FeatureCollectionRequired(TypedDict):
     feature: list
     type: str
-    link: Optional[list] = None
-    number_matched: Optional[int] = None
-    number_returned: Optional[int] = None
 
 
-@dataclass
-class FeatureCollectionListMatch:
-    feature: Optional[list] = None
-    link: Optional[list] = None
-    number_matched: Optional[int] = None
-    number_returned: Optional[int] = None
-    type: Optional[str] = None
+class FeatureCollection(FeatureCollectionRequired, total=False):
+    link: list
+    number_matched: int
+    number_returned: int
 
 
-@dataclass
-class Item:
+class FeatureCollectionListMatch(TypedDict, total=False):
+    feature: list
+    link: list
+    number_matched: int
+    number_returned: int
+    type: str
+
+
+class ItemRequired(TypedDict):
     geometry: dict
     property: dict
     type: str
-    id: Optional[str] = None
-    link: Optional[list] = None
 
 
-@dataclass
-class ItemLoadMatch:
+class Item(ItemRequired, total=False):
     id: str
+    link: list
 
+
+class ItemLoadMatch(TypedDict):
+    id: str

@@ -93,7 +93,7 @@ Prepare a fetch definition without sending the request. Returns the
 ## CollectionEntity
 
 ```php
-$collection = $client->collection();
+$collection = $client->Collection();
 ```
 
 ### Fields
@@ -112,7 +112,7 @@ $collection = $client->collection();
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->collection()->list([]);
+$results = $client->Collection()->list([]);
 ```
 
 ### Common Methods
@@ -148,7 +148,7 @@ Return the entity name.
 ## FeatureCollectionEntity
 
 ```php
-$feature_collection = $client->feature_collection();
+$feature_collection = $client->FeatureCollection();
 ```
 
 ### Fields
@@ -168,7 +168,7 @@ $feature_collection = $client->feature_collection();
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->feature_collection()->list([]);
+$results = $client->FeatureCollection()->list([]);
 ```
 
 ### Common Methods
@@ -204,7 +204,7 @@ Return the entity name.
 ## ItemEntity
 
 ```php
-$item = $client->item();
+$item = $client->Item();
 ```
 
 ### Fields
@@ -224,7 +224,7 @@ $item = $client->item();
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->item()->load(["id" => "item_id"]);
+$result = $client->Item()->load(["id" => "item_id"]);
 ```
 
 ### Common Methods
