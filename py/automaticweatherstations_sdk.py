@@ -144,16 +144,23 @@ class AutomaticWeatherStationsSDK:
 
         _, err = utility.prepare_auth(ctx)
         if err is not None:
-            return None, err
+            raise err
 
-        return utility.make_fetch_def(ctx)
+        fetchdef, err = utility.make_fetch_def(ctx)
+        if err is not None:
+            raise err
+
+        return fetchdef
 
     def direct(self, fetchargs=None):
         utility = self._utility
 
-        fetchdef, err = self.prepare(fetchargs)
-        if err is not None:
-            return {"ok": False, "err": err}, None
+        try:
+            fetchdef = self.prepare(fetchargs)
+        except Exception as err:
+            # direct() is the raw-HTTP escape hatch: it never raises, it
+            # returns a result object callers branch on via result["ok"].
+            return {"ok": False, "err": err}
 
         if fetchargs is None:
             fetchargs = {}
@@ -170,13 +177,13 @@ class AutomaticWeatherStationsSDK:
         fetched, fetch_err = utility.fetcher(ctx, url, fetchdef)
 
         if fetch_err is not None:
-            return {"ok": False, "err": fetch_err}, None
+            return {"ok": False, "err": fetch_err}
 
         if fetched is None:
             return {
                 "ok": False,
                 "err": ctx.make_error("direct_no_response", "response: undefined"),
-            }, None
+            }
 
         if isinstance(fetched, dict):
             status = helpers.to_int(vs.getprop(fetched, "status"))
@@ -205,25 +212,58 @@ class AutomaticWeatherStationsSDK:
                 "status": status,
                 "headers": headers,
                 "data": json_data,
-            }, None
+            }
 
         return {
             "ok": False,
             "err": ctx.make_error("direct_invalid", "invalid response type"),
-        }, None
+        }
 
+
+    @property
+    def collection(self):
+        """Idiomatic facade: client.collection.list() / client.collection.load({"id": ...})."""
+        from entity.collection_entity import CollectionEntity
+        cached = getattr(self, "_collection", None)
+        if cached is None:
+            cached = CollectionEntity(self, None)
+            self._collection = cached
+        return cached
 
     def Collection(self, data=None):
+        # Deprecated: use client.collection instead.
         from entity.collection_entity import CollectionEntity
         return CollectionEntity(self, data)
 
 
+    @property
+    def feature_collection(self):
+        """Idiomatic facade: client.feature_collection.list() / client.feature_collection.load({"id": ...})."""
+        from entity.feature_collection_entity import FeatureCollectionEntity
+        cached = getattr(self, "_feature_collection", None)
+        if cached is None:
+            cached = FeatureCollectionEntity(self, None)
+            self._feature_collection = cached
+        return cached
+
     def FeatureCollection(self, data=None):
+        # Deprecated: use client.feature_collection instead.
         from entity.feature_collection_entity import FeatureCollectionEntity
         return FeatureCollectionEntity(self, data)
 
 
+    @property
+    def item(self):
+        """Idiomatic facade: client.item.list() / client.item.load({"id": ...})."""
+        from entity.item_entity import ItemEntity
+        cached = getattr(self, "_item", None)
+        if cached is None:
+            cached = ItemEntity(self, None)
+            self._item = cached
+        return cached
+
     def Item(self, data=None):
+        # Deprecated: use client.item instead.
         from entity.item_entity import ItemEntity
         return ItemEntity(self, data)
 

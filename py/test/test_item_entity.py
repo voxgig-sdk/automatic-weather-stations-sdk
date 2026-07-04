@@ -51,8 +51,7 @@ class TestItemEntity:
         item_ref01_match_dt0 = {
             "id": item_ref01_data["id"],
         }
-        item_ref01_data_dt0_loaded, err = item_ref01_ent.load(item_ref01_match_dt0, None)
-        assert err is None
+        item_ref01_data_dt0_loaded = item_ref01_ent.load(item_ref01_match_dt0, None)
         item_ref01_data_dt0_load_result = helpers.to_map(item_ref01_data_dt0_loaded)
         assert item_ref01_data_dt0_load_result is not None
         assert item_ref01_data_dt0_load_result["id"] == item_ref01_data["id"]
@@ -95,7 +94,6 @@ def _item_basic_setup(extra):
         "AUTOMATICWEATHERSTATIONS_TEST_ITEM_ENTID": idmap,
         "AUTOMATICWEATHERSTATIONS_TEST_LIVE": "FALSE",
         "AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN": "FALSE",
-        "AUTOMATICWEATHERSTATIONS_APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -106,7 +104,6 @@ def _item_basic_setup(extra):
     if env.get("AUTOMATICWEATHERSTATIONS_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("AUTOMATICWEATHERSTATIONS_APIKEY"),
             },
             extra or {},
         ])

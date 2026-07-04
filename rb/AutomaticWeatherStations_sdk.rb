@@ -13,6 +13,9 @@ require_relative 'config'
 require_relative 'feature/base_feature'
 require_relative 'features'
 
+# Load typed models (Struct value objects).
+require_relative 'AutomaticWeatherStations_types'
+
 
 class AutomaticWeatherStationsSDK
   attr_accessor :mode, :features, :options
@@ -131,7 +134,7 @@ class AutomaticWeatherStationsSDK
     end
 
     _, err = utility.prepare_auth.call(ctx)
-    return nil, err if err
+    raise err if err
 
     utility.make_fetch_def.call(ctx)
   end
@@ -139,8 +142,14 @@ class AutomaticWeatherStationsSDK
   def direct(fetchargs = {})
     utility = @_utility
 
-    fetchdef, err = prepare(fetchargs)
-    return { "ok" => false, "err" => err }, nil if err
+    # direct() is the raw-HTTP escape hatch: it always returns a result hash
+    # ({ "ok" => ..., ... }) and never raises. prepare() raises on error, so
+    # trap that and surface it in the hash.
+    begin
+      fetchdef = prepare(fetchargs)
+    rescue AutomaticWeatherStationsError => err
+      return { "ok" => false, "err" => err }
+    end
 
     fetchargs ||= {}
     ctrl = AutomaticWeatherStationsHelpers.to_map(VoxgigStruct.getprop(fetchargs, "ctrl")) || {}
@@ -153,13 +162,13 @@ class AutomaticWeatherStationsSDK
     url = fetchdef["url"] || ""
     fetched, fetch_err = utility.fetcher.call(ctx, url, fetchdef)
 
-    return { "ok" => false, "err" => fetch_err }, nil if fetch_err
+    return { "ok" => false, "err" => fetch_err } if fetch_err
 
     if fetched.nil?
       return {
         "ok" => false,
         "err" => ctx.make_error("direct_no_response", "response: undefined"),
-      }, nil
+      }
     end
 
     if fetched.is_a?(Hash)
@@ -189,28 +198,49 @@ class AutomaticWeatherStationsSDK
         "status" => status,
         "headers" => headers,
         "data" => json_data,
-      }, nil
+      }
     end
 
     return {
       "ok" => false,
       "err" => ctx.make_error("direct_invalid", "invalid response type"),
-    }, nil
+    }
   end
 
 
+  # Idiomatic facade: client.collection.list / client.collection.load({ "id" => ... })
+  def collection
+    require_relative 'entity/collection_entity'
+    @collection ||= CollectionEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.collection instead.
   def Collection(data = nil)
     require_relative 'entity/collection_entity'
     CollectionEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.feature_collection.list / client.feature_collection.load({ "id" => ... })
+  def feature_collection
+    require_relative 'entity/feature_collection_entity'
+    @feature_collection ||= FeatureCollectionEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.feature_collection instead.
   def FeatureCollection(data = nil)
     require_relative 'entity/feature_collection_entity'
     FeatureCollectionEntity.new(self, data)
   end
 
 
+  # Idiomatic facade: client.item.list / client.item.load({ "id" => ... })
+  def item
+    require_relative 'entity/item_entity'
+    @item ||= ItemEntity.new(self, nil)
+  end
+
+  # Deprecated: use client.item instead.
   def Item(data = nil)
     require_relative 'entity/item_entity'
     ItemEntity.new(self, data)

@@ -50,8 +50,7 @@ class CollectionEntityTest extends TestCase
         $collection_ref01_ent = $client->Collection(null);
         $collection_ref01_match = [];
 
-        [$collection_ref01_list_result, $err] = $collection_ref01_ent->list($collection_ref01_match, null);
-        $this->assertNull($err);
+        $collection_ref01_list_result = $collection_ref01_ent->list($collection_ref01_match, null);
         $this->assertIsArray($collection_ref01_list_result);
 
     }
@@ -86,7 +85,6 @@ function collection_basic_setup($extra)
         "AUTOMATICWEATHERSTATIONS_TEST_COLLECTION_ENTID" => $idmap,
         "AUTOMATICWEATHERSTATIONS_TEST_LIVE" => "FALSE",
         "AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN" => "FALSE",
-        "AUTOMATICWEATHERSTATIONS_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -98,7 +96,6 @@ function collection_basic_setup($extra)
     if ($env["AUTOMATICWEATHERSTATIONS_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
-                "apikey" => $env["AUTOMATICWEATHERSTATIONS_APIKEY"],
             ],
             $extra ?? [],
         ]);

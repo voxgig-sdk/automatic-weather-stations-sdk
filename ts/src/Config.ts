@@ -38,10 +38,6 @@ class Config {
   options = {
     base: 'https://data.geo.admin.ch/api/stac/v1',
 
-    auth: {
-      prefix: 'Bearer',
-    },
-
     headers: {
       "content-type": "application/json"
     },
@@ -309,7 +305,8 @@ class Config {
                     "name": "id",
                     "orig": "item_id",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "type": "`$STRING`",
+                    "index$": 0
                   }
                 ]
               },

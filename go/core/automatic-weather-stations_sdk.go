@@ -245,16 +245,25 @@ func (sdk *AutomaticWeatherStationsSDK) Direct(fetchargs map[string]any) (map[st
 }
 
 
+// Collection returns a Collection entity bound to this client.
+// Idiomatic usage: client.Collection(nil).List(nil, nil) or
+// client.Collection(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *AutomaticWeatherStationsSDK) Collection(data map[string]any) AutomaticWeatherStationsEntity {
 	return NewCollectionEntityFunc(sdk, data)
 }
 
 
+// FeatureCollection returns a FeatureCollection entity bound to this client.
+// Idiomatic usage: client.FeatureCollection(nil).List(nil, nil) or
+// client.FeatureCollection(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *AutomaticWeatherStationsSDK) FeatureCollection(data map[string]any) AutomaticWeatherStationsEntity {
 	return NewFeatureCollectionEntityFunc(sdk, data)
 }
 
 
+// Item returns a Item entity bound to this client.
+// Idiomatic usage: client.Item(nil).List(nil, nil) or
+// client.Item(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *AutomaticWeatherStationsSDK) Item(data map[string]any) AutomaticWeatherStationsEntity {
 	return NewItemEntityFunc(sdk, data)
 }

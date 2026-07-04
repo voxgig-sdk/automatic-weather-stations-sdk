@@ -10,26 +10,24 @@ This is an unofficial SDK for the Automatic Weather Stations public API, generat
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/automatic-weather-stations` | `npm install @voxgig-sdk/automatic-weather-stations` |
-| Python | `voxgig-sdk-automatic-weather-stations` | `pip install voxgig-sdk-automatic-weather-stations` |
-| PHP | `voxgig-sdk/automatic-weather-stations` | `composer require voxgig-sdk/automatic-weather-stations` |
-| Golang | `github.com/voxgig-sdk/automatic-weather-stations-sdk/go` | `go get github.com/voxgig-sdk/automatic-weather-stations-sdk/go` |
-| Ruby | `voxgig-sdk-automatic-weather-stations` | `gem install voxgig-sdk-automatic-weather-stations` |
-| Lua | `voxgig-sdk-automatic-weather-stations` | `luarocks install voxgig-sdk-automatic-weather-stations` |
+| TypeScript | `@voxgig-sdk/automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
+| Python | `voxgig-sdk-automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
+| PHP | `voxgig-sdk/automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
+| Golang | `github.com/voxgig-sdk/automatic-weather-stations-sdk/go` | `go get github.com/voxgig-sdk/automatic-weather-stations-sdk/go@latest` |
+| Ruby | `voxgig-sdk-automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
+| Lua | `voxgig-sdk-automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
 
 ## Quickstart
 
 ### TypeScript
 
 ```ts
-import { AutomaticWeatherStationsSDK } from 'automatic-weather-stations'
+import { AutomaticWeatherStationsSDK } from '@voxgig-sdk/automatic-weather-stations'
 
-const client = new AutomaticWeatherStationsSDK({
-  apikey: process.env.AUTOMATIC-WEATHER-STATIONS_APIKEY,
-})
+const client = new AutomaticWeatherStationsSDK()
 
 // List all collections
-const collections = await client.Collection().list()
+const collections = await client.collection.list()
 console.log(collections.data)
 ```
 
@@ -71,9 +69,9 @@ The API exposes 3 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Collection** |  | `/collections/ch.meteoschweiz.ogd-smn` |
-| **FeatureCollection** |  | `/collections/ch.meteoschweiz.ogd-smn/items` |
-| **Item** |  | `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}` |
+| **Collection** | The Collection entity (list). | `/collections/ch.meteoschweiz.ogd-smn` |
+| **FeatureCollection** | The FeatureCollection entity (list). | `/collections/ch.meteoschweiz.ogd-smn/items` |
+| **Item** | The Item entity (load). | `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}` |
 
 Each entity supports the following operations where available: **load**,
 **list**, **create**, **update**, and **remove**.
@@ -83,15 +81,12 @@ Each entity supports the following operations where available: **load**,
 ### Python
 
 ```python
-import os
 from automaticweatherstations_sdk import AutomaticWeatherStationsSDK
 
-client = AutomaticWeatherStationsSDK({
-    "apikey": os.environ.get("AUTOMATIC-WEATHER-STATIONS_APIKEY"),
-})
+client = AutomaticWeatherStationsSDK()
 
 # List all collections
-collections, err = client.Collection().list()
+collections = client.collection.list()
 print(collections)
 ```
 
@@ -101,12 +96,10 @@ print(collections)
 <?php
 require_once 'automaticweatherstations_sdk.php';
 
-$client = new AutomaticWeatherStationsSDK([
-    "apikey" => getenv("AUTOMATIC-WEATHER-STATIONS_APIKEY"),
-]);
+$client = new AutomaticWeatherStationsSDK();
 
-// List all collections
-[$collections, $err] = $client->Collection()->list();
+// List all collections (throws on error)
+$collections = $client->collection()->list();
 print_r($collections);
 ```
 
@@ -115,9 +108,7 @@ print_r($collections);
 ```go
 import sdk "github.com/voxgig-sdk/automatic-weather-stations-sdk/go"
 
-client := sdk.NewAutomaticWeatherStationsSDK(map[string]any{
-    "apikey": os.Getenv("AUTOMATIC-WEATHER-STATIONS_APIKEY"),
-})
+client := sdk.New()
 
 // List all collections
 collections, err := client.Collection(nil).List(nil, nil)
@@ -129,12 +120,10 @@ fmt.Println(collections)
 ```ruby
 require_relative "AutomaticWeatherStations_sdk"
 
-client = AutomaticWeatherStationsSDK.new({
-  "apikey" => ENV["AUTOMATIC-WEATHER-STATIONS_APIKEY"],
-})
+client = AutomaticWeatherStationsSDK.new
 
 # List all collections
-collections, err = client.Collection().list
+collections = client.collection.list
 puts collections
 ```
 
@@ -143,12 +132,10 @@ puts collections
 ```lua
 local sdk = require("automatic-weather-stations_sdk")
 
-local client = sdk.new({
-  apikey = os.getenv("AUTOMATIC-WEATHER-STATIONS_APIKEY"),
-})
+local client = sdk.new()
 
 -- List all collections
-local collections, err = client:Collection():list()
+local collections, err = client:collection():list()
 print(collections)
 ```
 
@@ -161,7 +148,7 @@ in-memory mock, so unit tests run offline.
 
 ```ts
 const client = AutomaticWeatherStationsSDK.test()
-const result = await client.Collection().load({ id: 'test01' })
+const result = await client.collection.load({ id: 'test01' })
 // result.ok === true, result.data contains mock data
 ```
 
@@ -169,14 +156,14 @@ const result = await client.Collection().load({ id: 'test01' })
 
 ```python
 client = AutomaticWeatherStationsSDK.test()
-result, err = client.Collection().load({"id": "test01"})
+result = client.collection.load({"id": "test01"})
 ```
 
 ### PHP
 
 ```php
 $client = AutomaticWeatherStationsSDK::test();
-[$result, $err] = $client->Collection()->load(["id" => "test01"]);
+$result = $client->collection()->load(["id" => "test01"]);
 ```
 
 ### Golang
@@ -192,14 +179,14 @@ result, err := client.Collection(nil).Load(
 
 ```ruby
 client = AutomaticWeatherStationsSDK.test
-result, err = client.Collection().load({ "id" => "test01" })
+result = client.collection.load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local result, err = client:Collection():load({ id = "test01" })
+local result, err = client:collection():load({ id = "test01" })
 ```
 
 ## How it works
@@ -252,7 +239,7 @@ console.log(result.data)
 
 **Python:**
 ```python
-result, err = client.direct({
+result = client.direct({
     "path": "/api/resource/{id}",
     "method": "GET",
     "params": {"id": "example"},
@@ -261,7 +248,7 @@ result, err = client.direct({
 
 **PHP:**
 ```php
-[$result, $err] = $client->direct([
+$result = $client->direct([
     "path" => "/api/resource/{id}",
     "method" => "GET",
     "params" => ["id" => "example"],
@@ -279,7 +266,7 @@ result, err := client.Direct(map[string]any{
 
 **Ruby:**
 ```ruby
-result, err = client.direct({
+result = client.direct({
   "path" => "/api/resource/{id}",
   "method" => "GET",
   "params" => { "id" => "example" },

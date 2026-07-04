@@ -45,6 +45,7 @@ class FeatureCollectionEntity
     end
   end
 
+  # @return [FeatureCollection, Hash] the current FeatureCollection data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,6 +58,7 @@ class FeatureCollectionEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of FeatureCollection fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
@@ -65,6 +67,11 @@ class FeatureCollectionEntity
   
 
   
+  # List FeatureCollection items matching the given filter.
+  #
+  # @param reqmatch [FeatureCollectionListMatch, Hash, nil] match filter (any subset of FeatureCollection fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Array<FeatureCollection>, Array] the matching FeatureCollection items; raises AutomaticWeatherStationsError on failure
   def list(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

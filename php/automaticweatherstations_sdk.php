@@ -103,7 +103,7 @@ class AutomaticWeatherStationsSDK
         return $this->_rootctx;
     }
 
-    public function prepare(array $fetchargs = []): array
+    public function prepare(array $fetchargs = []): mixed
     {
         $utility = $this->_utility;
         $fetchargs = $fetchargs ?? [];
@@ -149,19 +149,27 @@ class AutomaticWeatherStationsSDK
 
         [$_, $err] = ($utility->prepare_auth)($ctx);
         if ($err) {
-            return [null, $err];
+            return ($utility->make_error)($ctx, $err);
         }
 
-        return ($utility->make_fetch_def)($ctx);
+        [$fetchdef, $fd_err] = ($utility->make_fetch_def)($ctx);
+        if ($fd_err) {
+            return ($utility->make_error)($ctx, $fd_err);
+        }
+        return $fetchdef;
     }
 
-    public function direct(array $fetchargs = []): array
+    public function direct(array $fetchargs = []): mixed
     {
         $utility = $this->_utility;
 
-        [$fetchdef, $err] = $this->prepare($fetchargs);
-        if ($err) {
-            return [["ok" => false, "err" => $err], null];
+        // direct() is the raw-HTTP escape hatch: it never throws, it returns
+        // an {ok, err, ...} dict. prepare() now raises on error, so catch it
+        // and surface the failure through the dict instead.
+        try {
+            $fetchdef = $this->prepare($fetchargs);
+        } catch (\Throwable $err) {
+            return ["ok" => false, "err" => $err];
         }
 
         $fetchargs = $fetchargs ?? [];
@@ -176,14 +184,14 @@ class AutomaticWeatherStationsSDK
         [$fetched, $fetch_err] = ($utility->fetcher)($ctx, $url, $fetchdef);
 
         if ($fetch_err) {
-            return [["ok" => false, "err" => $fetch_err], null];
+            return ["ok" => false, "err" => $fetch_err];
         }
 
         if ($fetched === null) {
-            return [[
+            return [
                 "ok" => false,
                 "err" => $ctx->make_error("direct_no_response", "response: undefined"),
-            ], null];
+            ];
         }
 
         if (is_array($fetched)) {
@@ -208,38 +216,71 @@ class AutomaticWeatherStationsSDK
                 }
             }
 
-            return [[
+            return [
                 "ok" => $status >= 200 && $status < 300,
                 "status" => $status,
                 "headers" => Struct::getprop($fetched, "headers"),
                 "data" => $json_data,
-            ], null];
+            ];
         }
 
-        return [[
+        return [
             "ok" => false,
             "err" => $ctx->make_error("direct_invalid", "invalid response type"),
-        ], null];
+        ];
     }
 
 
-    public function Collection($data = null)
+    private $_collection = null;
+
+    // Idiomatic facade: $client->collection()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Collection() (PHP method
+    // names are case-insensitive).
+    public function collection($data = null)
     {
         require_once __DIR__ . '/entity/collection_entity.php';
+        if ($data === null) {
+            if ($this->_collection === null) {
+                $this->_collection = new CollectionEntity($this, null);
+            }
+            return $this->_collection;
+        }
         return new CollectionEntity($this, $data);
     }
 
 
-    public function FeatureCollection($data = null)
+    private $_feature_collection = null;
+
+    // Idiomatic facade: $client->feature_collection()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias FeatureCollection() (PHP method
+    // names are case-insensitive).
+    public function feature_collection($data = null)
     {
         require_once __DIR__ . '/entity/feature_collection_entity.php';
+        if ($data === null) {
+            if ($this->_feature_collection === null) {
+                $this->_feature_collection = new FeatureCollectionEntity($this, null);
+            }
+            return $this->_feature_collection;
+        }
         return new FeatureCollectionEntity($this, $data);
     }
 
 
-    public function Item($data = null)
+    private $_item = null;
+
+    // Idiomatic facade: $client->item()->list() / ->load(["id" => ...]).
+    // Also serves the deprecated PascalCase alias Item() (PHP method
+    // names are case-insensitive).
+    public function item($data = null)
     {
         require_once __DIR__ . '/entity/item_entity.php';
+        if ($data === null) {
+            if ($this->_item === null) {
+                $this->_item = new ItemEntity($this, null);
+            }
+            return $this->_item;
+        }
         return new ItemEntity($this, $data);
     }
 

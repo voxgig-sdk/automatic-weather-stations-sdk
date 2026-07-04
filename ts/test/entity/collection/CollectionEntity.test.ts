@@ -113,7 +113,6 @@ function basicSetup(extra?: any) {
     'AUTOMATIC_WEATHER_STATIONS_TEST_COLLECTION_ENTID': idmap,
     'AUTOMATIC_WEATHER_STATIONS_TEST_LIVE': 'FALSE',
     'AUTOMATIC_WEATHER_STATIONS_TEST_EXPLAIN': 'FALSE',
-    'AUTOMATIC_WEATHER_STATIONS_APIKEY': 'NONE',
   })
 
   idmap = env['AUTOMATIC_WEATHER_STATIONS_TEST_COLLECTION_ENTID']
@@ -123,7 +122,6 @@ function basicSetup(extra?: any) {
   if (live) {
     client = new AutomaticWeatherStationsSDK(merge([
       {
-        apikey: env.AUTOMATIC_WEATHER_STATIONS_APIKEY,
       },
       extra
     ]))

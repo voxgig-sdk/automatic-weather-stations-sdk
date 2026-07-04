@@ -14,9 +14,13 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  FeatureCollection,
+  FeatureCollectionListMatch,
+} from '../AutomaticWeatherStationsTypes'
 
 // TODO: needs Entity superclass
-class FeatureCollectionEntity extends AutomaticWeatherStationsEntityBase {
+class FeatureCollectionEntity extends AutomaticWeatherStationsEntityBase<FeatureCollection> {
 
   constructor(client: AutomaticWeatherStationsSDK, entopts: any) {
     super(client, entopts)
@@ -33,7 +37,7 @@ class FeatureCollectionEntity extends AutomaticWeatherStationsEntityBase {
 
 
 
-  async list(this: any, reqmatch?: any, ctrl?: Control) {
+  async list(this: any, reqmatch?: FeatureCollectionListMatch, ctrl?: Control): Promise<FeatureCollection[]> {
 
     const utility = this._utility
 
@@ -133,7 +137,9 @@ class FeatureCollectionEntity extends AutomaticWeatherStationsEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<FeatureCollection[]> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

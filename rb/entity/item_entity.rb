@@ -45,6 +45,7 @@ class ItemEntity
     end
   end
 
+  # @return [Item, Hash] the current Item data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,12 +58,18 @@ class ItemEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of Item fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
   end
 
   
+  # Load a single Item.
+  #
+  # @param reqmatch [ItemLoadMatch, Hash, nil] match criteria (id/query fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Item, Hash] the loaded Item; raises AutomaticWeatherStationsError on failure
   def load(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

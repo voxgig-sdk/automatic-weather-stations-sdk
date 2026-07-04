@@ -80,14 +80,12 @@ function directSetup(mockres?: any) {
   const env = envOverride({
     'AUTOMATICWEATHERSTATIONS_TEST_ITEM_ENTID': {},
     'AUTOMATICWEATHERSTATIONS_TEST_LIVE': 'FALSE',
-    'AUTOMATICWEATHERSTATIONS_APIKEY': 'NONE',
   })
 
   const live = 'TRUE' === env.AUTOMATICWEATHERSTATIONS_TEST_LIVE
 
   if (live) {
     const client = new AutomaticWeatherStationsSDK({
-      apikey: env.AUTOMATICWEATHERSTATIONS_APIKEY,
     })
 
     let idmap: any = env['AUTOMATICWEATHERSTATIONS_TEST_ITEM_ENTID']

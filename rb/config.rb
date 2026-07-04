@@ -15,9 +15,6 @@ module AutomaticWeatherStationsConfig
       },
       "options" => {
         "base" => "https://data.geo.admin.ch/api/stac/v1",
-        "auth" => {
-          "prefix" => "Bearer",
-        },
         "headers" => {
           "content-type" => "application/json",
         },
@@ -276,6 +273,7 @@ module AutomaticWeatherStationsConfig
                         "orig" => "item_id",
                         "reqd" => true,
                         "type" => "`$STRING`",
+                        "index$" => 0,
                       },
                     ],
                   },

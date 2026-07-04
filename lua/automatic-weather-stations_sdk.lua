@@ -244,18 +244,57 @@ end
 
 
 
+-- Idiomatic facade: client:collection():list() / client:collection():load({ id = ... })
+function AutomaticWeatherStationsSDK:collection(data)
+  local EntityMod = require("entity.collection_entity")
+  if data == nil then
+    if self._collection == nil then
+      self._collection = EntityMod.new(self, nil)
+    end
+    return self._collection
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:collection() instead.
 function AutomaticWeatherStationsSDK:Collection(data)
   local EntityMod = require("entity.collection_entity")
   return EntityMod.new(self, data)
 end
 
 
+-- Idiomatic facade: client:feature_collection():list() / client:feature_collection():load({ id = ... })
+function AutomaticWeatherStationsSDK:feature_collection(data)
+  local EntityMod = require("entity.feature_collection_entity")
+  if data == nil then
+    if self._feature_collection == nil then
+      self._feature_collection = EntityMod.new(self, nil)
+    end
+    return self._feature_collection
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:feature_collection() instead.
 function AutomaticWeatherStationsSDK:FeatureCollection(data)
   local EntityMod = require("entity.feature_collection_entity")
   return EntityMod.new(self, data)
 end
 
 
+-- Idiomatic facade: client:item():list() / client:item():load({ id = ... })
+function AutomaticWeatherStationsSDK:item(data)
+  local EntityMod = require("entity.item_entity")
+  if data == nil then
+    if self._item == nil then
+      self._item = EntityMod.new(self, nil)
+    end
+    return self._item
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:item() instead.
 function AutomaticWeatherStationsSDK:Item(data)
   local EntityMod = require("entity.item_entity")
   return EntityMod.new(self, data)

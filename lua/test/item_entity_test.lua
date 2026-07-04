@@ -95,7 +95,6 @@ function item_basic_setup(extra)
     ["AUTOMATICWEATHERSTATIONS_TEST_ITEM_ENTID"] = idmap,
     ["AUTOMATICWEATHERSTATIONS_TEST_LIVE"] = "FALSE",
     ["AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN"] = "FALSE",
-    ["AUTOMATICWEATHERSTATIONS_APIKEY"] = "NONE",
   })
 
   local idmap_resolved = helpers.to_map(
@@ -107,7 +106,6 @@ function item_basic_setup(extra)
   if env["AUTOMATICWEATHERSTATIONS_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
       {
-        apikey = env["AUTOMATICWEATHERSTATIONS_APIKEY"],
       },
       extra or {},
     })
