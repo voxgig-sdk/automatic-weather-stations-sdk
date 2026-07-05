@@ -105,10 +105,10 @@ collection := client.Collection(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `href` | ``$STRING`` | Yes |  |
-| `rel` | ``$STRING`` | Yes |  |
-| `title` | ``$STRING`` | No |  |
-| `type` | ``$STRING`` | No |  |
+| `href` | `string` | Yes |  |
+| `rel` | `string` | Yes |  |
+| `title` | `string` | No |  |
+| `type` | `string` | No |  |
 
 ### Operations
 
@@ -154,11 +154,11 @@ feature_collection := client.FeatureCollection(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feature` | ``$ARRAY`` | Yes |  |
-| `link` | ``$ARRAY`` | No |  |
-| `number_matched` | ``$INTEGER`` | No |  |
-| `number_returned` | ``$INTEGER`` | No |  |
-| `type` | ``$STRING`` | Yes |  |
+| `feature` | `[]any` | Yes |  |
+| `link` | `[]any` | No |  |
+| `number_matched` | `int` | No |  |
+| `number_returned` | `int` | No |  |
+| `type` | `string` | Yes |  |
 
 ### Operations
 
@@ -204,11 +204,11 @@ item := client.Item(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `geometry` | ``$OBJECT`` | Yes |  |
-| `id` | ``$STRING`` | No |  |
-| `link` | ``$ARRAY`` | No |  |
-| `property` | ``$OBJECT`` | Yes |  |
-| `type` | ``$STRING`` | Yes |  |
+| `geometry` | `map[string]any` | Yes |  |
+| `id` | `string` | No |  |
+| `link` | `[]any` | No |  |
+| `property` | `map[string]any` | Yes |  |
+| `type` | `string` | Yes |  |
 
 ### Operations
 

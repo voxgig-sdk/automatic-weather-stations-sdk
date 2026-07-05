@@ -98,10 +98,10 @@ local collection = client:Collection(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `href` | ``$STRING`` | Yes |  |
-| `rel` | ``$STRING`` | Yes |  |
-| `title` | ``$STRING`` | No |  |
-| `type` | ``$STRING`` | No |  |
+| `href` | `string` | Yes |  |
+| `rel` | `string` | Yes |  |
+| `title` | `string` | No |  |
+| `type` | `string` | No |  |
 
 ### Operations
 
@@ -153,11 +153,11 @@ local feature_collection = client:FeatureCollection(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feature` | ``$ARRAY`` | Yes |  |
-| `link` | ``$ARRAY`` | No |  |
-| `number_matched` | ``$INTEGER`` | No |  |
-| `number_returned` | ``$INTEGER`` | No |  |
-| `type` | ``$STRING`` | Yes |  |
+| `feature` | `table` | Yes |  |
+| `link` | `table` | No |  |
+| `number_matched` | `number` | No |  |
+| `number_returned` | `number` | No |  |
+| `type` | `string` | Yes |  |
 
 ### Operations
 
@@ -209,11 +209,11 @@ local item = client:Item(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `geometry` | ``$OBJECT`` | Yes |  |
-| `id` | ``$STRING`` | No |  |
-| `link` | ``$ARRAY`` | No |  |
-| `property` | ``$OBJECT`` | Yes |  |
-| `type` | ``$STRING`` | Yes |  |
+| `geometry` | `table` | Yes |  |
+| `id` | `string` | No |  |
+| `link` | `table` | No |  |
+| `property` | `table` | Yes |  |
+| `type` | `string` | Yes |  |
 
 ### Operations
 

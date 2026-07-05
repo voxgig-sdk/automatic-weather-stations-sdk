@@ -8,7 +8,7 @@ Complete API reference for the AutomaticWeatherStations Ruby SDK.
 ### Constructor
 
 ```ruby
-require_relative 'automatic-weather-stations_sdk'
+require_relative 'AutomaticWeatherStations_sdk'
 
 client = AutomaticWeatherStationsSDK.new(options)
 ```
@@ -101,19 +101,19 @@ collection = client.Collection
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `href` | ``$STRING`` | Yes |  |
-| `rel` | ``$STRING`` | Yes |  |
-| `title` | ``$STRING`` | No |  |
-| `type` | ``$STRING`` | No |  |
+| `href` | `String` | Yes |  |
+| `rel` | `String` | Yes |  |
+| `title` | `String` | No |  |
+| `type` | `String` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.Collection.list(nil)
+results = client.Collection.list
 ```
 
 ### Common Methods
@@ -156,20 +156,20 @@ feature_collection = client.FeatureCollection
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feature` | ``$ARRAY`` | Yes |  |
-| `link` | ``$ARRAY`` | No |  |
-| `number_matched` | ``$INTEGER`` | No |  |
-| `number_returned` | ``$INTEGER`` | No |  |
-| `type` | ``$STRING`` | Yes |  |
+| `feature` | `Array` | Yes |  |
+| `link` | `Array` | No |  |
+| `number_matched` | `Integer` | No |  |
+| `number_returned` | `Integer` | No |  |
+| `type` | `String` | Yes |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl = nil) -> Array`
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
 
-List entities matching the given criteria. Returns an array. Raises on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
 
 ```ruby
-results = client.FeatureCollection.list(nil)
+results = client.FeatureCollection.list
 ```
 
 ### Common Methods
@@ -212,11 +212,11 @@ item = client.Item
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `geometry` | ``$OBJECT`` | Yes |  |
-| `id` | ``$STRING`` | No |  |
-| `link` | ``$ARRAY`` | No |  |
-| `property` | ``$OBJECT`` | Yes |  |
-| `type` | ``$STRING`` | Yes |  |
+| `geometry` | `Hash` | Yes |  |
+| `id` | `String` | No |  |
+| `link` | `Array` | No |  |
+| `property` | `Hash` | Yes |  |
+| `type` | `String` | Yes |  |
 
 ### Operations
 

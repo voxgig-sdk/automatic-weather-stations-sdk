@@ -12,7 +12,12 @@ export interface Collection {
   type?: string
 }
 
-export type CollectionListMatch = Partial<Collection>
+export interface CollectionListMatch {
+  href?: string
+  rel?: string
+  title?: string
+  type?: string
+}
 
 export interface FeatureCollection {
   feature: any[]
@@ -22,7 +27,13 @@ export interface FeatureCollection {
   type: string
 }
 
-export type FeatureCollectionListMatch = Partial<FeatureCollection>
+export interface FeatureCollectionListMatch {
+  feature?: any[]
+  link?: any[]
+  number_matched?: number
+  number_returned?: number
+  type?: string
+}
 
 export interface Item {
   geometry: Record<string, any>

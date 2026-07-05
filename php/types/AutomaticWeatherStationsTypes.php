@@ -21,7 +21,7 @@ class Collection
     public ?string $type = null;
 }
 
-/** Match filter for Collection#list (any subset of Collection fields). */
+/** Request payload for Collection#list. */
 class CollectionListMatch
 {
     public ?string $href = null;
@@ -40,7 +40,7 @@ class FeatureCollection
     public string $type;
 }
 
-/** Match filter for FeatureCollection#list (any subset of FeatureCollection fields). */
+/** Request payload for FeatureCollection#list. */
 class FeatureCollectionListMatch
 {
     public ?array $feature = null;

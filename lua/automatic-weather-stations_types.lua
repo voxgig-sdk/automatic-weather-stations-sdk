@@ -13,6 +13,10 @@
 ---@field type? string
 
 ---@class CollectionListMatch
+---@field href? string
+---@field rel? string
+---@field title? string
+---@field type? string
 
 ---@class FeatureCollection
 ---@field feature table
@@ -22,6 +26,11 @@
 ---@field type string
 
 ---@class FeatureCollectionListMatch
+---@field feature? table
+---@field link? table
+---@field number_matched? number
+---@field number_returned? number
+---@field type? string
 
 ---@class Item
 ---@field geometry table

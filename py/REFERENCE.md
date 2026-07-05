@@ -8,7 +8,7 @@ Complete API reference for the AutomaticWeatherStations Python SDK.
 ### Constructor
 
 ```python
-from automatic-weather-stations_sdk import AutomaticWeatherStationsSDK
+from automaticweatherstations_sdk import AutomaticWeatherStationsSDK
 
 client = AutomaticWeatherStationsSDK(options)
 ```
@@ -95,19 +95,19 @@ collection = client.Collection()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `href` | ``$STRING`` | Yes |  |
-| `rel` | ``$STRING`` | Yes |  |
-| `title` | ``$STRING`` | No |  |
-| `type` | ``$STRING`` | No |  |
+| `href` | `str` | Yes |  |
+| `rel` | `str` | Yes |  |
+| `title` | `str` | No |  |
+| `type` | `str` | No |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl=None) -> list`
+#### `list(reqmatch=None, ctrl=None) -> list`
 
-List entities matching the given criteria. Returns a list and raises on error.
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Collection().list({})
+results = client.Collection().list()
 for collection in results:
     print(collection)
 ```
@@ -151,20 +151,20 @@ feature_collection = client.FeatureCollection()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feature` | ``$ARRAY`` | Yes |  |
-| `link` | ``$ARRAY`` | No |  |
-| `number_matched` | ``$INTEGER`` | No |  |
-| `number_returned` | ``$INTEGER`` | No |  |
-| `type` | ``$STRING`` | Yes |  |
+| `feature` | `list` | Yes |  |
+| `link` | `list` | No |  |
+| `number_matched` | `int` | No |  |
+| `number_returned` | `int` | No |  |
+| `type` | `str` | Yes |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl=None) -> list`
+#### `list(reqmatch=None, ctrl=None) -> list`
 
-List entities matching the given criteria. Returns a list and raises on error.
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.FeatureCollection().list({})
+results = client.FeatureCollection().list()
 for feature_collection in results:
     print(feature_collection)
 ```
@@ -208,11 +208,11 @@ item = client.Item()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `geometry` | ``$OBJECT`` | Yes |  |
-| `id` | ``$STRING`` | No |  |
-| `link` | ``$ARRAY`` | No |  |
-| `property` | ``$OBJECT`` | Yes |  |
-| `type` | ``$STRING`` | Yes |  |
+| `geometry` | `dict` | Yes |  |
+| `id` | `str` | No |  |
+| `link` | `list` | No |  |
+| `property` | `dict` | Yes |  |
+| `type` | `str` | Yes |  |
 
 ### Operations
 

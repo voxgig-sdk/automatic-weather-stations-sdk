@@ -8,7 +8,7 @@ Complete API reference for the AutomaticWeatherStations PHP SDK.
 ### Constructor
 
 ```php
-require_once __DIR__ . '/automatic-weather-stations_sdk.php';
+require_once __DIR__ . '/automaticweatherstations_sdk.php';
 
 $client = new AutomaticWeatherStationsSDK($options);
 ```
@@ -53,11 +53,11 @@ Create a new `FeatureCollectionEntity` instance. Pass `null` for no initial data
 
 Create a new `ItemEntity` instance. Pass `null` for no initial data.
 
-#### `optionsMap(): array`
+#### `options_map(): array`
 
 Return a deep copy of the current SDK options.
 
-#### `getUtility(): ProjectNameUtility`
+#### `get_utility(): AutomaticWeatherStationsUtility`
 
 Return a copy of the SDK utility object.
 
@@ -100,36 +100,36 @@ $collection = $client->Collection();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `href` | ``$STRING`` | Yes |  |
-| `rel` | ``$STRING`` | Yes |  |
-| `title` | ``$STRING`` | No |  |
-| `type` | ``$STRING`` | No |  |
+| `href` | `string` | Yes |  |
+| `rel` | `string` | Yes |  |
+| `title` | `string` | No |  |
+| `type` | `string` | No |  |
 
 ### Operations
 
-#### `list(array $reqmatch, ?array $ctrl = null): mixed`
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
-List entities matching the given criteria. Returns an array. Throws on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
 
 ```php
-$results = $client->Collection()->list([]);
+$results = $client->Collection()->list();
 ```
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -138,7 +138,7 @@ Set the entity match criteria.
 Create a new `CollectionEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 
@@ -155,37 +155,37 @@ $feature_collection = $client->FeatureCollection();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feature` | ``$ARRAY`` | Yes |  |
-| `link` | ``$ARRAY`` | No |  |
-| `number_matched` | ``$INTEGER`` | No |  |
-| `number_returned` | ``$INTEGER`` | No |  |
-| `type` | ``$STRING`` | Yes |  |
+| `feature` | `array` | Yes |  |
+| `link` | `array` | No |  |
+| `number_matched` | `int` | No |  |
+| `number_returned` | `int` | No |  |
+| `type` | `string` | Yes |  |
 
 ### Operations
 
-#### `list(array $reqmatch, ?array $ctrl = null): mixed`
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
-List entities matching the given criteria. Returns an array. Throws on error.
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
 
 ```php
-$results = $client->FeatureCollection()->list([]);
+$results = $client->FeatureCollection()->list();
 ```
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -194,7 +194,7 @@ Set the entity match criteria.
 Create a new `FeatureCollectionEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 
@@ -211,11 +211,11 @@ $item = $client->Item();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `geometry` | ``$OBJECT`` | Yes |  |
-| `id` | ``$STRING`` | No |  |
-| `link` | ``$ARRAY`` | No |  |
-| `property` | ``$OBJECT`` | Yes |  |
-| `type` | ``$STRING`` | Yes |  |
+| `geometry` | `array` | Yes |  |
+| `id` | `string` | No |  |
+| `link` | `array` | No |  |
+| `property` | `array` | Yes |  |
+| `type` | `string` | Yes |  |
 
 ### Operations
 
@@ -229,19 +229,19 @@ $result = $client->Item()->load(["id" => "item_id"]);
 
 ### Common Methods
 
-#### `dataGet(): array`
+#### `data_get(): array`
 
 Get the entity data. Returns a copy of the current data.
 
-#### `dataSet($data): void`
+#### `data_set($data): void`
 
 Set the entity data.
 
-#### `matchGet(): array`
+#### `match_get(): array`
 
 Get the entity match criteria.
 
-#### `matchSet($match): void`
+#### `match_set($match): void`
 
 Set the entity match criteria.
 
@@ -250,7 +250,7 @@ Set the entity match criteria.
 Create a new `ItemEntity` instance with the same client and
 options.
 
-#### `getName(): string`
+#### `get_name(): string`
 
 Return the entity name.
 

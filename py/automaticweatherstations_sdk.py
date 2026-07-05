@@ -221,19 +221,19 @@ class AutomaticWeatherStationsSDK:
 
 
     def Collection(self, data=None) -> "CollectionEntity":
-        """Entity factory: client.Collection().list({}) / client.Collection().load({"id": ...})."""
+        """Entity factory: client.Collection().list() / client.Collection().load({"id": ...})."""
         from entity.collection_entity import CollectionEntity
         return CollectionEntity(self, data)
 
 
     def FeatureCollection(self, data=None) -> "FeatureCollectionEntity":
-        """Entity factory: client.FeatureCollection().list({}) / client.FeatureCollection().load({"id": ...})."""
+        """Entity factory: client.FeatureCollection().list() / client.FeatureCollection().load({"id": ...})."""
         from entity.feature_collection_entity import FeatureCollectionEntity
         return FeatureCollectionEntity(self, data)
 
 
     def Item(self, data=None) -> "ItemEntity":
-        """Entity factory: client.Item().list({}) / client.Item().load({"id": ...})."""
+        """Entity factory: client.Item().list() / client.Item().load({"id": ...})."""
         from entity.item_entity import ItemEntity
         return ItemEntity(self, data)
 

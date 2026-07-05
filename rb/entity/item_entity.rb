@@ -67,10 +67,12 @@ class ItemEntity
   
   # Load a single Item.
   #
-  # @param reqmatch [ItemLoadMatch, Hash, nil] match criteria (id/query fields)
+  # @param reqmatch [ItemLoadMatch, Hash, nil] match criteria (id/query fields);
+  #   optional — an entity with no id-like key loads with no match (nil is treated
+  #   as an empty match, so client.Item.load works with no args).
   # @param ctrl [Object, nil] optional per-call control
   # @return [Item, Hash] the loaded Item; raises AutomaticWeatherStationsError on failure
-  def load(reqmatch, ctrl = nil)
+  def load(reqmatch = nil, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
       "opname" => "load",
