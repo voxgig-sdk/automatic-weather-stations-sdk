@@ -6,9 +6,6 @@
     },
     "kit": {
       "config": {
-        "auth": {
-          "prefix": "Bearer"
-        },
         "docs_order": [
           "ts",
           "py",
@@ -492,15 +489,18 @@
           "name": "Open Data",
           "url": "https://opendatadocs.meteoswiss.ch"
         },
+        "meta_source": "https://www.freepublicapis.com",
         "servers": [
           {
             "description": "FSDI REST API for Swiss Meteorological Data",
             "url": "https://data.geo.admin.ch/api/stac/v1"
           }
         ],
+        "summary": "The Automatic Weather Stations API provides access to data from around 160 automatic measurement stations within the SwissMetNet network.",
         "termsOfService": "https://opendatadocs.meteoswiss.ch",
         "title": "Automatic Weather Stations",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "website": "https://opendatadocs.meteoswiss.ch/a-data-groundbased/a1-automatic-weather-stations"
       },
       "option": {},
       "target": {
@@ -553,6 +553,9 @@
           },
           "name": "go-cli",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },
@@ -603,6 +606,9 @@
           },
           "name": "go-mcp",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },

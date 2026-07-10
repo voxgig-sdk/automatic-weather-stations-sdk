@@ -338,7 +338,7 @@ fmt.Println(collections) // the array of records
 
 ### FeatureCollection
 
-Create an instance: `feature_collection := client.FeatureCollection(nil)`
+Create an instance: `featureCollection := client.FeatureCollection(nil)`
 
 #### Operations
 
@@ -359,11 +359,11 @@ Create an instance: `feature_collection := client.FeatureCollection(nil)`
 #### Example: List
 
 ```go
-feature_collections, err := client.FeatureCollection(nil).List(nil, nil)
+featureCollections, err := client.FeatureCollection(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(feature_collections) // the array of records
+fmt.Println(featureCollections) // the array of records
 ```
 
 

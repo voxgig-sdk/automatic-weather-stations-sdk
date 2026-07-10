@@ -99,6 +99,7 @@ same parameters as `Direct()`.
 
 ```go
 collection := client.Collection(nil)
+fmt.Println(collection.GetName()) // "collection"
 ```
 
 ### Fields
@@ -118,6 +119,10 @@ List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.Collection(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 ### Common Methods
@@ -147,7 +152,8 @@ Return the entity name.
 ## FeatureCollectionEntity
 
 ```go
-feature_collection := client.FeatureCollection(nil)
+featureCollection := client.FeatureCollection(nil)
+fmt.Println(featureCollection.GetName()) // "feature_collection"
 ```
 
 ### Fields
@@ -168,6 +174,10 @@ List entities matching the given criteria. Returns an array.
 
 ```go
 results, err := client.FeatureCollection(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
 ```
 
 ### Common Methods
@@ -198,6 +208,7 @@ Return the entity name.
 
 ```go
 item := client.Item(nil)
+fmt.Println(item.GetName()) // "item"
 ```
 
 ### Fields
@@ -218,6 +229,10 @@ Load a single entity matching the given criteria.
 
 ```go
 result, err := client.Item(nil).Load(map[string]any{"id": "item_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
