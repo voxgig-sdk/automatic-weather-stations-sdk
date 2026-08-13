@@ -19,24 +19,24 @@
 ---@field type? string
 
 ---@class FeatureCollection
----@field feature table
----@field link? table
----@field number_matched? number
----@field number_returned? number
+---@field features table
+---@field links? table
+---@field numberMatched? number
+---@field numberReturned? number
 ---@field type string
 
 ---@class FeatureCollectionListMatch
----@field feature? table
----@field link? table
----@field number_matched? number
----@field number_returned? number
+---@field features? table
+---@field links? table
+---@field numberMatched? number
+---@field numberReturned? number
 ---@field type? string
 
 ---@class Item
 ---@field geometry table
 ---@field id? string
----@field link? table
----@field property table
+---@field links? table
+---@field properties table
 ---@field type string
 
 ---@class ItemLoadMatch

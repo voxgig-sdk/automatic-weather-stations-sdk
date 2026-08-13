@@ -160,10 +160,10 @@ fmt.Println(featureCollection.GetName()) // "feature_collection"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feature` | `[]any` | Yes |  |
-| `link` | `[]any` | No |  |
-| `number_matched` | `int` | No |  |
-| `number_returned` | `int` | No |  |
+| `features` | `[]any` | Yes |  |
+| `links` | `[]any` | No |  |
+| `numberMatched` | `int` | No |  |
+| `numberReturned` | `int` | No |  |
 | `type` | `string` | Yes |  |
 
 ### Operations
@@ -217,8 +217,8 @@ fmt.Println(item.GetName()) // "item"
 | --- | --- | --- | --- |
 | `geometry` | `map[string]any` | Yes |  |
 | `id` | `string` | No |  |
-| `link` | `[]any` | No |  |
-| `property` | `map[string]any` | Yes |  |
+| `links` | `[]any` | No |  |
+| `properties` | `map[string]any` | Yes |  |
 | `type` | `string` | Yes |  |
 
 ### Operations

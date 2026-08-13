@@ -60,11 +60,11 @@ def feature_collection_direct_setup(mockres)
   calls = []
 
   env = Runner.env_override({
-    "AUTOMATICWEATHERSTATIONS_TEST_FEATURE_COLLECTION_ENTID" => {},
-    "AUTOMATICWEATHERSTATIONS_TEST_LIVE" => "FALSE",
+    "AUTOMATIC_WEATHER_STATIONS_TEST_FEATURE_COLLECTION_ENTID" => {},
+    "AUTOMATIC_WEATHER_STATIONS_TEST_LIVE" => "FALSE",
   })
 
-  live = env["AUTOMATICWEATHERSTATIONS_TEST_LIVE"] == "TRUE"
+  live = env["AUTOMATIC_WEATHER_STATIONS_TEST_LIVE"] == "TRUE"
 
   if live
     merged_opts = {

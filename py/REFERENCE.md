@@ -151,10 +151,10 @@ feature_collection = client.FeatureCollection()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feature` | `list` | Yes |  |
-| `link` | `list` | No |  |
-| `number_matched` | `int` | No |  |
-| `number_returned` | `int` | No |  |
+| `features` | `list` | Yes |  |
+| `links` | `list` | No |  |
+| `numberMatched` | `int` | No |  |
+| `numberReturned` | `int` | No |  |
 | `type` | `str` | Yes |  |
 
 ### Operations
@@ -210,8 +210,8 @@ item = client.Item()
 | --- | --- | --- | --- |
 | `geometry` | `dict` | Yes |  |
 | `id` | `str` | No |  |
-| `link` | `list` | No |  |
-| `property` | `dict` | Yes |  |
+| `links` | `list` | No |  |
+| `properties` | `dict` | Yes |  |
 | `type` | `str` | Yes |  |
 
 ### Operations

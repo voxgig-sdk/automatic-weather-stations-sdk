@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from automaticweatherstations_sdk.utility.voxgig_struct import voxgig_struct as vs
 from automaticweatherstations_sdk import AutomaticWeatherStationsSDK
-from core import helpers
+from automaticweatherstations_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -36,7 +36,7 @@ class TestItemEntity:
         # without an *_ENTID env override, those IDs hit the live API and 4xx.
         if setup.get("synthetic_only"):
             pytest.skip("live entity test uses synthetic IDs from fixture — "
-                        "set AUTOMATICWEATHERSTATIONS_TEST_ITEM_ENTID JSON to run live")
+                        "set AUTOMATIC_WEATHER_STATIONS_TEST_ITEM_ENTID JSON to run live")
         client = setup["client"]
 
         # Bootstrap entity data from existing test data.
@@ -52,7 +52,7 @@ class TestItemEntity:
             "id": item_ref01_data["id"],
         }
         item_ref01_data_dt0_loaded = item_ref01_ent.load(item_ref01_match_dt0, None)
-        item_ref01_data_dt0_load_result = helpers.to_map(item_ref01_data_dt0_loaded)
+        item_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(item_ref01_data_dt0_loaded))
         assert item_ref01_data_dt0_load_result is not None
         assert item_ref01_data_dt0_load_result["id"] == item_ref01_data["id"]
 
@@ -87,21 +87,21 @@ def _item_basic_setup(extra):
     # mode is on without a real override, the basic test runs against synthetic
     # IDs from the fixture and 4xx's. We surface this so the test can skip.
     _entid_env_raw = os.environ.get(
-        "AUTOMATICWEATHERSTATIONS_TEST_ITEM_ENTID")
+        "AUTOMATIC_WEATHER_STATIONS_TEST_ITEM_ENTID")
     _idmap_overridden = _entid_env_raw is not None and _entid_env_raw.strip().startswith("{")
 
     env = runner.env_override({
-        "AUTOMATICWEATHERSTATIONS_TEST_ITEM_ENTID": idmap,
-        "AUTOMATICWEATHERSTATIONS_TEST_LIVE": "FALSE",
-        "AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN": "FALSE",
+        "AUTOMATIC_WEATHER_STATIONS_TEST_ITEM_ENTID": idmap,
+        "AUTOMATIC_WEATHER_STATIONS_TEST_LIVE": "FALSE",
+        "AUTOMATIC_WEATHER_STATIONS_TEST_EXPLAIN": "FALSE",
     })
 
     idmap_resolved = helpers.to_map(
-        env.get("AUTOMATICWEATHERSTATIONS_TEST_ITEM_ENTID"))
+        env.get("AUTOMATIC_WEATHER_STATIONS_TEST_ITEM_ENTID"))
     if idmap_resolved is None:
         idmap_resolved = helpers.to_map(idmap)
 
-    if env.get("AUTOMATICWEATHERSTATIONS_TEST_LIVE") == "TRUE":
+    if env.get("AUTOMATIC_WEATHER_STATIONS_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
             },
@@ -109,13 +109,13 @@ def _item_basic_setup(extra):
         ])
         client = AutomaticWeatherStationsSDK(helpers.to_map(merged_opts))
 
-    _live = env.get("AUTOMATICWEATHERSTATIONS_TEST_LIVE") == "TRUE"
+    _live = env.get("AUTOMATIC_WEATHER_STATIONS_TEST_LIVE") == "TRUE"
     return {
         "client": client,
         "data": entity_data,
         "idmap": idmap_resolved,
         "env": env,
-        "explain": env.get("AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN") == "TRUE",
+        "explain": env.get("AUTOMATIC_WEATHER_STATIONS_TEST_EXPLAIN") == "TRUE",
         "live": _live,
         "synthetic_only": _live and not _idmap_overridden,
         "now": int(time.time() * 1000),

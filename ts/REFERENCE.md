@@ -145,6 +145,26 @@ const collection = client.Collection()
 | `title` | `string` | No |  |
 | `type` | `string` | No |  |
 
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `chmeteoschweizogd_smn` | `/collections/ch.meteoschweiz.ogd-smn` | `client.Collection().list({ $action: 'chmeteoschweizogd_smn', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+Collection record — check the API definition for its shape.
+
+```ts
+const result = await client.Collection().list({
+  $action: 'chmeteoschweizogd_smn',
+  /* ...the action's own arguments */
+})
+```
+
 ### Operations
 
 #### `list(match: object, ctrl?: object)`
@@ -193,10 +213,10 @@ const feature_collection = client.FeatureCollection()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feature` | `any[]` | Yes |  |
-| `link` | `any[]` | No |  |
-| `number_matched` | `number` | No |  |
-| `number_returned` | `number` | No |  |
+| `features` | `any[]` | Yes |  |
+| `links` | `any[]` | No |  |
+| `numberMatched` | `number` | No |  |
+| `numberReturned` | `number` | No |  |
 | `type` | `string` | Yes |  |
 
 ### Operations
@@ -249,8 +269,8 @@ const item = client.Item()
 | --- | --- | --- | --- |
 | `geometry` | `Record<string, any>` | Yes |  |
 | `id` | `string` | No |  |
-| `link` | `any[]` | No |  |
-| `property` | `Record<string, any>` | Yes |  |
+| `links` | `any[]` | No |  |
+| `properties` | `Record<string, any>` | Yes |  |
 | `type` | `string` | Yes |  |
 
 ### Operations

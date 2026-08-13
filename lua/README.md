@@ -222,9 +222,9 @@ data **directly** — there is no wrapper:
 
 Check `err` first (it is non-`nil` on failure), then use `value`:
 
-    local collection, err = client:Collection():load()
+    local item, err = client:Item():load({ id = "example_id" })
     if err then error(err) end
-    -- collection is the loaded record
+    -- item is the loaded record
 
 Only `direct()` returns a response envelope — a `table` with `ok`,
 `status`, `headers`, and `data` keys.
@@ -248,10 +248,10 @@ API path: `/collections/ch.meteoschweiz.ogd-smn`
 
 | Field | Description |
 | --- | --- |
-| `feature` |  |
-| `link` |  |
-| `number_matched` |  |
-| `number_returned` |  |
+| `features` |  |
+| `links` |  |
+| `numberMatched` |  |
+| `numberReturned` |  |
 | `type` |  |
 
 Operations: List.
@@ -264,8 +264,8 @@ API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 | --- | --- |
 | `geometry` |  |
 | `id` |  |
-| `link` |  |
-| `property` |  |
+| `links` |  |
+| `properties` |  |
 | `type` |  |
 
 Operations: Load.
@@ -317,10 +317,10 @@ Create an instance: `local feature_collection = client:FeatureCollection(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `feature` | `table` |  |
-| `link` | `table` |  |
-| `number_matched` | `number` |  |
-| `number_returned` | `number` |  |
+| `features` | `table` |  |
+| `links` | `table` |  |
+| `numberMatched` | `number` |  |
+| `numberReturned` | `number` |  |
 | `type` | `string` |  |
 
 #### Example: List
@@ -346,8 +346,8 @@ Create an instance: `local item = client:Item(nil)`
 | --- | --- | --- |
 | `geometry` | `table` |  |
 | `id` | `string` |  |
-| `link` | `table` |  |
-| `property` | `table` |  |
+| `links` | `table` |  |
+| `properties` | `table` |  |
 | `type` | `string` |  |
 
 #### Example: Load

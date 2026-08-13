@@ -38,9 +38,18 @@ network, and no credentials:
 ### TypeScript
 
 ```ts
-const client = AutomaticWeatherStationsSDK.test()
+// The offline mock starts EMPTY — seed it with the records the test needs.
+// Shape: { entity: { <entity-name>: { <id>: <record> } } }
+const client = AutomaticWeatherStationsSDK.test({
+  entity: {
+    collection: {
+      test01: { id: 'test01' },
+    },
+  },
+})
 const collections = await client.Collection().list()
-// collections is an array of bare Collection records populated with mock data
+// collections is an array of Collection entities, populated with mock data
+// — call collections[0].data() for the record itself
 console.log(collections)
 ```
 
@@ -110,7 +119,7 @@ import { AutomaticWeatherStationsSDK } from '@voxgig-sdk/automatic-weather-stati
 
 const client = new AutomaticWeatherStationsSDK()
 
-// List all collections (returns Collection[])
+// List all collections (returns CollectionEntity[] — .data() for the record)
 const collections = await client.Collection().list()
 for (const collection of collections) {
   console.log(collection)
@@ -345,6 +354,9 @@ Pass custom features via the `extend` option at construction time.
 
 This SDK is generated from the upstream OpenAPI specification. It is an
 unofficial client and is not affiliated with the API provider.
+
+The OpenAPI spec(s) this SDK was generated from are kept in the
+[`.sdk/def/`](.sdk/def/) folder.
 
 - Upstream API: [https://opendatadocs.meteoswiss.ch/a-data-groundbased/a1-automatic-weather-stations](https://opendatadocs.meteoswiss.ch/a-data-groundbased/a1-automatic-weather-stations)
 

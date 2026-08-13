@@ -16,12 +16,12 @@ main: kit: entity: item: {
       type: "`$STRING`"
     }
     {
-      name: "link"
+      name: "links"
       req: false
       type: "`$ARRAY`"
     }
     {
-      name: "property"
+      name: "properties"
       req: true
       type: "`$OBJECT`"
     }

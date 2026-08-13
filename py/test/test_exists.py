@@ -1,4 +1,4 @@
-# ProjectName SDK exists test
+# AutomaticWeatherStations SDK exists test
 
 import pytest
 from automaticweatherstations_sdk import AutomaticWeatherStationsSDK

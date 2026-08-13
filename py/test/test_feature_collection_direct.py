@@ -3,9 +3,9 @@
 import json
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from automaticweatherstations_sdk.utility.voxgig_struct import voxgig_struct as vs
 from automaticweatherstations_sdk import AutomaticWeatherStationsSDK
-from core import helpers
+from automaticweatherstations_sdk.core import helpers
 from test import runner
 
 
@@ -58,11 +58,11 @@ def _feature_collection_direct_setup(mockres):
     calls = []
 
     env = runner.env_override({
-        "AUTOMATICWEATHERSTATIONS_TEST_FEATURE_COLLECTION_ENTID": {},
-        "AUTOMATICWEATHERSTATIONS_TEST_LIVE": "FALSE",
+        "AUTOMATIC_WEATHER_STATIONS_TEST_FEATURE_COLLECTION_ENTID": {},
+        "AUTOMATIC_WEATHER_STATIONS_TEST_LIVE": "FALSE",
     })
 
-    live = env.get("AUTOMATICWEATHERSTATIONS_TEST_LIVE") == "TRUE"
+    live = env.get("AUTOMATIC_WEATHER_STATIONS_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {

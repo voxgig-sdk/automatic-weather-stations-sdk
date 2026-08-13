@@ -4,22 +4,22 @@
       "ITEM00": {
         "geometry": {},
         "id": "ITEM00",
-        "link": [],
-        "property": {},
+        "links": [],
+        "properties": {},
         "type": "s36"
       },
       "ITEM01": {
         "geometry": {},
         "id": "ITEM01",
-        "link": [],
-        "property": {},
+        "links": [],
+        "properties": {},
         "type": "s68"
       },
       "ITEM02": {
         "geometry": {},
         "id": "ITEM02",
-        "link": [],
-        "property": {},
+        "links": [],
+        "properties": {},
         "type": "s9a"
       }
     }
@@ -28,8 +28,8 @@
     "item": {
       "item_ref01": {
         "geometry": {},
-        "link": [],
-        "property": {},
+        "links": [],
+        "properties": {},
         "type": "scc"
       }
     }

@@ -155,10 +155,10 @@ $feature_collection = $client->FeatureCollection();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feature` | `array` | Yes |  |
-| `link` | `array` | No |  |
-| `number_matched` | `int` | No |  |
-| `number_returned` | `int` | No |  |
+| `features` | `array` | Yes |  |
+| `links` | `array` | No |  |
+| `numberMatched` | `int` | No |  |
+| `numberReturned` | `int` | No |  |
 | `type` | `string` | Yes |  |
 
 ### Operations
@@ -213,8 +213,8 @@ $item = $client->Item();
 | --- | --- | --- | --- |
 | `geometry` | `array` | Yes |  |
 | `id` | `string` | No |  |
-| `link` | `array` | No |  |
-| `property` | `array` | Yes |  |
+| `links` | `array` | No |  |
+| `properties` | `array` | Yes |  |
 | `type` | `string` | Yes |  |
 
 ### Operations

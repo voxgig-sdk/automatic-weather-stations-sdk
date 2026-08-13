@@ -153,10 +153,10 @@ local feature_collection = client:FeatureCollection(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feature` | `table` | Yes |  |
-| `link` | `table` | No |  |
-| `number_matched` | `number` | No |  |
-| `number_returned` | `number` | No |  |
+| `features` | `table` | Yes |  |
+| `links` | `table` | No |  |
+| `numberMatched` | `number` | No |  |
+| `numberReturned` | `number` | No |  |
 | `type` | `string` | Yes |  |
 
 ### Operations
@@ -211,8 +211,8 @@ local item = client:Item(nil)
 | --- | --- | --- | --- |
 | `geometry` | `table` | Yes |  |
 | `id` | `string` | No |  |
-| `link` | `table` | No |  |
-| `property` | `table` | Yes |  |
+| `links` | `table` | No |  |
+| `properties` | `table` | Yes |  |
 | `type` | `string` | Yes |  |
 
 ### Operations

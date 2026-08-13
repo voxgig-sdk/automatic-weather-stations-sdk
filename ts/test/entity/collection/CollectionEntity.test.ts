@@ -26,8 +26,8 @@ import {
 describe('CollectionEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when AUTOMATICWEATHERSTATIONS_TEST_LIVE=TRUE.
-  afterEach(liveDelay('AUTOMATICWEATHERSTATIONS_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when AUTOMATIC_WEATHER_STATIONS_TEST_LIVE=TRUE.
+  afterEach(liveDelay('AUTOMATIC_WEATHER_STATIONS_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = AutomaticWeatherStationsSDK.test()
@@ -63,7 +63,7 @@ describe('CollectionEntity', async () => {
     const collection_ref01_ent = client.Collection()
     const collection_ref01_match: any = {}
 
-    const collection_ref01_list = await collection_ref01_ent.list(collection_ref01_match)
+    const collection_ref01_list = (await collection_ref01_ent.list(collection_ref01_match)).map((e: any) => e.data())
 
 
   })

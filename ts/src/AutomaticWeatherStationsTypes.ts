@@ -17,29 +17,35 @@ export interface CollectionListMatch {
   rel?: string
   title?: string
   type?: string
+
+  // Selects a custom action instead of the plain list:
+  //   'chmeteoschweizogd_smn'
+  // The remaining keys are that action's own payload.
+  $action?: string
+  [action: string]: any
 }
 
 export interface FeatureCollection {
-  feature: any[]
-  link?: any[]
-  number_matched?: number
-  number_returned?: number
+  features: any[]
+  links?: any[]
+  numberMatched?: number
+  numberReturned?: number
   type: string
 }
 
 export interface FeatureCollectionListMatch {
-  feature?: any[]
-  link?: any[]
-  number_matched?: number
-  number_returned?: number
+  features?: any[]
+  links?: any[]
+  numberMatched?: number
+  numberReturned?: number
   type?: string
 }
 
 export interface Item {
   geometry: Record<string, any>
   id?: string
-  link?: any[]
-  property: Record<string, any>
+  links?: any[]
+  properties: Record<string, any>
   type: string
 }
 

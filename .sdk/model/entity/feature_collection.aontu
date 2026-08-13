@@ -6,22 +6,22 @@ main: kit: entity: feature_collection: {
 
   fields: [
     {
-      name: "feature"
+      name: "features"
       req: true
       type: "`$ARRAY`"
     }
     {
-      name: "link"
+      name: "links"
       req: false
       type: "`$ARRAY`"
     }
     {
-      name: "number_matched"
+      name: "numberMatched"
       req: false
       type: "`$INTEGER`"
     }
     {
-      name: "number_returned"
+      name: "numberReturned"
       req: false
       type: "`$INTEGER`"
     }

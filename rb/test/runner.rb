@@ -23,8 +23,8 @@ module AutomaticWeatherStationsTestRunner
   end
 
   def self.env_override(m)
-    live = getenv("AUTOMATICWEATHERSTATIONS_TEST_LIVE")
-    override = getenv("AUTOMATICWEATHERSTATIONS_TEST_OVERRIDE")
+    live = getenv("AUTOMATIC_WEATHER_STATIONS_TEST_LIVE")
+    override = getenv("AUTOMATIC_WEATHER_STATIONS_TEST_OVERRIDE")
 
     if live == "TRUE" || override == "TRUE"
       m.each_key do |key|
@@ -44,8 +44,8 @@ module AutomaticWeatherStationsTestRunner
       end
     end
 
-    explain = getenv("AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN")
-    m["AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN"] = explain if explain && !explain.empty?
+    explain = getenv("AUTOMATIC_WEATHER_STATIONS_TEST_EXPLAIN")
+    m["AUTOMATIC_WEATHER_STATIONS_TEST_EXPLAIN"] = explain if explain && !explain.empty?
 
     m
   end

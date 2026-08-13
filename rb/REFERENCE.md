@@ -156,10 +156,10 @@ feature_collection = client.FeatureCollection
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feature` | `Array` | Yes |  |
-| `link` | `Array` | No |  |
-| `number_matched` | `Integer` | No |  |
-| `number_returned` | `Integer` | No |  |
+| `features` | `Array` | Yes |  |
+| `links` | `Array` | No |  |
+| `numberMatched` | `Integer` | No |  |
+| `numberReturned` | `Integer` | No |  |
 | `type` | `String` | Yes |  |
 
 ### Operations
@@ -214,8 +214,8 @@ item = client.Item
 | --- | --- | --- | --- |
 | `geometry` | `Hash` | Yes |  |
 | `id` | `String` | No |  |
-| `link` | `Array` | No |  |
-| `property` | `Hash` | Yes |  |
+| `links` | `Array` | No |  |
+| `properties` | `Hash` | Yes |  |
 | `type` | `String` | Yes |  |
 
 ### Operations

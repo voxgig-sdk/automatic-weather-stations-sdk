@@ -70,11 +70,11 @@ function item_direct_setup(mockres)
   local calls = {}
 
   local env = runner.env_override({
-    ["AUTOMATICWEATHERSTATIONS_TEST_ITEM_ENTID"] = {},
-    ["AUTOMATICWEATHERSTATIONS_TEST_LIVE"] = "FALSE",
+    ["AUTOMATIC_WEATHER_STATIONS_TEST_ITEM_ENTID"] = {},
+    ["AUTOMATIC_WEATHER_STATIONS_TEST_LIVE"] = "FALSE",
   })
 
-  local live = env["AUTOMATICWEATHERSTATIONS_TEST_LIVE"] == "TRUE"
+  local live = env["AUTOMATIC_WEATHER_STATIONS_TEST_LIVE"] == "TRUE"
 
   if live then
     local merged_opts = {

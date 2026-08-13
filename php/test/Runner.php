@@ -43,8 +43,8 @@ class AutomaticWeatherStationsTestRunner
 
     public static function env_override(array $m): array
     {
-        $live = self::getenv('AUTOMATICWEATHERSTATIONS_TEST_LIVE');
-        $override = self::getenv('AUTOMATICWEATHERSTATIONS_TEST_OVERRIDE');
+        $live = self::getenv('AUTOMATIC_WEATHER_STATIONS_TEST_LIVE');
+        $override = self::getenv('AUTOMATIC_WEATHER_STATIONS_TEST_OVERRIDE');
 
         if ($live === 'TRUE' || $override === 'TRUE') {
             foreach (array_keys($m) as $key) {
@@ -63,9 +63,9 @@ class AutomaticWeatherStationsTestRunner
             }
         }
 
-        $explain = self::getenv('AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN');
+        $explain = self::getenv('AUTOMATIC_WEATHER_STATIONS_TEST_EXPLAIN');
         if ($explain !== null && $explain !== '') {
-            $m['AUTOMATICWEATHERSTATIONS_TEST_EXPLAIN'] = $explain;
+            $m['AUTOMATIC_WEATHER_STATIONS_TEST_EXPLAIN'] = $explain;
         }
 
         return $m;

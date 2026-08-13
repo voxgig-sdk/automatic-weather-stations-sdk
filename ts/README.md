@@ -35,7 +35,9 @@ const client = new AutomaticWeatherStationsSDK()
 
 ### 2. List collection records
 
-`list()` resolves to an array of Collection objects — iterate it directly:
+`list()` resolves to an array of Collection ENTITIES — every operation
+resolves to entities, not raw records. Iterate them directly, and call
+`.data()` on one for the record it holds:
 
 ```ts
 const collections = await client.Collection().list()
@@ -120,7 +122,8 @@ Create a mock client for unit testing — no server required:
 const client = AutomaticWeatherStationsSDK.test()
 
 const collection = await client.Collection().list()
-// collection is a bare entity populated with mock response data
+// collection is the entity, populated with mock response data
+// — call collection.data() for the record itself
 console.log(collection)
 ```
 
@@ -301,10 +304,10 @@ API path: `/collections/ch.meteoschweiz.ogd-smn`
 
 | Field | Description |
 | --- | --- |
-| `feature` |  |
-| `link` |  |
-| `number_matched` |  |
-| `number_returned` |  |
+| `features` |  |
+| `links` |  |
+| `numberMatched` |  |
+| `numberReturned` |  |
 | `type` |  |
 
 Operations: list.
@@ -317,8 +320,8 @@ API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 | --- | --- |
 | `geometry` |  |
 | `id` |  |
-| `link` |  |
-| `property` |  |
+| `links` |  |
+| `properties` |  |
 | `type` |  |
 
 Operations: load.
@@ -370,10 +373,10 @@ Create an instance: `const feature_collection = client.FeatureCollection()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `feature` | `any[]` |  |
-| `link` | `any[]` |  |
-| `number_matched` | `number` |  |
-| `number_returned` | `number` |  |
+| `features` | `any[]` |  |
+| `links` | `any[]` |  |
+| `numberMatched` | `number` |  |
+| `numberReturned` | `number` |  |
 | `type` | `string` |  |
 
 #### Example: List
@@ -399,8 +402,8 @@ Create an instance: `const item = client.Item()`
 | --- | --- | --- |
 | `geometry` | `Record<string, any>` |  |
 | `id` | `string` |  |
-| `link` | `any[]` |  |
-| `property` | `Record<string, any>` |  |
+| `links` | `any[]` |  |
+| `properties` | `Record<string, any>` |  |
 | `type` | `string` |  |
 
 #### Example: Load

@@ -37,7 +37,7 @@ class FeatureCollectionEntity extends AutomaticWeatherStationsEntityBase<Feature
 
 
 
-  async list(this: any, reqmatch?: FeatureCollectionListMatch, ctrl?: Control): Promise<FeatureCollection[]> {
+  async list(this: any, reqmatch?: FeatureCollectionListMatch, ctrl?: Control): Promise<FeatureCollectionEntity[]> {
 
     const utility = this._utility
 

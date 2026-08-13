@@ -14,12 +14,12 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from config import make_config
-from features import _make_feature
-from core.control import AutomaticWeatherStationsControl
-from core.error import AutomaticWeatherStationsError
-from core.result import AutomaticWeatherStationsResult
-from core.spec import AutomaticWeatherStationsSpec
+from automaticweatherstations_sdk.config import make_config
+from automaticweatherstations_sdk.features import _make_feature
+from automaticweatherstations_sdk.core.control import AutomaticWeatherStationsControl
+from automaticweatherstations_sdk.core.error import AutomaticWeatherStationsError
+from automaticweatherstations_sdk.core.result import AutomaticWeatherStationsResult
+from automaticweatherstations_sdk.core.spec import AutomaticWeatherStationsSpec
 
 
 # True when this SDK was generated with the named feature.

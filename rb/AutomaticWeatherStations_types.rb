@@ -52,50 +52,50 @@ CollectionListMatch = Struct.new(
 
 # FeatureCollection entity data model.
 #
-# @!attribute [rw] feature
+# @!attribute [rw] features
 #   @return [Array]
 #
-# @!attribute [rw] link
+# @!attribute [rw] links
 #   @return [Array, nil]
 #
-# @!attribute [rw] number_matched
+# @!attribute [rw] numberMatched
 #   @return [Integer, nil]
 #
-# @!attribute [rw] number_returned
+# @!attribute [rw] numberReturned
 #   @return [Integer, nil]
 #
 # @!attribute [rw] type
 #   @return [String]
 FeatureCollection = Struct.new(
-  :feature,
-  :link,
-  :number_matched,
-  :number_returned,
+  :features,
+  :links,
+  :numberMatched,
+  :numberReturned,
   :type,
   keyword_init: true
 )
 
 # Request payload for FeatureCollection#list.
 #
-# @!attribute [rw] feature
+# @!attribute [rw] features
 #   @return [Array, nil]
 #
-# @!attribute [rw] link
+# @!attribute [rw] links
 #   @return [Array, nil]
 #
-# @!attribute [rw] number_matched
+# @!attribute [rw] numberMatched
 #   @return [Integer, nil]
 #
-# @!attribute [rw] number_returned
+# @!attribute [rw] numberReturned
 #   @return [Integer, nil]
 #
 # @!attribute [rw] type
 #   @return [String, nil]
 FeatureCollectionListMatch = Struct.new(
-  :feature,
-  :link,
-  :number_matched,
-  :number_returned,
+  :features,
+  :links,
+  :numberMatched,
+  :numberReturned,
   :type,
   keyword_init: true
 )
@@ -108,10 +108,10 @@ FeatureCollectionListMatch = Struct.new(
 # @!attribute [rw] id
 #   @return [String, nil]
 #
-# @!attribute [rw] link
+# @!attribute [rw] links
 #   @return [Array, nil]
 #
-# @!attribute [rw] property
+# @!attribute [rw] properties
 #   @return [Hash]
 #
 # @!attribute [rw] type
@@ -119,8 +119,8 @@ FeatureCollectionListMatch = Struct.new(
 Item = Struct.new(
   :geometry,
   :id,
-  :link,
-  :property,
+  :links,
+  :properties,
   :type,
   keyword_init: true
 )

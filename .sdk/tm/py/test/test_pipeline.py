@@ -16,11 +16,11 @@
 import pytest
 
 from projectname_sdk import AutomaticWeatherStationsSDK
-from core.error import AutomaticWeatherStationsError
-from core.result import AutomaticWeatherStationsResult
-from core.response import AutomaticWeatherStationsResponse
-from core.spec import AutomaticWeatherStationsSpec
-from feature.base_feature import AutomaticWeatherStationsBaseFeature
+from projectname_sdk.core.error import AutomaticWeatherStationsError
+from projectname_sdk.core.result import AutomaticWeatherStationsResult
+from projectname_sdk.core.response import AutomaticWeatherStationsResponse
+from projectname_sdk.core.spec import AutomaticWeatherStationsSpec
+from projectname_sdk.feature.base_feature import AutomaticWeatherStationsBaseFeature
 
 
 def _client():

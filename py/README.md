@@ -124,7 +124,8 @@ Create a mock client for unit testing — no server required:
 ```python
 client = AutomaticWeatherStationsSDK.test()
 
-# Entity ops return the bare record and raise on error.
+# Entity ops return the ENTITY and raises on error;
+# call data_get() for the record.
 collection = client.Collection().list()
 # collection contains the mock response record
 ```
@@ -223,7 +224,7 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the bare result data (a `dict` for single-entity
+Entity operations return the ENTITY (call data_get() for the record) (a `dict` for single-entity
 ops, a `list` for `list`) and raise on error. Wrap calls in
 `try`/`except` to handle failures.
 
@@ -258,10 +259,10 @@ API path: `/collections/ch.meteoschweiz.ogd-smn`
 
 | Field | Description |
 | --- | --- |
-| `feature` |  |
-| `link` |  |
-| `number_matched` |  |
-| `number_returned` |  |
+| `features` |  |
+| `links` |  |
+| `numberMatched` |  |
+| `numberReturned` |  |
 | `type` |  |
 
 Operations: List.
@@ -274,8 +275,8 @@ API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 | --- | --- |
 | `geometry` |  |
 | `id` |  |
-| `link` |  |
-| `property` |  |
+| `links` |  |
+| `properties` |  |
 | `type` |  |
 
 Operations: Load.
@@ -327,10 +328,10 @@ Create an instance: `feature_collection = client.FeatureCollection()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `feature` | `list` |  |
-| `link` | `list` |  |
-| `number_matched` | `int` |  |
-| `number_returned` | `int` |  |
+| `features` | `list` |  |
+| `links` | `list` |  |
+| `numberMatched` | `int` |  |
+| `numberReturned` | `int` |  |
 | `type` | `str` |  |
 
 #### Example: List
@@ -356,8 +357,8 @@ Create an instance: `item = client.Item()`
 | --- | --- | --- |
 | `geometry` | `dict` |  |
 | `id` | `str` |  |
-| `link` | `list` |  |
-| `property` | `dict` |  |
+| `links` | `list` |  |
+| `properties` | `dict` |  |
 | `type` | `str` |  |
 
 #### Example: Load

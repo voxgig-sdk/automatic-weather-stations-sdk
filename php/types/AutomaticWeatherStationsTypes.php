@@ -33,20 +33,20 @@ class CollectionListMatch
 /** FeatureCollection entity data model. */
 class FeatureCollection
 {
-    public array $feature;
-    public ?array $link = null;
-    public ?int $number_matched = null;
-    public ?int $number_returned = null;
+    public array $features;
+    public ?array $links = null;
+    public ?int $numberMatched = null;
+    public ?int $numberReturned = null;
     public string $type;
 }
 
 /** Request payload for FeatureCollection#list. */
 class FeatureCollectionListMatch
 {
-    public ?array $feature = null;
-    public ?array $link = null;
-    public ?int $number_matched = null;
-    public ?int $number_returned = null;
+    public ?array $features = null;
+    public ?array $links = null;
+    public ?int $numberMatched = null;
+    public ?int $numberReturned = null;
     public ?string $type = null;
 }
 
@@ -55,8 +55,8 @@ class Item
 {
     public array $geometry;
     public ?string $id = null;
-    public ?array $link = null;
-    public array $property;
+    public ?array $links = null;
+    public array $properties;
     public string $type;
 }
 

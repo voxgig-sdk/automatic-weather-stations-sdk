@@ -277,10 +277,10 @@ API path: `/collections/ch.meteoschweiz.ogd-smn`
 
 | Field | Description |
 | --- | --- |
-| `"feature"` |  |
-| `"link"` |  |
-| `"number_matched"` |  |
-| `"number_returned"` |  |
+| `"features"` |  |
+| `"links"` |  |
+| `"numberMatched"` |  |
+| `"numberReturned"` |  |
 | `"type"` |  |
 
 Operations: List.
@@ -293,8 +293,8 @@ API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 | --- | --- |
 | `"geometry"` |  |
 | `"id"` |  |
-| `"link"` |  |
-| `"property"` |  |
+| `"links"` |  |
+| `"properties"` |  |
 | `"type"` |  |
 
 Operations: Load.
@@ -350,10 +350,10 @@ Create an instance: `featureCollection := client.FeatureCollection(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `feature` | `[]any` |  |
-| `link` | `[]any` |  |
-| `number_matched` | `int` |  |
-| `number_returned` | `int` |  |
+| `features` | `[]any` |  |
+| `links` | `[]any` |  |
+| `numberMatched` | `int` |  |
+| `numberReturned` | `int` |  |
 | `type` | `string` |  |
 
 #### Example: List
@@ -383,8 +383,8 @@ Create an instance: `item := client.Item(nil)`
 | --- | --- | --- |
 | `geometry` | `map[string]any` |  |
 | `id` | `string` |  |
-| `link` | `[]any` |  |
-| `property` | `map[string]any` |  |
+| `links` | `[]any` |  |
+| `properties` | `map[string]any` |  |
 | `type` | `string` |  |
 
 #### Example: Load
