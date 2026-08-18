@@ -40,7 +40,7 @@ class AutomaticWeatherStationsSDK
         $utility = new AutomaticWeatherStationsUtility();
         $this->_utility = $utility;
 
-        $config = AutomaticWeatherStationsConfig::make_config();
+        $config = AutomaticWeatherStationsConfig::shared_config();
 
         $this->_rootctx = ($utility->make_context)([
             "client" => $this,

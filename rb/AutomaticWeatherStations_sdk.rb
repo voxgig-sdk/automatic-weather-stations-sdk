@@ -28,7 +28,7 @@ class AutomaticWeatherStationsSDK
     utility = AutomaticWeatherStationsUtility.new
     @_utility = utility
 
-    config = AutomaticWeatherStationsConfig.make_config
+    config = AutomaticWeatherStationsConfig.shared_config
 
     @_rootctx = utility.make_context.call({
       "client" => self,
