@@ -8,6 +8,7 @@ main: kit: entity: item: {
     {
       name: "geometry"
       req: true
+      short: "GeoJSON Geometry"
       type: "`$OBJECT`"
     }
     {
@@ -23,6 +24,7 @@ main: kit: entity: item: {
     {
       name: "properties"
       req: true
+      short: "Weather station measurement properties"
       type: "`$OBJECT`"
     }
     {

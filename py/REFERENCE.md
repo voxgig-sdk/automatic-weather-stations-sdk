@@ -208,10 +208,10 @@ item = client.Item()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `geometry` | `dict` | Yes |  |
+| `geometry` | `dict` | Yes | GeoJSON Geometry |
 | `id` | `str` | No |  |
 | `links` | `list` | No |  |
-| `properties` | `dict` | Yes |  |
+| `properties` | `dict` | Yes | Weather station measurement properties |
 | `type` | `str` | Yes |  |
 
 ### Operations

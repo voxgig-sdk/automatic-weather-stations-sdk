@@ -267,10 +267,10 @@ const item = client.Item()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `geometry` | `Record<string, any>` | Yes |  |
+| `geometry` | `Record<string, any>` | Yes | GeoJSON Geometry |
 | `id` | `string` | No |  |
 | `links` | `any[]` | No |  |
-| `properties` | `Record<string, any>` | Yes |  |
+| `properties` | `Record<string, any>` | Yes | Weather station measurement properties |
 | `type` | `string` | Yes |  |
 
 ### Operations

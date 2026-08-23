@@ -215,10 +215,10 @@ fmt.Println(item.GetName()) // "item"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `geometry` | `map[string]any` | Yes |  |
+| `geometry` | `map[string]any` | Yes | GeoJSON Geometry |
 | `id` | `string` | No |  |
 | `links` | `[]any` | No |  |
-| `properties` | `map[string]any` | Yes |  |
+| `properties` | `map[string]any` | Yes | Weather station measurement properties |
 | `type` | `string` | Yes |  |
 
 ### Operations

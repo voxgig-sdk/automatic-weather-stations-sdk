@@ -19,9 +19,20 @@ class Config {
     return fi
   }
 
+  // False for a feature added at runtime via options.extend (station's
+  // adopt path) - the constructor uses this to skip makeFeature for names
+  // no generated class backs.
+  hasFeature(this: any, fn: string) {
+    return null != FEATURE_CLASS[fn]
+  }
+
 
   main = {
     name: 'AutomaticWeatherStations',
+        slug: "automatic-weather-stations",
+    version: "0.0.1",
+    target: "ts",
+
   }
 
 
@@ -217,6 +228,7 @@ class Config {
         {
           "name": "geometry",
           "req": true,
+          "short": "GeoJSON Geometry",
           "type": "`$OBJECT`"
         },
         {
@@ -230,6 +242,7 @@ class Config {
         {
           "name": "properties",
           "req": true,
+          "short": "Weather station measurement properties",
           "type": "`$OBJECT`"
         },
         {

@@ -28,6 +28,9 @@ def make_config():
     return {
         "main": {
             "name": "AutomaticWeatherStations",
+            "slug": "automatic-weather-stations",
+            "version": "0.0.1",
+            "target": "py",
         },
         "feature": {
             "test": {
@@ -207,6 +210,7 @@ def make_config():
           {
             "name": "geometry",
             "req": True,
+            "short": "GeoJSON Geometry",
             "type": "`$OBJECT`",
           },
           {
@@ -220,6 +224,7 @@ def make_config():
           {
             "name": "properties",
             "req": True,
+            "short": "Weather station measurement properties",
             "type": "`$OBJECT`",
           },
           {

@@ -33,6 +33,9 @@ class AutomaticWeatherStationsConfig
         return [
             "main" => [
                 "name" => "AutomaticWeatherStations",
+                "slug" => "automatic-weather-stations",
+                "version" => "0.0.1",
+                "target" => "php",
             ],
             "feature" => [
                 "test" => [
@@ -212,6 +215,7 @@ class AutomaticWeatherStationsConfig
             [
               'name' => 'geometry',
               'req' => true,
+              'short' => 'GeoJSON Geometry',
               'type' => '`$OBJECT`',
             ],
             [
@@ -225,6 +229,7 @@ class AutomaticWeatherStationsConfig
             [
               'name' => 'properties',
               'req' => true,
+              'short' => 'Weather station measurement properties',
               'type' => '`$OBJECT`',
             ],
             [

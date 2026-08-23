@@ -209,10 +209,10 @@ local item = client:Item(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `geometry` | `table` | Yes |  |
+| `geometry` | `table` | Yes | GeoJSON Geometry |
 | `id` | `string` | No |  |
 | `links` | `table` | No |  |
-| `properties` | `table` | Yes |  |
+| `properties` | `table` | Yes | Weather station measurement properties |
 | `type` | `string` | Yes |  |
 
 ### Operations

@@ -6,7 +6,7 @@ The Golang SDK for the AutomaticWeatherStations API — an entity-oriented clien
 
 It exposes the API as capitalised, semantic **Entities** — e.g. `client.Collection(nil)` — each with the same small set of operations (`List`, `Load`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
 
-> Other languages, the CLI, and MCP server live alongside this one — see
+> Also generated from this model: `go-cli`, `go-mcp`, `lua`, `php`, `py`, `rb`, `ts` — see
 > the [top-level README](../README.md).
 
 
@@ -291,10 +291,10 @@ API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 
 | Field | Description |
 | --- | --- |
-| `"geometry"` |  |
+| `"geometry"` | GeoJSON Geometry |
 | `"id"` |  |
 | `"links"` |  |
-| `"properties"` |  |
+| `"properties"` | Weather station measurement properties |
 | `"type"` |  |
 
 Operations: Load.
@@ -381,10 +381,10 @@ Create an instance: `item := client.Item(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `geometry` | `map[string]any` |  |
+| `geometry` | `map[string]any` | GeoJSON Geometry |
 | `id` | `string` |  |
 | `links` | `[]any` |  |
-| `properties` | `map[string]any` |  |
+| `properties` | `map[string]any` | Weather station measurement properties |
 | `type` | `string` |  |
 
 #### Example: Load

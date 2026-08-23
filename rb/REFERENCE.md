@@ -212,10 +212,10 @@ item = client.Item
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `geometry` | `Hash` | Yes |  |
+| `geometry` | `Hash` | Yes | GeoJSON Geometry |
 | `id` | `String` | No |  |
 | `links` | `Array` | No |  |
-| `properties` | `Hash` | Yes |  |
+| `properties` | `Hash` | Yes | Weather station measurement properties |
 | `type` | `String` | Yes |  |
 
 ### Operations

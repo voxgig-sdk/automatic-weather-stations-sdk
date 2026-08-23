@@ -11,6 +11,9 @@ func MakeConfig() map[string]any {
 	return map[string]any{
 		"main": map[string]any{
 			"name": "AutomaticWeatherStations",
+			"slug": "automatic-weather-stations",
+			"version": "0.0.1",
+			"target": "go",
 		},
 		"feature": map[string]any{
 			"test": map[string]any{
@@ -190,6 +193,7 @@ func MakeConfig() map[string]any {
 					map[string]any{
 						"name": "geometry",
 						"req": true,
+						"short": "GeoJSON Geometry",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{
@@ -203,6 +207,7 @@ func MakeConfig() map[string]any {
 					map[string]any{
 						"name": "properties",
 						"req": true,
+						"short": "Weather station measurement properties",
 						"type": "`$OBJECT`",
 					},
 					map[string]any{

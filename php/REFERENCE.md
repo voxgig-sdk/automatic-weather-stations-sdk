@@ -211,10 +211,10 @@ $item = $client->Item();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `geometry` | `array` | Yes |  |
+| `geometry` | `array` | Yes | GeoJSON Geometry |
 | `id` | `string` | No |  |
 | `links` | `array` | No |  |
-| `properties` | `array` | Yes |  |
+| `properties` | `array` | Yes | Weather station measurement properties |
 | `type` | `string` | Yes |  |
 
 ### Operations

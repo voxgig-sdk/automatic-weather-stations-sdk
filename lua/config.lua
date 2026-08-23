@@ -7,6 +7,9 @@ local function make_config()
   return {
     main = {
       name = "AutomaticWeatherStations",
+      slug = "automatic-weather-stations",
+      version = "0.0.1",
+      target = "lua",
     },
     feature = {
       ["test"] = {
@@ -186,6 +189,7 @@ local function make_config()
           {
             ["name"] = "geometry",
             ["req"] = true,
+            ["short"] = "GeoJSON Geometry",
             ["type"] = "`$OBJECT`",
           },
           {
@@ -199,6 +203,7 @@ local function make_config()
           {
             ["name"] = "properties",
             ["req"] = true,
+            ["short"] = "Weather station measurement properties",
             ["type"] = "`$OBJECT`",
           },
           {

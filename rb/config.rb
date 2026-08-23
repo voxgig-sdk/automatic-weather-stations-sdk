@@ -19,6 +19,9 @@ module AutomaticWeatherStationsConfig
     {
       "main" => {
         "name" => "AutomaticWeatherStations",
+        "slug" => "automatic-weather-stations",
+        "version" => "0.0.1",
+        "target" => "rb",
       },
       "feature" => {
         "test" => {
@@ -198,6 +201,7 @@ module AutomaticWeatherStationsConfig
             {
               "name" => "geometry",
               "req" => true,
+              "short" => "GeoJSON Geometry",
               "type" => "`$OBJECT`",
             },
             {
@@ -211,6 +215,7 @@ module AutomaticWeatherStationsConfig
             {
               "name" => "properties",
               "req" => true,
+              "short" => "Weather station measurement properties",
               "type" => "`$OBJECT`",
             },
             {

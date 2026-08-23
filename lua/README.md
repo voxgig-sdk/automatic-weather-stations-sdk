@@ -262,10 +262,10 @@ API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 
 | Field | Description |
 | --- | --- |
-| `geometry` |  |
+| `geometry` | GeoJSON Geometry |
 | `id` |  |
 | `links` |  |
-| `properties` |  |
+| `properties` | Weather station measurement properties |
 | `type` |  |
 
 Operations: Load.
@@ -344,10 +344,10 @@ Create an instance: `local item = client:Item(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `geometry` | `table` |  |
+| `geometry` | `table` | GeoJSON Geometry |
 | `id` | `string` |  |
 | `links` | `table` |  |
-| `properties` | `table` |  |
+| `properties` | `table` | Weather station measurement properties |
 | `type` | `string` |  |
 
 #### Example: Load
