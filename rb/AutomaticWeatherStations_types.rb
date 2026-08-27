@@ -77,26 +77,30 @@ FeatureCollection = Struct.new(
 
 # Request payload for FeatureCollection#list.
 #
-# @!attribute [rw] features
+# @!attribute [rw] bbox
 #   @return [Array, nil]
 #
-# @!attribute [rw] links
-#   @return [Array, nil]
+# @!attribute [rw] datetime
+#   @return [String, nil]
 #
-# @!attribute [rw] numberMatched
+# @!attribute [rw] granularity
+#   @return [String, nil]
+#
+# @!attribute [rw] limit
 #   @return [Integer, nil]
 #
-# @!attribute [rw] numberReturned
-#   @return [Integer, nil]
+# @!attribute [rw] station
+#   @return [String, nil]
 #
-# @!attribute [rw] type
+# @!attribute [rw] update_frequency
 #   @return [String, nil]
 FeatureCollectionListMatch = Struct.new(
-  :features,
-  :links,
-  :numberMatched,
-  :numberReturned,
-  :type,
+  :bbox,
+  :datetime,
+  :granularity,
+  :limit,
+  :station,
+  :update_frequency,
   keyword_init: true
 )
 

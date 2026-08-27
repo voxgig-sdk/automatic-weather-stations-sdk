@@ -43,11 +43,12 @@ class FeatureCollection
 /** Request payload for FeatureCollection#list. */
 class FeatureCollectionListMatch
 {
-    public ?array $features = null;
-    public ?array $links = null;
-    public ?int $numberMatched = null;
-    public ?int $numberReturned = null;
-    public ?string $type = null;
+    public ?array $bbox = null;
+    public ?string $datetime = null;
+    public ?string $granularity = null;
+    public ?int $limit = null;
+    public ?string $station = null;
+    public ?string $update_frequency = null;
 }
 
 /** Item entity data model. */

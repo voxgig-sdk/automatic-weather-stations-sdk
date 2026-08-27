@@ -45,11 +45,12 @@ class FeatureCollection(FeatureCollectionRequired, total=False):
 
 
 class FeatureCollectionListMatch(TypedDict, total=False):
-    features: list
-    links: list
-    numberMatched: int
-    numberReturned: int
-    type: str
+    bbox: list
+    datetime: str
+    granularity: str
+    limit: int
+    station: str
+    update_frequency: str
 
 
 class ItemRequired(TypedDict):

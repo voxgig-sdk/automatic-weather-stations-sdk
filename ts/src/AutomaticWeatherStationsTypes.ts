@@ -34,11 +34,12 @@ export interface FeatureCollection {
 }
 
 export interface FeatureCollectionListMatch {
-  features?: any[]
-  links?: any[]
-  numberMatched?: number
-  numberReturned?: number
-  type?: string
+  bbox?: any[]
+  datetime?: string
+  granularity?: string
+  limit?: number
+  station?: string
+  update_frequency?: string
 }
 
 export interface Item {

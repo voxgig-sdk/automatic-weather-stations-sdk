@@ -39,11 +39,12 @@ type FeatureCollection struct {
 
 // FeatureCollectionListMatch is the typed request payload for FeatureCollection.ListTyped.
 type FeatureCollectionListMatch struct {
-	Features *[]any `json:"features,omitempty"`
-	Links *[]any `json:"links,omitempty"`
-	NumberMatched *int `json:"numberMatched,omitempty"`
-	NumberReturned *int `json:"numberReturned,omitempty"`
-	Type *string `json:"type,omitempty"`
+	Bbox *[]any `json:"bbox,omitempty"`
+	Datetime *string `json:"datetime,omitempty"`
+	Granularity *string `json:"granularity,omitempty"`
+	Limit *int `json:"limit,omitempty"`
+	Station *string `json:"station,omitempty"`
+	UpdateFrequency *string `json:"update_frequency,omitempty"`
 }
 
 // Item is the typed data model for the item entity.

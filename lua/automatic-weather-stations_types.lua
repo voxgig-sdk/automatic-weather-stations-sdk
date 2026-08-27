@@ -26,11 +26,12 @@
 ---@field type string
 
 ---@class FeatureCollectionListMatch
----@field features? table
----@field links? table
----@field numberMatched? number
----@field numberReturned? number
----@field type? string
+---@field bbox? table
+---@field datetime? string
+---@field granularity? string
+---@field limit? number
+---@field station? string
+---@field update_frequency? string
 
 ---@class Item
 ---@field geometry table
