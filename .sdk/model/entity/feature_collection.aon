@@ -87,10 +87,16 @@ main: kit: entity: feature_collection: {
           }
           method: "GET"
           orig: "/collections/ch.meteoschweiz.ogd-smn/items"
-          parts: [
-            "collections"
-            "ch.meteoschweiz.ogd-smn"
-            "items"
+          segments: [
+            {
+              lit: "collections"
+            }
+            {
+              lit: "ch.meteoschweiz.ogd-smn"
+            }
+            {
+              lit: "items"
+            }
           ]
           select: {
             exist: [

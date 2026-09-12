@@ -46,6 +46,7 @@ module AutomaticWeatherStationsConfig
         "collection" => {
           "fields" => [
             {
+              "format" => "uri",
               "name" => "href",
               "req" => true,
               "type" => "`$STRING`",
@@ -75,9 +76,13 @@ module AutomaticWeatherStationsConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/collections/ch.meteoschweiz.ogd-smn",
-                  "parts" => [
-                    "collections",
-                    "ch.meteoschweiz.ogd-smn",
+                  "segments" => [
+                    {
+                      "lit" => "collections",
+                    },
+                    {
+                      "lit" => "ch.meteoschweiz.ogd-smn",
+                    },
                   ],
                   "select" => {
                     "$action" => "chmeteoschweizogd_smn",
@@ -86,6 +91,10 @@ module AutomaticWeatherStationsConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "collections",
+                    "ch.meteoschweiz.ogd-smn",
+                  ],
                 },
               ],
             },
@@ -170,10 +179,16 @@ module AutomaticWeatherStationsConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/collections/ch.meteoschweiz.ogd-smn/items",
-                  "parts" => [
-                    "collections",
-                    "ch.meteoschweiz.ogd-smn",
-                    "items",
+                  "segments" => [
+                    {
+                      "lit" => "collections",
+                    },
+                    {
+                      "lit" => "ch.meteoschweiz.ogd-smn",
+                    },
+                    {
+                      "lit" => "items",
+                    },
                   ],
                   "select" => {
                     "exist" => [
@@ -189,6 +204,11 @@ module AutomaticWeatherStationsConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "collections",
+                    "ch.meteoschweiz.ogd-smn",
+                    "items",
+                  ],
                 },
               ],
             },
@@ -225,6 +245,10 @@ module AutomaticWeatherStationsConfig
               "type" => "`$STRING`",
             },
           ],
+          "id" => {
+            "field" => "id",
+            "name" => "id",
+          },
           "name" => "item",
           "op" => {
             "load" => {
@@ -246,17 +270,25 @@ module AutomaticWeatherStationsConfig
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/collections/ch.meteoschweiz.ogd-smn/items/{itemId}",
-                  "parts" => [
-                    "collections",
-                    "ch.meteoschweiz.ogd-smn",
-                    "items",
-                    "{id}",
-                  ],
                   "rename" => {
                     "param" => {
                       "itemId" => "id",
                     },
                   },
+                  "segments" => [
+                    {
+                      "lit" => "collections",
+                    },
+                    {
+                      "lit" => "ch.meteoschweiz.ogd-smn",
+                    },
+                    {
+                      "lit" => "items",
+                    },
+                    {
+                      "var" => "id",
+                    },
+                  ],
                   "select" => {
                     "exist" => [
                       "id",
@@ -266,6 +298,12 @@ module AutomaticWeatherStationsConfig
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
+                  "parts" => [
+                    "collections",
+                    "ch.meteoschweiz.ogd-smn",
+                    "items",
+                    "{id}",
+                  ],
                 },
               ],
             },

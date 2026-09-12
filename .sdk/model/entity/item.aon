@@ -58,17 +58,25 @@ main: kit: entity: item: {
           }
           method: "GET"
           orig: "/collections/ch.meteoschweiz.ogd-smn/items/{itemId}"
-          parts: [
-            "collections"
-            "ch.meteoschweiz.ogd-smn"
-            "items"
-            "{id}"
-          ]
           rename: {
             param: {
               itemId: "id"
             }
           }
+          segments: [
+            {
+              lit: "collections"
+            }
+            {
+              lit: "ch.meteoschweiz.ogd-smn"
+            }
+            {
+              lit: "items"
+            }
+            {
+              var: "id"
+            }
+          ]
           select: {
             exist: [
               "id"

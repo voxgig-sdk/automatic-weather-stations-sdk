@@ -34,6 +34,7 @@ local function make_config()
       ["collection"] = {
         ["fields"] = {
           {
+            ["format"] = "uri",
             ["name"] = "href",
             ["req"] = true,
             ["type"] = "`$STRING`",
@@ -63,9 +64,13 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/collections/ch.meteoschweiz.ogd-smn",
-                ["parts"] = {
-                  "collections",
-                  "ch.meteoschweiz.ogd-smn",
+                ["segments"] = {
+                  {
+                    ["lit"] = "collections",
+                  },
+                  {
+                    ["lit"] = "ch.meteoschweiz.ogd-smn",
+                  },
                 },
                 ["select"] = {
                   ["$action"] = "chmeteoschweizogd_smn",
@@ -73,6 +78,10 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "collections",
+                  "ch.meteoschweiz.ogd-smn",
                 },
               },
             },
@@ -158,10 +167,16 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/collections/ch.meteoschweiz.ogd-smn/items",
-                ["parts"] = {
-                  "collections",
-                  "ch.meteoschweiz.ogd-smn",
-                  "items",
+                ["segments"] = {
+                  {
+                    ["lit"] = "collections",
+                  },
+                  {
+                    ["lit"] = "ch.meteoschweiz.ogd-smn",
+                  },
+                  {
+                    ["lit"] = "items",
+                  },
                 },
                 ["select"] = {
                   ["exist"] = {
@@ -176,6 +191,11 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "collections",
+                  "ch.meteoschweiz.ogd-smn",
+                  "items",
                 },
               },
             },
@@ -213,6 +233,10 @@ local function make_config()
             ["type"] = "`$STRING`",
           },
         },
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
+        },
         ["name"] = "item",
         ["op"] = {
           ["load"] = {
@@ -234,15 +258,23 @@ local function make_config()
                 ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/collections/ch.meteoschweiz.ogd-smn/items/{itemId}",
-                ["parts"] = {
-                  "collections",
-                  "ch.meteoschweiz.ogd-smn",
-                  "items",
-                  "{id}",
-                },
                 ["rename"] = {
                   ["param"] = {
                     ["itemId"] = "id",
+                  },
+                },
+                ["segments"] = {
+                  {
+                    ["lit"] = "collections",
+                  },
+                  {
+                    ["lit"] = "ch.meteoschweiz.ogd-smn",
+                  },
+                  {
+                    ["lit"] = "items",
+                  },
+                  {
+                    ["var"] = "id",
                   },
                 },
                 ["select"] = {
@@ -253,6 +285,12 @@ local function make_config()
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
+                },
+                ["parts"] = {
+                  "collections",
+                  "ch.meteoschweiz.ogd-smn",
+                  "items",
+                  "{id}",
                 },
               },
             },

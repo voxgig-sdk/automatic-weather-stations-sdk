@@ -6,6 +6,7 @@ main: kit: entity: collection: {
 
   fields: [
     {
+      format: "uri"
       name: "href"
       req: true
       type: "`$STRING`"
@@ -35,9 +36,13 @@ main: kit: entity: collection: {
         {
           method: "GET"
           orig: "/collections/ch.meteoschweiz.ogd-smn"
-          parts: [
-            "collections"
-            "ch.meteoschweiz.ogd-smn"
+          segments: [
+            {
+              lit: "collections"
+            }
+            {
+              lit: "ch.meteoschweiz.ogd-smn"
+            }
           ]
           select: {
             "$action": "chmeteoschweizogd_smn"

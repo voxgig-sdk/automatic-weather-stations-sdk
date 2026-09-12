@@ -1,6 +1,14 @@
 # AutomaticWeatherStations SDK configuration
 
 
+# The sekreto plugin DEFINITIONS the model selected per feature, imported
+# above by name from the modules the catalogue's active `plugin.def`
+# entries declare. Handed to each feature (secrets builds its Sekreto
+# with them): a provider kind not listed here is unknown to that SDK.
+FEATURE_PLUGINS = {
+}
+
+
 _shared_config = None
 
 
@@ -55,6 +63,7 @@ def make_config():
       "collection": {
         "fields": [
           {
+            "format": "uri",
             "name": "href",
             "req": True,
             "type": "`$STRING`",
@@ -84,9 +93,13 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/collections/ch.meteoschweiz.ogd-smn",
-                "parts": [
-                  "collections",
-                  "ch.meteoschweiz.ogd-smn",
+                "segments": [
+                  {
+                    "lit": "collections",
+                  },
+                  {
+                    "lit": "ch.meteoschweiz.ogd-smn",
+                  },
                 ],
                 "select": {
                   "$action": "chmeteoschweizogd_smn",
@@ -95,6 +108,10 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "collections",
+                  "ch.meteoschweiz.ogd-smn",
+                ],
               },
             ],
           },
@@ -179,10 +196,16 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/collections/ch.meteoschweiz.ogd-smn/items",
-                "parts": [
-                  "collections",
-                  "ch.meteoschweiz.ogd-smn",
-                  "items",
+                "segments": [
+                  {
+                    "lit": "collections",
+                  },
+                  {
+                    "lit": "ch.meteoschweiz.ogd-smn",
+                  },
+                  {
+                    "lit": "items",
+                  },
                 ],
                 "select": {
                   "exist": [
@@ -198,6 +221,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "collections",
+                  "ch.meteoschweiz.ogd-smn",
+                  "items",
+                ],
               },
             ],
           },
@@ -234,6 +262,10 @@ def make_config():
             "type": "`$STRING`",
           },
         ],
+        "id": {
+          "field": "id",
+          "name": "id",
+        },
         "name": "item",
         "op": {
           "load": {
@@ -255,17 +287,25 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/collections/ch.meteoschweiz.ogd-smn/items/{itemId}",
-                "parts": [
-                  "collections",
-                  "ch.meteoschweiz.ogd-smn",
-                  "items",
-                  "{id}",
-                ],
                 "rename": {
                   "param": {
                     "itemId": "id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "collections",
+                  },
+                  {
+                    "lit": "ch.meteoschweiz.ogd-smn",
+                  },
+                  {
+                    "lit": "items",
+                  },
+                  {
+                    "var": "id",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "id",
@@ -275,6 +315,12 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "collections",
+                  "ch.meteoschweiz.ogd-smn",
+                  "items",
+                  "{id}",
+                ],
               },
             ],
           },
