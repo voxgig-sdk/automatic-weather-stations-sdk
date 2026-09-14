@@ -105,7 +105,7 @@ local results, err = client:Collection():list()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
+| TypeScript | `@voxgig-sdk/automatic-weather-stations-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
 | Python | `voxgig-sdk-automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
 | PHP | `voxgig-sdk/automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
 | Golang | `github.com/voxgig-sdk/automatic-weather-stations-sdk/go` | `go get github.com/voxgig-sdk/automatic-weather-stations-sdk/go@latest` |
@@ -119,7 +119,7 @@ local results, err = client:Collection():list()
 ### TypeScript
 
 ```ts
-import { AutomaticWeatherStationsSDK } from '@voxgig-sdk/automatic-weather-stations'
+import { AutomaticWeatherStationsSDK } from '@voxgig-sdk/automatic-weather-stations-sdk'
 
 const client = new AutomaticWeatherStationsSDK()
 

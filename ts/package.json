@@ -1,5 +1,5 @@
 {
-  "name": "@voxgig-sdk/automatic-weather-stations",
+  "name": "@voxgig-sdk/automatic-weather-stations-sdk",
   "version": "0.0.1",
   "description": "Unofficial generated TypeScript SDK for the Automatic Weather Stations public API. Not affiliated with or endorsed by the upstream API provider.",
   "keywords": [
