@@ -30,5 +30,117 @@
         "type": "sa3"
       }
     }
+  },
+  "requests": {
+    "GET /collections/ch.meteoschweiz.ogd-smn": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "getWeatherStationsCollection",
+        "parameters": [],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "STAC Collection metadata for the automatic weather stations",
+                  "properties": {
+                    "description": {
+                      "example": "Data from around 160 automatic measurement stations within the SwissMetNet network",
+                      "type": "string"
+                    },
+                    "extent": {
+                      "properties": {
+                        "spatial": {
+                          "properties": {
+                            "bbox": {
+                              "items": {
+                                "items": {
+                                  "type": "number"
+                                },
+                                "type": "array"
+                              },
+                              "type": "array"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "temporal": {
+                          "properties": {
+                            "interval": {
+                              "items": {
+                                "items": {
+                                  "format": "date-time",
+                                  "nullable": true,
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "type": "array"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "id": {
+                      "example": "ch.meteoschweiz.ogd-smn",
+                      "type": "string"
+                    },
+                    "license": {
+                      "example": "Open Data",
+                      "type": "string"
+                    },
+                    "links": {
+                      "items": {
+                        "properties": {
+                          "href": {
+                            "format": "uri",
+                            "type": "string"
+                          },
+                          "rel": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "href",
+                          "rel"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "title": {
+                      "example": "Automatic Weather Stations - SwissMetNet",
+                      "type": "string"
+                    },
+                    "type": {
+                      "example": "Collection",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful response with collection metadata"
+          },
+          "404": {
+            "description": "Collection not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "securitySource": "unspecified"
+      }
+    }
   }
 }

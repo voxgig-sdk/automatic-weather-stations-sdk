@@ -40,6 +40,8 @@ const node_path_1 = __importDefault(require("node:path"));
 const Fs = __importStar(require("node:fs"));
 const node_test_1 = require("node:test");
 const node_assert_1 = __importDefault(require("node:assert"));
+const live_runner_1 = require("../../live-runner");
+const live_entity_1 = require("../../live-entity");
 const __1 = require("../../..");
 const utility_1 = require("../../utility");
 // AFTER the imports on purpose: TypeScript hoists `import` above any
@@ -59,16 +61,12 @@ const utility_1 = require("../../utility");
     (0, node_test_1.test)('basic', async (t) => {
         const live = 'TRUE' === process.env.AUTOMATIC_WEATHER_STATIONS_TEST_LIVE;
         for (const op of ['list']) {
-            if ((0, utility_1.maybeSkipControl)(t, 'entityOp', 'collection.' + op, live))
+            if (!live && (0, utility_1.maybeSkipControl)(t, 'entityOp', 'collection.' + op, live))
                 return;
         }
         const setup = basicSetup();
-        // The basic flow consumes synthetic IDs and field values from the
-        // fixture (entity TestData.json). Those don't exist on the live API.
-        // Skip live runs unless the user provided a real ENTID env override.
-        if (setup.syntheticOnly) {
-            t.skip('live entity test uses synthetic IDs from fixture — set AUTOMATIC_WEATHER_STATIONS_TEST_COLLECTION_ENTID JSON to run live');
-            return;
+        if (setup.live) {
+            return (0, live_entity_1.runLiveEntity)(setup, { "active": true, "alias": { "field": {} }, "fields": [{ "active": true, "format": "uri", "name": "href", "req": true, "type": "`$STRING`", "index$": 0 }, { "active": true, "name": "rel", "req": true, "type": "`$STRING`", "index$": 1 }, { "active": true, "name": "title", "req": false, "type": "`$STRING`", "index$": 2 }, { "active": true, "name": "type", "req": false, "type": "`$STRING`", "index$": 3 }], "name": "collection", "op": { "list": { "input": "data", "name": "list", "points": [{ "active": true, "args": {}, "contract": { "id": "GET /collections/ch.meteoschweiz.ogd-smn", "json": "{\"operationId\":\"getWeatherStationsCollection\",\"parameters\":[],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"description\":\"STAC Collection metadata for the automatic weather stations\",\"properties\":{\"description\":{\"example\":\"Data from around 160 automatic measurement stations within the SwissMetNet network\",\"type\":\"string\"},\"extent\":{\"properties\":{\"spatial\":{\"properties\":{\"bbox\":{\"items\":{\"items\":{\"type\":\"number\"},\"type\":\"array\"},\"type\":\"array\"}},\"type\":\"object\"},\"temporal\":{\"properties\":{\"interval\":{\"items\":{\"items\":{\"format\":\"date-time\",\"nullable\":true,\"type\":\"string\"},\"type\":\"array\"},\"type\":\"array\"}},\"type\":\"object\"}},\"type\":\"object\"},\"id\":{\"example\":\"ch.meteoschweiz.ogd-smn\",\"type\":\"string\"},\"license\":{\"example\":\"Open Data\",\"type\":\"string\"},\"links\":{\"items\":{\"properties\":{\"href\":{\"format\":\"uri\",\"type\":\"string\"},\"rel\":{\"type\":\"string\"},\"title\":{\"type\":\"string\"},\"type\":{\"type\":\"string\"}},\"required\":[\"href\",\"rel\"],\"type\":\"object\"},\"type\":\"array\"},\"title\":{\"example\":\"Automatic Weather Stations - SwissMetNet\",\"type\":\"string\"},\"type\":{\"example\":\"Collection\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Successful response with collection metadata\"},\"404\":{\"description\":\"Collection not found\"},\"500\":{\"description\":\"Internal server error\"}},\"securitySource\":\"unspecified\"}", "source": "openapi3", "version": 1 }, "kind": "http", "method": "GET", "orig": "/collections/ch.meteoschweiz.ogd-smn", "segments": [{ "lit": "collections" }, { "lit": "ch.meteoschweiz.ogd-smn" }], "select": { "$action": "chmeteoschweizogd_smn" }, "transform": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }], "key$": "list" } }, "relations": { "ancestors": [] }, "key$": "collection", "name__orig": "collection", "Name": "Collection", "name_": "collection", "name-": "collection", "NAME": "COLLECTION", "index$": 0 }, { "active": true, "entity": "collection", "key$": "BasicCollectionFlow", "kind": "basic", "name": "BasicCollectionFlow", "param": {}, "step": [{ "active": true, "data": {}, "input": {}, "match": {}, "op": "list", "spec": [], "valid": [{ "apply": "ItemExists", "def": { "ref": "collection_ref01" } }], "index$": 0 }] }, 'Collection');
         }
         const client = setup.client;
         const struct = setup.struct;
@@ -101,12 +99,6 @@ function basicSetup(extra) {
                 '`$VAL`': ['`$FORMAT`', 'upper', '`$COPY`']
             }]
     });
-    // Detect whether the user provided a real ENTID JSON via env var. The
-    // basic flow consumes synthetic IDs from the fixture file; without an
-    // override those synthetic IDs reach the live API and 4xx. Surface this
-    // to the test so it can skip rather than fail.
-    const idmapEnvVal = process.env['AUTOMATIC_WEATHER_STATIONS_TEST_COLLECTION_ENTID'];
-    const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{');
     const env = (0, utility_1.envOverride)({
         'AUTOMATIC_WEATHER_STATIONS_TEST_COLLECTION_ENTID': idmap,
         'AUTOMATIC_WEATHER_STATIONS_TEST_LIVE': 'FALSE',
@@ -114,7 +106,13 @@ function basicSetup(extra) {
     });
     idmap = env['AUTOMATIC_WEATHER_STATIONS_TEST_COLLECTION_ENTID'];
     const live = 'TRUE' === env.AUTOMATIC_WEATHER_STATIONS_TEST_LIVE;
+    const transport = (0, live_runner_1.createLiveTransport)();
     if (live) {
+        const rawIds = process.env['AUTOMATIC_WEATHER_STATIONS_TEST_COLLECTION_ENTID'];
+        idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {};
+        if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+            throw new Error('Live ENTID must be a JSON object');
+        }
         client = new __1.AutomaticWeatherStationsSDK(merge([
             // FIRST, so the generated fields below win: sdk-test-control.json's
             // test.client.options adds to the live client, it does not redirect it.
@@ -125,7 +123,8 @@ function basicSetup(extra) {
             // argument at all - so a bare 'extra' silently discarded the apikey
             // and server values above and handed the SDK undefined. Harmless
             // while there was nothing in that object; not harmless now.
-            extra || {}
+            extra || {},
+            { system: { fetch: transport.fetch } }
         ]));
     }
     const setup = {
@@ -137,7 +136,7 @@ function basicSetup(extra) {
         data: entityData,
         explain: 'TRUE' === env.AUTOMATIC_WEATHER_STATIONS_TEST_EXPLAIN,
         live,
-        syntheticOnly: live && !idmapOverridden,
+        transport,
         now: Date.now(),
     };
     return setup;

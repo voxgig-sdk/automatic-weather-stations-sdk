@@ -1,12 +1,18 @@
 # AutomaticWeatherStations SDK feature factory
 
 from automaticweatherstations_sdk.feature.base_feature import AutomaticWeatherStationsBaseFeature
+from automaticweatherstations_sdk.feature.ratelimit_feature import AutomaticWeatherStationsRatelimitFeature
+from automaticweatherstations_sdk.feature.retry_feature import AutomaticWeatherStationsRetryFeature
 from automaticweatherstations_sdk.feature.test_feature import AutomaticWeatherStationsTestFeature
+from automaticweatherstations_sdk.feature.timeout_feature import AutomaticWeatherStationsTimeoutFeature
 
 
 _FEATURES = {
     "base": lambda: AutomaticWeatherStationsBaseFeature(),
+    "ratelimit": lambda: AutomaticWeatherStationsRatelimitFeature(),
+    "retry": lambda: AutomaticWeatherStationsRetryFeature(),
     "test": lambda: AutomaticWeatherStationsTestFeature(),
+    "timeout": lambda: AutomaticWeatherStationsTimeoutFeature(),
 }
 
 
