@@ -76,22 +76,7 @@ declare class Config {
     };
     entity: {
         collection: {
-            fields: ({
-                format: string;
-                name: string;
-                req: boolean;
-                type: string;
-            } | {
-                name: string;
-                req: boolean;
-                type: string;
-                format?: undefined;
-            } | {
-                name: string;
-                type: string;
-                format?: undefined;
-                req?: undefined;
-            })[];
+            fields: never[];
             name: string;
             op: {
                 list: {

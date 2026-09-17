@@ -90,27 +90,7 @@ func MakeConfig() map[string]any {
 		},
 		"entity": map[string]any{
 			"collection": map[string]any{
-				"fields": []any{
-					map[string]any{
-						"format": "uri",
-						"name": "href",
-						"req": true,
-						"type": "`$STRING`",
-					},
-					map[string]any{
-						"name": "rel",
-						"req": true,
-						"type": "`$STRING`",
-					},
-					map[string]any{
-						"name": "title",
-						"type": "`$STRING`",
-					},
-					map[string]any{
-						"name": "type",
-						"type": "`$STRING`",
-					},
-				},
+				"fields": []any{},
 				"name": "collection",
 				"op": map[string]any{
 					"list": map[string]any{

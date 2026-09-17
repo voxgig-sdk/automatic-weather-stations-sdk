@@ -91,15 +91,6 @@ Prepare a fetch definition without sending. Returns the `fetchdef` and raises on
 collection = client.Collection()
 ```
 
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `href` | `str` | Yes |  |
-| `rel` | `str` | Yes |  |
-| `title` | `str` | No |  |
-| `type` | `str` | No |  |
-
 ### Operations
 
 #### `list(reqmatch=None, ctrl=None) -> list`

@@ -15,19 +15,11 @@ declare(strict_types=1);
 /** Collection entity data model. */
 class Collection
 {
-    public string $href;
-    public string $rel;
-    public ?string $title = null;
-    public ?string $type = null;
 }
 
 /** Request payload for Collection#list. */
 class CollectionListMatch
 {
-    public ?string $href = null;
-    public ?string $rel = null;
-    public ?string $title = null;
-    public ?string $type = null;
 }
 
 /** FeatureCollection entity data model. */

@@ -7,16 +7,8 @@
 -- edit by hand.
 
 ---@class Collection
----@field href string
----@field rel string
----@field title? string
----@field type? string
 
 ---@class CollectionListMatch
----@field href? string
----@field rel? string
----@field title? string
----@field type? string
 
 ---@class FeatureCollection
 ---@field features table

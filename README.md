@@ -46,23 +46,23 @@ network, and no credentials:
 // Shape: { entity: { <entity-name>: { <id>: <record> } } }
 const client = AutomaticWeatherStationsSDK.test({
   entity: {
-    collection: {
+    item: {
       test01: { id: 'test01' },
     },
   },
 })
-const collections = await client.Collection().list()
-// collections is an array of Collection entities, populated with mock data
-// — call collections[0].data() for the record itself
-console.log(collections)
+const item = await client.Item().load({ id: 'test01' })
+// item is the Item entity, populated with mock data
+// — call item.data() for the record itself
+console.log(item)
 ```
 
 ### Python
 
 ```python
 client = AutomaticWeatherStationsSDK.test()
-collections = client.Collection().list()
-print(collections)
+item = client.Item().load({"id": "test01"})
+print(item)
 ```
 
 ### PHP
@@ -70,17 +70,17 @@ print(collections)
 ```php
 // Seed fixture data so offline calls resolve without a live server.
 $client = AutomaticWeatherStationsSDK::test([
-    "entity" => ["collection" => ["test01" => []]],
+    "entity" => ["item" => ["test01" => ["id" => "test01"]]],
 ]);
-$collections = $client->Collection()->list();
+$item = $client->Item()->load(["id" => "test01"]);
 ```
 
 ### Golang
 
 ```go
 client := sdk.Test()
-result, err := client.Collection(nil).List(
-    nil, nil,
+result, err := client.Item(nil).Load(
+    map[string]any{"id": "test01"}, nil,
 )
 ```
 
@@ -89,28 +89,28 @@ result, err := client.Collection(nil).List(
 ```ruby
 # Seed fixture data so offline calls resolve without a live server.
 client = AutomaticWeatherStationsSDK.test({
-  "entity" => { "collection" => { "test01" => {} } },
+  "entity" => { "item" => { "test01" => { "id" => "test01" } } },
 })
-collections = client.Collection.list()
+item = client.Item.load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local results, err = client:Collection():list()
+local result, err = client:Item():load({ id = "test01" })
 ```
 
 ## Packages
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/automatic-weather-stations-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
-| Python | `voxgig-sdk-automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
-| PHP | `voxgig-sdk/automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
+| TypeScript | `@voxgig-sdk/automatic-weather-stations-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/tags) |
+| Python | `voxgig-sdk-automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/tags) |
+| PHP | `voxgig-sdk/automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/tags) |
 | Golang | `github.com/voxgig-sdk/automatic-weather-stations-sdk/go` | `go get github.com/voxgig-sdk/automatic-weather-stations-sdk/go@latest` |
-| Ruby | `voxgig-sdk-automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
-| Lua | `voxgig-sdk-automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases) |
+| Ruby | `voxgig-sdk-automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/tags) |
+| Lua | `voxgig-sdk-automatic-weather-stations` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/tags) |
 | Go CLI | `github.com/voxgig-sdk/automatic-weather-stations-sdk/go-cli` | `go install github.com/voxgig-sdk/automatic-weather-stations-sdk/go-cli/cmd/automatic-weather-stations@latest` |
 | Go MCP server | `github.com/voxgig-sdk/automatic-weather-stations-sdk/go-mcp` | `go get github.com/voxgig-sdk/automatic-weather-stations-sdk/go-mcp@latest` |
 

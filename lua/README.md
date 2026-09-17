@@ -43,7 +43,7 @@ local collections, err = client:Collection():list()
 if err then error(err) end
 
 for _, item in ipairs(collections) do
-  print(item["href"])
+  print(item)
 end
 ```
 
@@ -54,7 +54,7 @@ Entity operations return `(value, err)`. Check `err` before using
 the value:
 
 ```lua
-local collections, err = client:Collection():list()
+local item, err = client:Item():load({ id = "example_id" })
 if err then error(err) end
 ```
 
@@ -112,7 +112,7 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:Collection():list()
+local result, err = client:Item():load({ id = "test01" })
 -- result is the returned data; err is set on failure
 ```
 
@@ -235,10 +235,6 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 
 | Field | Description |
 | --- | --- |
-| `href` |  |
-| `rel` |  |
-| `title` |  |
-| `type` |  |
 
 Operations: List.
 
@@ -286,15 +282,6 @@ Create an instance: `local collection = client:Collection(nil)`
 | Method | Description |
 | --- | --- |
 | `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `href` | `string` |  |
-| `rel` | `string` |  |
-| `title` | `string` |  |
-| `type` | `string` |  |
 
 #### Example: List
 
@@ -499,6 +486,7 @@ Use `helpers.to_map()` to safely validate that a value is a table.
 lua/
 ├── automatic-weather-stations_sdk.lua    -- Main SDK module
 ├── config.lua               -- Configuration
+├── schema.lua               -- Generated option + entity specs
 ├── features.lua             -- Feature factory
 ├── core/                    -- Core types and context
 ├── entity/                  -- Entity implementations
@@ -513,15 +501,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local collection = client:Collection()
-collection:list()
+local item = client:Item()
+item:load({ id = "example_id" })
 
--- collection:data_get() now returns the collection data from the last list
--- collection:match_get() returns the last match criteria
+-- item:data_get() now returns the item data from the last load
+-- item:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

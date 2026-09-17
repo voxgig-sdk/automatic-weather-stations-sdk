@@ -16,21 +16,12 @@ from __future__ import annotations
 from typing import TypedDict, Any
 
 
-class CollectionRequired(TypedDict):
-    href: str
-    rel: str
+class Collection(TypedDict):
+    pass
 
 
-class Collection(CollectionRequired, total=False):
-    title: str
-    type: str
-
-
-class CollectionListMatch(TypedDict, total=False):
-    href: str
-    rel: str
-    title: str
-    type: str
+class CollectionListMatch(TypedDict):
+    pass
 
 
 class FeatureCollectionRequired(TypedDict):

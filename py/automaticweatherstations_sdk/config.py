@@ -115,27 +115,7 @@ def make_config():
         },
         "entity": {
       "collection": {
-        "fields": [
-          {
-            "format": "uri",
-            "name": "href",
-            "req": True,
-            "type": "`$STRING`",
-          },
-          {
-            "name": "rel",
-            "req": True,
-            "type": "`$STRING`",
-          },
-          {
-            "name": "title",
-            "type": "`$STRING`",
-          },
-          {
-            "name": "type",
-            "type": "`$STRING`",
-          },
-        ],
+        "fields": [],
         "name": "collection",
         "op": {
           "list": {

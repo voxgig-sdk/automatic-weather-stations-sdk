@@ -6,17 +6,9 @@
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 
 export interface Collection {
-  href: string
-  rel: string
-  title?: string
-  type?: string
 }
 
 export interface CollectionListMatch {
-  href?: string
-  rel?: string
-  title?: string
-  type?: string
 
   // Selects a custom action instead of the plain list:
   //   'chmeteoschweizogd_smn'

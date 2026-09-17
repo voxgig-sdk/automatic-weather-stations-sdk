@@ -94,15 +94,6 @@ same parameters as `direct()`.
 local collection = client:Collection(nil)
 ```
 
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `href` | `string` | Yes |  |
-| `rel` | `string` | Yes |  |
-| `title` | `string` | No |  |
-| `type` | `string` | No |  |
-
 ### Operations
 
 #### `list(reqmatch, ctrl) -> any, err`

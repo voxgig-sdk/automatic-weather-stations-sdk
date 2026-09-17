@@ -37,7 +37,7 @@ begin
   # list returns an Array of Collection records — iterate directly.
   collections = client.Collection.list
   collections.each do |item|
-    puts "#{item["href"]}"
+    puts "#{item}"
   end
 rescue => err
   warn "list failed: #{err}"
@@ -51,9 +51,9 @@ Entity operations raise on failure, so rescue them:
 
 ```ruby
 begin
-  collections = client.Collection.list()
+  item = client.Item.load({ "id" => "example_id" })
 rescue => err
-  warn "list failed: #{err}"
+  warn "load failed: #{err}"
 end
 ```
 
@@ -114,15 +114,18 @@ end
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```ruby
-client = AutomaticWeatherStationsSDK.test
+client = AutomaticWeatherStationsSDK.test({
+  "entity" => { "item" => { "test01" => { "id" => "test01" } } },
+})
 
 # Entity ops return the ENTITY (raises on error);
 # call data_get for the mock record.
-collection = client.Collection.list()
-puts collection
+item = client.Item.load({ "id" => "test01" })
+puts item
 ```
 
 ### Use a custom fetch function
@@ -240,10 +243,6 @@ returns a result `Hash` with these keys:
 
 | Field | Description |
 | --- | --- |
-| `href` |  |
-| `rel` |  |
-| `title` |  |
-| `type` |  |
 
 Operations: List.
 
@@ -291,15 +290,6 @@ Create an instance: `collection = client.Collection`
 | Method | Description |
 | --- | --- |
 | `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `href` | `String` |  |
-| `rel` | `String` |  |
-| `title` | `String` |  |
-| `type` | `String` |  |
 
 #### Example: List
 
@@ -507,6 +497,7 @@ Use `Helpers.to_map()` to safely validate that a value is a hash.
 rb/
 ├── AutomaticWeatherStations_sdk.rb       -- Main SDK module
 ├── config.rb                  -- Configuration
+├── schema.rb                  -- Generated option + entity specs
 ├── features.rb                -- Feature factory
 ├── core/                      -- Core types and context
 ├── entity/                    -- Entity implementations
@@ -521,15 +512,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
-collection = client.Collection
-collection.list()
+item = client.Item
+item.load({ "id" => "example_id" })
 
-# collection.data_get now returns the collection data from the last list
-# collection.match_get returns the last match criteria
+# item.data_get now returns the item data from the last load
+# item.match_get returns the last match criteria
 ```
 
 Call `make` to create a fresh instance with the same configuration

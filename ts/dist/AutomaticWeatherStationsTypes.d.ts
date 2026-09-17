@@ -1,14 +1,6 @@
 export interface Collection {
-    href: string;
-    rel: string;
-    title?: string;
-    type?: string;
 }
 export interface CollectionListMatch {
-    href?: string;
-    rel?: string;
-    title?: string;
-    type?: string;
     $action?: string;
     [action: string]: any;
 }

@@ -96,15 +96,6 @@ Prepare a fetch definition without sending the request. Returns the
 $collection = $client->Collection();
 ```
 
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `href` | `string` | Yes |  |
-| `rel` | `string` | Yes |  |
-| `title` | `string` | No |  |
-| `type` | `string` | No |  |
-
 ### Operations
 
 #### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`

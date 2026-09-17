@@ -1,5 +1,5 @@
 # Flows
 
-@"BasicCollectionFlow.aon"
-@"BasicFeatureCollectionFlow.aon"
-@"BasicItemFlow.aon"
+@"./BasicCollectionFlow.aon"
+@"./BasicFeatureCollectionFlow.aon"
+@"./BasicItemFlow.aon"

@@ -54,10 +54,10 @@ Entity operations reject on failure, so wrap them in `try` / `catch`:
 
 ```ts
 try {
-  const collections = await client.Collection().list()
-  console.log(collections)
+  const item = await client.Item().load({ id: "example_id" })
+  console.log(item)
 } catch (err) {
-  console.error('list failed:', err)
+  console.error('load failed:', err)
 }
 ```
 
@@ -121,10 +121,10 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = AutomaticWeatherStationsSDK.test()
 
-const collection = await client.Collection().list()
-// collection is the entity, populated with mock response data
-// — call collection.data() for the record itself
-console.log(collection)
+const item = await client.Item().load({ id: 'test01' })
+// item is the entity, populated with mock response data
+// — call item.data() for the record itself
+console.log(item)
 ```
 
 You can also use the instance method:
@@ -139,14 +139,14 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.Collection()
+const entity = client.Item()
 
 // First call runs the operation and stores its result
-await entity.list()
+await entity.load({ id: 'example' })
 
 // Subsequent calls reuse the stored state
 const data = entity.data()
-console.log(data)
+console.log(data.id)
 ```
 
 ### Add custom middleware
@@ -296,10 +296,6 @@ The `prepare()` method returns:
 
 | Field | Description |
 | --- | --- |
-| `href` |  |
-| `rel` |  |
-| `title` |  |
-| `type` |  |
 
 Operations: list.
 
@@ -347,15 +343,6 @@ Create an instance: `const collection = client.Collection()`
 | Method | Description |
 | --- | --- |
 | `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `href` | `string` |  |
-| `rel` | `string` |  |
-| `title` | `string` |  |
-| `type` | `string` |  |
 
 #### Example: List
 
@@ -566,16 +553,16 @@ import { AutomaticWeatherStationsSDK } from '@voxgig-sdk/automatic-weather-stati
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const collection = client.Collection()
-await collection.list()
+const item = client.Item()
+await item.load({ id: "example_id" })
 
-// collection.data() now returns the collection data from the last `list`
-// collection.match() returns the last match criteria
+// item.data() now returns the item data from the last `load`
+// item.match() returns { id: "example_id" }
 ```
 
 Call `make()` to create a fresh instance with the same configuration

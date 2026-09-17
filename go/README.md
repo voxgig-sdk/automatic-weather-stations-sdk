@@ -68,12 +68,12 @@ Every entity operation returns `(value, error)`. Check `err` before
 using the value — there is no exception to catch:
 
 ```go
-collections, err := client.Collection(nil).List(nil, nil)
+item, err := client.Item(nil).Load(map[string]any{"id": "example_id"}, nil)
 if err != nil {
     // handle err
     return
 }
-_ = collections
+_ = item
 ```
 
 `Direct` follows the same `(value, error)` convention:
@@ -137,13 +137,13 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-collection, err := client.Collection(nil).List(
-    nil, nil,
+item, err := client.Item(nil).Load(
+    map[string]any{"id": "test01"}, nil,
 )
 if err != nil {
     panic(err)
 }
-fmt.Println(collection) // the returned mock data
+fmt.Println(item) // the returned mock data
 ```
 
 ### Use a custom fetch function
@@ -264,10 +264,6 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 
 | Field | Description |
 | --- | --- |
-| `"href"` |  |
-| `"rel"` |  |
-| `"title"` |  |
-| `"type"` |  |
 
 Operations: List.
 
@@ -315,15 +311,6 @@ Create an instance: `collection := client.Collection(nil)`
 | Method | Description |
 | --- | --- |
 | `List(match, ctrl)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `href` | `string` |  |
-| `rel` | `string` |  |
-| `title` | `string` |  |
-| `type` | `string` |  |
 
 #### Example: List
 
@@ -551,15 +538,15 @@ like `core.ToMapAny`.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `List`, the entity
+Entity instances are stateful. After a successful `Load`, the entity
 stores the returned data and match criteria internally.
 
 ```go
-collection := client.Collection(nil)
-collection.List(nil, nil)
+item := client.Item(nil)
+item.Load(map[string]any{"id": "example_id"}, nil)
 
-// collection.Data() now returns the collection data from the last list
-// collection.Match() returns the last match criteria
+// item.Data() now returns the item data from the last load
+// item.Match() returns the last match criteria
 ```
 
 Call `Make()` to create a fresh instance with the same configuration

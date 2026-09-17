@@ -102,15 +102,6 @@ collection := client.Collection(nil)
 fmt.Println(collection.GetName()) // "collection"
 ```
 
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `href` | `string` | Yes |  |
-| `rel` | `string` | Yes |  |
-| `title` | `string` | No |  |
-| `type` | `string` | No |  |
-
 ### Operations
 
 #### `List(reqmatch, ctrl map[string]any) (any, error)`

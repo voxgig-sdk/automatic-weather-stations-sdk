@@ -1,5 +1,5 @@
 # Entity Models
 
-@"collection.aon"
-@"feature_collection.aon"
-@"item.aon"
+@"./collection.aon"
+@"./feature_collection.aon"
+@"./item.aon"

@@ -14,18 +14,10 @@ import (
 
 // Collection is the typed data model for the collection entity.
 type Collection struct {
-	Href string `json:"href"`
-	Rel string `json:"rel"`
-	Title *string `json:"title,omitempty"`
-	Type *string `json:"type,omitempty"`
 }
 
 // CollectionListMatch is the typed request payload for Collection.ListTyped.
 type CollectionListMatch struct {
-	Href *string `json:"href,omitempty"`
-	Rel *string `json:"rel,omitempty"`
-	Title *string `json:"title,omitempty"`
-	Type *string `json:"type,omitempty"`
 }
 
 // FeatureCollection is the typed data model for the feature_collection entity.

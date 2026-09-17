@@ -97,15 +97,6 @@ same parameters as `direct()`. Raises on error.
 collection = client.Collection
 ```
 
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `href` | `String` | Yes |  |
-| `rel` | `String` | Yes |  |
-| `title` | `String` | No |  |
-| `type` | `String` | No |  |
-
 ### Operations
 
 #### `list(reqmatch = nil, ctrl = nil) -> Array`

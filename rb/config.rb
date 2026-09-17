@@ -98,27 +98,7 @@ module AutomaticWeatherStationsConfig
       },
       "entity" => {
         "collection" => {
-          "fields" => [
-            {
-              "format" => "uri",
-              "name" => "href",
-              "req" => true,
-              "type" => "`$STRING`",
-            },
-            {
-              "name" => "rel",
-              "req" => true,
-              "type" => "`$STRING`",
-            },
-            {
-              "name" => "title",
-              "type" => "`$STRING`",
-            },
-            {
-              "name" => "type",
-              "type" => "`$STRING`",
-            },
-          ],
+          "fields" => [],
           "name" => "collection",
           "op" => {
             "list" => {

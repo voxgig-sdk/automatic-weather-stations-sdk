@@ -9,46 +9,12 @@
 # annotations document the shapes. Do not edit by hand.
 
 # Collection entity data model.
-#
-# @!attribute [rw] href
-#   @return [String]
-#
-# @!attribute [rw] rel
-#   @return [String]
-#
-# @!attribute [rw] title
-#   @return [String, nil]
-#
-# @!attribute [rw] type
-#   @return [String, nil]
-Collection = Struct.new(
-  :href,
-  :rel,
-  :title,
-  :type,
-  keyword_init: true
-)
+class Collection
+end
 
 # Request payload for Collection#list.
-#
-# @!attribute [rw] href
-#   @return [String, nil]
-#
-# @!attribute [rw] rel
-#   @return [String, nil]
-#
-# @!attribute [rw] title
-#   @return [String, nil]
-#
-# @!attribute [rw] type
-#   @return [String, nil]
-CollectionListMatch = Struct.new(
-  :href,
-  :rel,
-  :title,
-  :type,
-  keyword_init: true
-)
+class CollectionListMatch
+end
 
 # FeatureCollection entity data model.
 #

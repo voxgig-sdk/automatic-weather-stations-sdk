@@ -39,7 +39,7 @@ try {
     $collections = $client->Collection()->list();
     foreach ($collections as $record) {
         $item = $record->data_get();
-        echo $item["href"] . "\n";
+        echo json_encode($item) . "\n";
     }
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
@@ -54,7 +54,7 @@ Entity operations throw a `\Throwable` on failure, so wrap them in
 
 ```php
 try {
-    $collections = $client->Collection()->list();
+    $item = $client->Item()->load(["id" => "example_id"]);
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -254,10 +254,6 @@ On error, `ok` is `false` and `$err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `href` |  |
-| `rel` |  |
-| `title` |  |
-| `type` |  |
 
 Operations: List.
 
@@ -305,15 +301,6 @@ Create an instance: `$collection = $client->Collection();`
 | Method | Description |
 | --- | --- |
 | `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `href` | `string` |  |
-| `rel` | `string` |  |
-| `title` | `string` |  |
-| `type` | `string` |  |
 
 #### Example: List
 
@@ -521,6 +508,7 @@ Use `Helpers::to_map()` to safely validate that a value is an array.
 php/
 ├── automaticweatherstations_sdk.php          -- Main SDK class
 ├── config.php                     -- Configuration
+├── schema.php                     -- Generated option + entity specs
 ├── features.php                   -- Feature factory
 ├── core/                          -- Core types and context
 ├── entity/                        -- Entity implementations
@@ -535,15 +523,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$collection = $client->Collection();
-$collection->list();
+$item = $client->Item();
+$item->load(["id" => "example_id"]);
 
-// $collection->data_get() now returns the collection data from the last list
-// $collection->match_get() returns the last match criteria
+// $item->data_get() now returns the item data from the last load
+// $item->match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

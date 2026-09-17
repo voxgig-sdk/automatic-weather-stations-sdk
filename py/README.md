@@ -57,10 +57,10 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 
 ```python
 try:
-    collections = client.Collection().list()
-    print(collections)
+    item = client.Item().load({"id": "example_id"})
+    print(item)
 except Exception as err:
-    print(f"list failed: {err}")
+    print(f"load failed: {err}")
 ```
 
 `direct()` does **not** raise — it returns the result envelope. Branch
@@ -126,8 +126,8 @@ client = AutomaticWeatherStationsSDK.test()
 
 # Entity ops return the ENTITY and raises on error;
 # call data_get() for the record.
-collection = client.Collection().list()
-# collection contains the mock response record
+item = client.Item().load({"id": "test01"})
+# item contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -246,10 +246,6 @@ On error, `ok` is `False` and `err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `href` |  |
-| `rel` |  |
-| `title` |  |
-| `type` |  |
 
 Operations: List.
 
@@ -297,15 +293,6 @@ Create an instance: `collection = client.Collection()`
 | Method | Description |
 | --- | --- |
 | `list()` | List entities, optionally matching the given criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `href` | `str` |  |
-| `rel` | `str` |  |
-| `title` | `str` |  |
-| `type` | `str` |  |
 
 #### Example: List
 
@@ -510,6 +497,7 @@ Use `helpers.to_map()` to safely validate that a value is a dict.
 py/
 ├── automaticweatherstations_sdk.py         -- Main SDK module
 ├── config.py                    -- Configuration
+├── schema.py                    -- Generated option + entity specs
 ├── features.py                  -- Feature factory
 ├── core/                        -- Core types and context
 ├── entity/                      -- Entity implementations
@@ -523,15 +511,15 @@ Import entity or utility modules directly only when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `list`, the entity
+Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-collection = client.Collection()
-collection.list()
+item = client.Item()
+item.load({"id": "example_id"})
 
-# collection.data_get() now returns the collection data from the last list
-# collection.match_get() returns the last match criteria
+# item.data_get() now returns the item data from the last load
+# item.match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration
