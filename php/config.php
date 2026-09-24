@@ -120,7 +120,6 @@ class AutomaticWeatherStationsConfig
               'name' => 'list',
               'points' => [
                 [
-                  'args' => [],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/collections/ch.meteoschweiz.ogd-smn',
@@ -132,16 +131,18 @@ class AutomaticWeatherStationsConfig
                       'lit' => 'ch.meteoschweiz.ogd-smn',
                     ],
                   ],
-                  'select' => [
-                    '$action' => 'chmeteoschweizogd_smn',
+                  'parts' => [
+                    'collections',
+                    'ch.meteoschweiz.ogd-smn',
                   ],
+                  'rename' => [],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'collections',
-                    'ch.meteoschweiz.ogd-smn',
+                  'args' => [],
+                  'select' => [
+                    '$action' => 'chmeteoschweizogd_smn',
                   ],
                 ],
               ],
@@ -155,25 +156,30 @@ class AutomaticWeatherStationsConfig
           'fields' => [
             [
               'name' => 'features',
-              'req' => true,
+              'title' => 'Features',
               'type' => '`$ARRAY`',
+              'req' => true,
             ],
             [
               'name' => 'links',
+              'title' => 'Links',
               'type' => '`$ARRAY`',
             ],
             [
               'name' => 'numberMatched',
+              'title' => 'Number Matched',
               'type' => '`$INTEGER`',
             ],
             [
               'name' => 'numberReturned',
+              'title' => 'Number Returned',
               'type' => '`$INTEGER`',
             ],
             [
               'name' => 'type',
-              'req' => true,
+              'title' => 'Type',
               'type' => '`$STRING`',
+              'req' => true,
             ],
           ],
           'name' => 'feature_collection',
@@ -183,47 +189,6 @@ class AutomaticWeatherStationsConfig
               'name' => 'list',
               'points' => [
                 [
-                  'args' => [
-                    'query' => [
-                      [
-                        'kind' => 'query',
-                        'name' => 'bbox',
-                        'orig' => 'bbox',
-                        'type' => '`$ARRAY`',
-                      ],
-                      [
-                        'kind' => 'query',
-                        'name' => 'datetime',
-                        'orig' => 'datetime',
-                        'type' => '`$STRING`',
-                      ],
-                      [
-                        'kind' => 'query',
-                        'name' => 'granularity',
-                        'orig' => 'granularity',
-                        'type' => '`$STRING`',
-                      ],
-                      [
-                        'example' => 10,
-                        'kind' => 'query',
-                        'name' => 'limit',
-                        'orig' => 'limit',
-                        'type' => '`$INTEGER`',
-                      ],
-                      [
-                        'kind' => 'query',
-                        'name' => 'station',
-                        'orig' => 'station',
-                        'type' => '`$STRING`',
-                      ],
-                      [
-                        'kind' => 'query',
-                        'name' => 'update_frequency',
-                        'orig' => 'update_frequency',
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/collections/ch.meteoschweiz.ogd-smn/items',
@@ -238,6 +203,57 @@ class AutomaticWeatherStationsConfig
                       'lit' => 'items',
                     ],
                   ],
+                  'parts' => [
+                    'collections',
+                    'ch.meteoschweiz.ogd-smn',
+                    'items',
+                  ],
+                  'rename' => [],
+                  'transform' => [
+                    'req' => '`reqdata`',
+                    'res' => '`body`',
+                  ],
+                  'args' => [
+                    'query' => [
+                      [
+                        'name' => 'bbox',
+                        'orig' => 'bbox',
+                        'type' => '`$ARRAY`',
+                        'kind' => 'query',
+                      ],
+                      [
+                        'name' => 'datetime',
+                        'orig' => 'datetime',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
+                      ],
+                      [
+                        'name' => 'granularity',
+                        'orig' => 'granularity',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
+                      ],
+                      [
+                        'name' => 'limit',
+                        'orig' => 'limit',
+                        'type' => '`$INTEGER`',
+                        'kind' => 'query',
+                        'example' => 10,
+                      ],
+                      [
+                        'name' => 'station',
+                        'orig' => 'station',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
+                      ],
+                      [
+                        'name' => 'update_frequency',
+                        'orig' => 'update_frequency',
+                        'type' => '`$STRING`',
+                        'kind' => 'query',
+                      ],
+                    ],
+                  ],
                   'select' => [
                     'exist' => [
                       'bbox',
@@ -247,15 +263,6 @@ class AutomaticWeatherStationsConfig
                       'station',
                       'update_frequency',
                     ],
-                  ],
-                  'transform' => [
-                    'req' => '`reqdata`',
-                    'res' => '`body`',
-                  ],
-                  'parts' => [
-                    'collections',
-                    'ch.meteoschweiz.ogd-smn',
-                    'items',
                   ],
                 ],
               ],
@@ -269,28 +276,33 @@ class AutomaticWeatherStationsConfig
           'fields' => [
             [
               'name' => 'geometry',
+              'title' => 'Geometry',
+              'type' => '`$OBJECT`',
               'req' => true,
               'short' => 'GeoJSON Geometry',
-              'type' => '`$OBJECT`',
             ],
             [
               'name' => 'id',
+              'title' => 'Id',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'links',
+              'title' => 'Links',
               'type' => '`$ARRAY`',
             ],
             [
               'name' => 'properties',
+              'title' => 'Properties',
+              'type' => '`$OBJECT`',
               'req' => true,
               'short' => 'Weather station measurement properties',
-              'type' => '`$OBJECT`',
             ],
             [
               'name' => 'type',
-              'req' => true,
+              'title' => 'Type',
               'type' => '`$STRING`',
+              'req' => true,
             ],
           ],
           'id' => [
@@ -304,25 +316,9 @@ class AutomaticWeatherStationsConfig
               'name' => 'load',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'kind' => 'param',
-                        'name' => 'id',
-                        'orig' => 'item_id',
-                        'reqd' => true,
-                        'type' => '`$STRING`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/collections/ch.meteoschweiz.ogd-smn/items/{itemId}',
-                  'rename' => [
-                    'param' => [
-                      'itemId' => 'id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'collections',
@@ -337,20 +333,36 @@ class AutomaticWeatherStationsConfig
                       'var' => 'id',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'id',
+                  'parts' => [
+                    'collections',
+                    'ch.meteoschweiz.ogd-smn',
+                    'items',
+                    '{id}',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'itemId' => 'id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'collections',
-                    'ch.meteoschweiz.ogd-smn',
-                    'items',
-                    '{id}',
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'id',
+                        'orig' => 'item_id',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'id',
+                    ],
                   ],
                 ],
               ],

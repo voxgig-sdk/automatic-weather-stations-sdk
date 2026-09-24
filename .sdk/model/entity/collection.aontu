@@ -1,0 +1,45 @@
+# Entity: collection
+
+main: kit: entity: collection: {
+
+  alias: field: {}
+
+  name: "collection"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /collections/ch.meteoschweiz.ogd-smn"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/collections/ch.meteoschweiz.ogd-smn"
+          q: {
+            "$action": "chmeteoschweizogd_smn"
+          }
+          s: [
+            {
+              lit: "collections"
+            }
+            {
+              lit: "ch.meteoschweiz.ogd-smn"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

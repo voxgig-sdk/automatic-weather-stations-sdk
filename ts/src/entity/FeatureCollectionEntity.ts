@@ -19,7 +19,6 @@ import type {
   FeatureCollectionListMatch,
 } from '../AutomaticWeatherStationsTypes'
 
-// TODO: needs Entity superclass
 class FeatureCollectionEntity extends AutomaticWeatherStationsEntityBase<FeatureCollection> {
 
   constructor(client: AutomaticWeatherStationsSDK, entopts: any) {

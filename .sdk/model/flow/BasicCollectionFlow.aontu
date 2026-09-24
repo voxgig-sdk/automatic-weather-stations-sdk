@@ -1,0 +1,22 @@
+# BasicCollectionFlow
+
+main: kit: flow: BasicCollectionFlow:
+{
+  entity: "collection",
+  kind: "basic",
+  name: "BasicCollectionFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "collection_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCollectionFlow"
+}

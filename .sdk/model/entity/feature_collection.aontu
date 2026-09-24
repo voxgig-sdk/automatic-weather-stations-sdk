@@ -1,0 +1,132 @@
+# Entity: feature_collection
+
+main: kit: entity: feature_collection: {
+
+  alias: field: {}
+
+  fields: {
+    features: {
+      h: "Features"
+      n: "features"
+      r: true
+      t: "`$ARRAY`"
+    }
+    links: {
+      h: "Links"
+      n: "links"
+      r: false
+      t: "`$ARRAY`"
+    }
+    numberMatched: {
+      h: "Number Matched"
+      n: "numberMatched"
+      r: false
+      t: "`$INTEGER`"
+    }
+    numberReturned: {
+      h: "Number Returned"
+      n: "numberReturned"
+      r: false
+      t: "`$INTEGER`"
+    }
+    type: {
+      h: "Type"
+      n: "type"
+      r: true
+      t: "`$STRING`"
+    }
+  }
+
+  name: "feature_collection"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /collections/ch.meteoschweiz.ogd-smn/items"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                k: "query"
+                n: "bbox"
+                or: "bbox"
+                r: false
+                t: "`$ARRAY`"
+              }
+              {
+                k: "query"
+                n: "datetime"
+                or: "datetime"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "granularity"
+                or: "granularity"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: 10
+                k: "query"
+                n: "limit"
+                or: "limit"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "station"
+                or: "station"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "update_frequency"
+                or: "update_frequency"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/collections/ch.meteoschweiz.ogd-smn/items"
+          q: {
+            exist: [
+              "bbox"
+              "datetime"
+              "granularity"
+              "limit"
+              "station"
+              "update_frequency"
+            ]
+          }
+          s: [
+            {
+              lit: "collections"
+            }
+            {
+              lit: "ch.meteoschweiz.ogd-smn"
+            }
+            {
+              lit: "items"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

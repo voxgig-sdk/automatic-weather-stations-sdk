@@ -1,7 +1,7 @@
 // Typed models for the AutomaticWeatherStations SDK.
 //
-// GENERATED from the API model: main.kit.entity.<e>.fields[] and per-op
-// params (op.<name>.points[].args.params[]). Field/param types come from the
+// GENERATED from the API model: main.kit.entity.<e>.fields{} and per-op
+// params (op.<name>.points[].g.params[]). Field/param types come from the
 // canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 package entity
@@ -22,11 +22,6 @@ type CollectionListMatch struct {
 
 // FeatureCollection is the typed data model for the feature_collection entity.
 type FeatureCollection struct {
-	Features []any `json:"features"`
-	Links *[]any `json:"links,omitempty"`
-	NumberMatched *int `json:"numberMatched,omitempty"`
-	NumberReturned *int `json:"numberReturned,omitempty"`
-	Type string `json:"type"`
 }
 
 // FeatureCollectionListMatch is the typed request payload for FeatureCollection.ListTyped.
@@ -41,11 +36,6 @@ type FeatureCollectionListMatch struct {
 
 // Item is the typed data model for the item entity.
 type Item struct {
-	Geometry map[string]any `json:"geometry"`
-	Id *string `json:"id,omitempty"`
-	Links *[]any `json:"links,omitempty"`
-	Properties map[string]any `json:"properties"`
-	Type string `json:"type"`
 }
 
 // ItemLoadMatch is the typed request payload for Item.LoadTyped.

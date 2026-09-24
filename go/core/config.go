@@ -98,7 +98,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/collections/ch.meteoschweiz.ogd-smn",
@@ -110,16 +109,18 @@ func MakeConfig() map[string]any {
 										"lit": "ch.meteoschweiz.ogd-smn",
 									},
 								},
-								"select": map[string]any{
-									"$action": "chmeteoschweizogd_smn",
+								"parts": []any{
+									"collections",
+									"ch.meteoschweiz.ogd-smn",
 								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"collections",
-									"ch.meteoschweiz.ogd-smn",
+								"args": map[string]any{},
+								"select": map[string]any{
+									"$action": "chmeteoschweizogd_smn",
 								},
 							},
 						},
@@ -133,25 +134,30 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "features",
-						"req": true,
+						"title": "Features",
 						"type": "`$ARRAY`",
+						"req": true,
 					},
 					map[string]any{
 						"name": "links",
+						"title": "Links",
 						"type": "`$ARRAY`",
 					},
 					map[string]any{
 						"name": "numberMatched",
+						"title": "Number Matched",
 						"type": "`$INTEGER`",
 					},
 					map[string]any{
 						"name": "numberReturned",
+						"title": "Number Returned",
 						"type": "`$INTEGER`",
 					},
 					map[string]any{
 						"name": "type",
-						"req": true,
+						"title": "Type",
 						"type": "`$STRING`",
+						"req": true,
 					},
 				},
 				"name": "feature_collection",
@@ -161,47 +167,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"query": []any{
-										map[string]any{
-											"kind": "query",
-											"name": "bbox",
-											"orig": "bbox",
-											"type": "`$ARRAY`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "datetime",
-											"orig": "datetime",
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "granularity",
-											"orig": "granularity",
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"example": 10,
-											"kind": "query",
-											"name": "limit",
-											"orig": "limit",
-											"type": "`$INTEGER`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "station",
-											"orig": "station",
-											"type": "`$STRING`",
-										},
-										map[string]any{
-											"kind": "query",
-											"name": "update_frequency",
-											"orig": "update_frequency",
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/collections/ch.meteoschweiz.ogd-smn/items",
@@ -216,6 +181,57 @@ func MakeConfig() map[string]any {
 										"lit": "items",
 									},
 								},
+								"parts": []any{
+									"collections",
+									"ch.meteoschweiz.ogd-smn",
+									"items",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"query": []any{
+										map[string]any{
+											"name": "bbox",
+											"orig": "bbox",
+											"type": "`$ARRAY`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "datetime",
+											"orig": "datetime",
+											"type": "`$STRING`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "granularity",
+											"orig": "granularity",
+											"type": "`$STRING`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "limit",
+											"orig": "limit",
+											"type": "`$INTEGER`",
+											"kind": "query",
+											"example": 10,
+										},
+										map[string]any{
+											"name": "station",
+											"orig": "station",
+											"type": "`$STRING`",
+											"kind": "query",
+										},
+										map[string]any{
+											"name": "update_frequency",
+											"orig": "update_frequency",
+											"type": "`$STRING`",
+											"kind": "query",
+										},
+									},
+								},
 								"select": map[string]any{
 									"exist": []any{
 										"bbox",
@@ -225,15 +241,6 @@ func MakeConfig() map[string]any {
 										"station",
 										"update_frequency",
 									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"parts": []any{
-									"collections",
-									"ch.meteoschweiz.ogd-smn",
-									"items",
 								},
 							},
 						},
@@ -247,28 +254,33 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "geometry",
+						"title": "Geometry",
+						"type": "`$OBJECT`",
 						"req": true,
 						"short": "GeoJSON Geometry",
-						"type": "`$OBJECT`",
 					},
 					map[string]any{
 						"name": "id",
+						"title": "Id",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "links",
+						"title": "Links",
 						"type": "`$ARRAY`",
 					},
 					map[string]any{
 						"name": "properties",
+						"title": "Properties",
+						"type": "`$OBJECT`",
 						"req": true,
 						"short": "Weather station measurement properties",
-						"type": "`$OBJECT`",
 					},
 					map[string]any{
 						"name": "type",
-						"req": true,
+						"title": "Type",
 						"type": "`$STRING`",
+						"req": true,
 					},
 				},
 				"id": map[string]any{
@@ -282,25 +294,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"kind": "param",
-											"name": "id",
-											"orig": "item_id",
-											"reqd": true,
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/collections/ch.meteoschweiz.ogd-smn/items/{itemId}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"itemId": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "collections",
@@ -315,20 +311,36 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
+								"parts": []any{
+									"collections",
+									"ch.meteoschweiz.ogd-smn",
+									"items",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"itemId": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"collections",
-									"ch.meteoschweiz.ogd-smn",
-									"items",
-									"{id}",
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "id",
+											"orig": "item_id",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+									},
 								},
 							},
 						},
