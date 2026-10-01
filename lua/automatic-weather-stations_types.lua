@@ -10,30 +10,26 @@
 
 ---@class CollectionListMatch
 
----@class FeatureCollection
+---@class Item
 ---@field features table
+---@field geometry table
+---@field id? string
 ---@field links? table
 ---@field numberMatched? number
 ---@field numberReturned? number
+---@field properties table
 ---@field type string
 
----@class FeatureCollectionListMatch
+---@class ItemLoadMatch
+---@field id string
+
+---@class ItemListMatch
 ---@field bbox? table
 ---@field datetime? string
 ---@field granularity? string
 ---@field limit? number
 ---@field station? string
 ---@field update_frequency? string
-
----@class Item
----@field geometry table
----@field id? string
----@field links? table
----@field properties table
----@field type string
-
----@class ItemLoadMatch
----@field id string
 
 local M = {}
 

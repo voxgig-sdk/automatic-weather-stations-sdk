@@ -14,7 +14,5 @@ var NewTimeoutFeatureFunc func() Feature
 
 var NewCollectionEntityFunc func(client *AutomaticWeatherStationsSDK, entopts map[string]any) AutomaticWeatherStationsEntity
 
-var NewFeatureCollectionEntityFunc func(client *AutomaticWeatherStationsSDK, entopts map[string]any) AutomaticWeatherStationsEntity
-
 var NewItemEntityFunc func(client *AutomaticWeatherStationsSDK, entopts map[string]any) AutomaticWeatherStationsEntity
 

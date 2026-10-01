@@ -15,7 +15,7 @@ import (
 // reqdata map passed through to the SDK. For load, `query` should be
 // `{"id": <value>}`. For list, omit `query` or pass an empty map.
 type Args struct {
-	Entity string         `json:"entity" jsonschema:"collection | feature_collection | item"`
+	Entity string         `json:"entity" jsonschema:"collection | item"`
 	Query  map[string]any `json:"query,omitempty" jsonschema:"optional match map e.g. {\"id\":1} for load, omit for list"`
 }
 
@@ -78,8 +78,6 @@ func entityFor(client *sdk.AutomaticWeatherStationsSDK, name string) (sdk.Automa
 	switch strings.ToLower(name) {
 	case "collection":
 		return client.Collection(nil), nil
-	case "feature_collection":
-		return client.FeatureCollection(nil), nil
 	case "item":
 		return client.Item(nil), nil
 

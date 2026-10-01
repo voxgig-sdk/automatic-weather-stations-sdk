@@ -22,33 +22,15 @@ class CollectionListMatch
 {
 }
 
-/** FeatureCollection entity data model. */
-class FeatureCollection
-{
-    public array $features;
-    public ?array $links = null;
-    public ?int $numberMatched = null;
-    public ?int $numberReturned = null;
-    public string $type;
-}
-
-/** Request payload for FeatureCollection#list. */
-class FeatureCollectionListMatch
-{
-    public ?array $bbox = null;
-    public ?string $datetime = null;
-    public ?string $granularity = null;
-    public ?int $limit = null;
-    public ?string $station = null;
-    public ?string $update_frequency = null;
-}
-
 /** Item entity data model. */
 class Item
 {
+    public array $features;
     public array $geometry;
     public ?string $id = null;
     public ?array $links = null;
+    public ?int $numberMatched = null;
+    public ?int $numberReturned = null;
     public array $properties;
     public string $type;
 }
@@ -57,5 +39,16 @@ class Item
 class ItemLoadMatch
 {
     public string $id;
+}
+
+/** Request payload for Item#list. */
+class ItemListMatch
+{
+    public ?array $bbox = null;
+    public ?string $datetime = null;
+    public ?string $granularity = null;
+    public ?int $limit = null;
+    public ?string $station = null;
+    public ?string $update_frequency = null;
 }
 

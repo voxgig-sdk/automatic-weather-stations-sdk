@@ -22,7 +22,7 @@ use Voxgig\Struct\Struct;
 // (_retry, _cache, _metrics, ...); allow them explicitly (PHP 8.2+
 // deprecates implicit dynamic properties).
 #[\AllowDynamicProperties]
-class AutomaticWeatherStationsSDK
+class AutomaticWeatherStationsSDK implements \JsonSerializable
 {
     public string $mode;
     public array $features;
@@ -115,6 +115,19 @@ class AutomaticWeatherStationsSDK
     {
         $out = Struct::clone($this->options);
         return is_array($out) ? $out : [];
+    }
+
+    // The options hold the credential, so the default print and json form
+    // name the client and nothing more; options_map() is the way to read
+    // them back.
+    public function jsonSerialize(): array
+    {
+        return ['name' => 'AutomaticWeatherStations'];
+    }
+
+    public function __debugInfo(): array
+    {
+        return $this->jsonSerialize();
     }
 
     public function get_utility()
@@ -242,7 +255,7 @@ class AutomaticWeatherStationsSDK
         [$fetched, $fetch_err] = ($utility->fetcher)($ctx, $url, $fetchdef);
 
         if ($fetch_err) {
-            return ["ok" => false, "err" => $fetch_err];
+            return ["ok" => false, "err" => ($utility->clean)($ctx, $fetch_err)];
         }
 
         if ($fetched === null) {
@@ -356,24 +369,6 @@ class AutomaticWeatherStationsSDK
             return $this->_collection;
         }
         return new CollectionEntity($this, $data);
-    }
-
-
-    private $_feature_collection = null;
-
-    // Canonical facade: $client->FeatureCollection()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->feature_collection()
-    // resolves here too.
-    public function FeatureCollection($data = null)
-    {
-        require_once __DIR__ . '/entity/feature_collection_entity.php';
-        if ($data === null) {
-            if ($this->_feature_collection === null) {
-                $this->_feature_collection = new FeatureCollectionEntity($this, null);
-            }
-            return $this->_feature_collection;
-        }
-        return new FeatureCollectionEntity($this, $data);
     }
 
 

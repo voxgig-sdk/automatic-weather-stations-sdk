@@ -79,8 +79,6 @@ func entityFor(client *sdk.AutomaticWeatherStationsSDK, name string) (sdk.Automa
 	switch strings.ToLower(name) {
 	case "collection":
 		return client.Collection(nil), nil
-	case "feature_collection":
-		return client.FeatureCollection(nil), nil
 	case "item":
 		return client.Item(nil), nil
 

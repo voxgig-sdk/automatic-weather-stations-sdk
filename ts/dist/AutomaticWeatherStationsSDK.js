@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SDK = exports.AutomaticWeatherStationsSDK = exports.AutomaticWeatherStationsEntityBase = exports.BaseFeature = exports.config = exports.stdutil = void 0;
 const CollectionEntity_1 = require("./entity/CollectionEntity");
-const FeatureCollectionEntity_1 = require("./entity/FeatureCollectionEntity");
 const ItemEntity_1 = require("./entity/ItemEntity");
 const node_util_1 = require("node:util");
 const Config_1 = require("./Config");
@@ -30,6 +29,11 @@ class AutomaticWeatherStationsSDK {
             shared: new WeakMap()
         });
         this._options = this._utility.makeOptions(this._rootctx);
+        for (const key of ['_options', '_rootctx', '_features']) {
+            Object.defineProperty(this, key, {
+                value: this[key], enumerable: false, writable: true, configurable: true
+            });
+        }
         const struct = this._utility.struct;
         const getpath = struct.getpath;
         if (true === getpath(this._options.feature, 'test.active')) {
@@ -146,7 +150,7 @@ class AutomaticWeatherStationsSDK {
                 return { ok: false, err: ctx.error('direct_no_response', 'response: undefined') };
             }
             else if (fetched instanceof Error) {
-                return { ok: false, err: fetched };
+                return { ok: false, err: utility.clean(ctx, fetched) };
             }
             const status = fetched.status;
             // No body responses (204 No Content, 304 Not Modified) and explicit
@@ -176,7 +180,7 @@ class AutomaticWeatherStationsSDK {
             };
         }
         catch (err) {
-            return { ok: false, err };
+            return { ok: false, err: utility.clean(ctx, err) };
         }
     }
     async graphql(query, variables, ctrl) {
@@ -218,13 +222,6 @@ class AutomaticWeatherStationsSDK {
     Collection(entopts) {
         const self = this;
         return new CollectionEntity_1.CollectionEntity(self, entopts);
-    }
-    // Entity access: `client.FeatureCollection().list()` / `client.FeatureCollection().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    FeatureCollection(entopts) {
-        const self = this;
-        return new FeatureCollectionEntity_1.FeatureCollectionEntity(self, entopts);
     }
     // Entity access: `client.Item().list()` / `client.Item().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity

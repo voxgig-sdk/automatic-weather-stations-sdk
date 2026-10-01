@@ -80,7 +80,6 @@ local function make_config()
       },
       entity = {
         ["collection"] = {},
-        ["feature_collection"] = {},
         ["item"] = {},
       },
     },
@@ -126,13 +125,25 @@ local function make_config()
           ["ancestors"] = {},
         },
       },
-      ["feature_collection"] = {
+      ["item"] = {
         ["fields"] = {
           {
             ["name"] = "features",
             ["title"] = "Features",
             ["type"] = "`$ARRAY`",
             ["req"] = true,
+          },
+          {
+            ["name"] = "geometry",
+            ["title"] = "Geometry",
+            ["type"] = "`$OBJECT`",
+            ["req"] = true,
+            ["short"] = "GeoJSON Geometry",
+          },
+          {
+            ["name"] = "id",
+            ["title"] = "Id",
+            ["type"] = "`$STRING`",
           },
           {
             ["name"] = "links",
@@ -150,13 +161,24 @@ local function make_config()
             ["type"] = "`$INTEGER`",
           },
           {
+            ["name"] = "properties",
+            ["title"] = "Properties",
+            ["type"] = "`$OBJECT`",
+            ["req"] = true,
+            ["short"] = "Weather station measurement properties",
+          },
+          {
             ["name"] = "type",
             ["title"] = "Type",
             ["type"] = "`$STRING`",
             ["req"] = true,
           },
         },
-        ["name"] = "feature_collection",
+        ["id"] = {
+          ["field"] = "id",
+          ["name"] = "id",
+        },
+        ["name"] = "item",
         ["op"] = {
           ["list"] = {
             ["input"] = "data",
@@ -222,7 +244,7 @@ local function make_config()
                     },
                     {
                       ["name"] = "update_frequency",
-                      ["orig"] = "update_frequency",
+                      ["orig"] = "updateFrequency",
                       ["type"] = "`$STRING`",
                       ["kind"] = "query",
                     },
@@ -241,50 +263,6 @@ local function make_config()
               },
             },
           },
-        },
-        ["relations"] = {
-          ["ancestors"] = {},
-        },
-      },
-      ["item"] = {
-        ["fields"] = {
-          {
-            ["name"] = "geometry",
-            ["title"] = "Geometry",
-            ["type"] = "`$OBJECT`",
-            ["req"] = true,
-            ["short"] = "GeoJSON Geometry",
-          },
-          {
-            ["name"] = "id",
-            ["title"] = "Id",
-            ["type"] = "`$STRING`",
-          },
-          {
-            ["name"] = "links",
-            ["title"] = "Links",
-            ["type"] = "`$ARRAY`",
-          },
-          {
-            ["name"] = "properties",
-            ["title"] = "Properties",
-            ["type"] = "`$OBJECT`",
-            ["req"] = true,
-            ["short"] = "Weather station measurement properties",
-          },
-          {
-            ["name"] = "type",
-            ["title"] = "Type",
-            ["type"] = "`$STRING`",
-            ["req"] = true,
-          },
-        },
-        ["id"] = {
-          ["field"] = "id",
-          ["name"] = "id",
-        },
-        ["name"] = "item",
-        ["op"] = {
           ["load"] = {
             ["input"] = "data",
             ["name"] = "load",
@@ -326,7 +304,7 @@ local function make_config()
                   ["params"] = {
                     {
                       ["name"] = "id",
-                      ["orig"] = "item_id",
+                      ["orig"] = "itemId",
                       ["type"] = "`$STRING`",
                       ["kind"] = "param",
                       ["reqd"] = true,

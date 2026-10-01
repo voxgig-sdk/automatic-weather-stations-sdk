@@ -45,10 +45,6 @@ client = AutomaticWeatherStationsSDK.test()
 
 Create a new `CollectionEntity` instance. Pass `None` for no initial data.
 
-#### `FeatureCollection(data=None)`
-
-Create a new `FeatureCollectionEntity` instance. Pass `None` for no initial data.
-
 #### `Item(data=None)`
 
 Create a new `ItemEntity` instance. Pass `None` for no initial data.
@@ -132,63 +128,6 @@ Return the entity name.
 
 ---
 
-## FeatureCollectionEntity
-
-```python
-feature_collection = client.FeatureCollection()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `features` | `list` | Yes |  |
-| `links` | `list` | No |  |
-| `numberMatched` | `int` | No |  |
-| `numberReturned` | `int` | No |  |
-| `type` | `str` | Yes |  |
-
-### Operations
-
-#### `list(reqmatch=None, ctrl=None) -> list`
-
-List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
-
-```python
-results = client.FeatureCollection().list()
-for feature_collection in results:
-    print(feature_collection)
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `FeatureCollectionEntity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
 ## ItemEntity
 
 ```python
@@ -199,13 +138,26 @@ item = client.Item()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `features` | `list` | Yes |  |
 | `geometry` | `dict` | Yes | GeoJSON Geometry |
 | `id` | `str` | No |  |
 | `links` | `list` | No |  |
+| `numberMatched` | `int` | No |  |
+| `numberReturned` | `int` | No |  |
 | `properties` | `dict` | Yes | Weather station measurement properties |
 | `type` | `str` | Yes |  |
 
 ### Operations
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.Item().list()
+for item in results:
+    print(item)
+```
 
 #### `load(reqmatch, ctrl=None) -> dict`
 

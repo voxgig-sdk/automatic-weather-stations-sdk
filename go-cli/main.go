@@ -20,7 +20,7 @@ import (
 const prompt = "automatic-weather-stations"
 
 // entitiesHelp is the space-separated entity list shown by /help.
-const entitiesHelp = "collection feature_collection item"
+const entitiesHelp = "collection item"
 
 func main() {
 	os.Exit(run(os.Args[1:], os.Stdin, os.Stdout, os.Stderr))

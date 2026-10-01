@@ -2,39 +2,56 @@
   "existing": {
     "item": {
       "ITEM00": {
+        "features": [],
         "geometry": {},
         "id": "ITEM00",
         "links": [],
+        "numberMatched": 84,
+        "numberReturned": 85,
         "properties": {},
-        "type": "s36"
+        "type": "s57"
       },
       "ITEM01": {
+        "features": [],
         "geometry": {},
         "id": "ITEM01",
         "links": [],
+        "numberMatched": 164,
+        "numberReturned": 165,
         "properties": {},
-        "type": "s68"
+        "type": "sa7"
       },
       "ITEM02": {
+        "features": [],
         "geometry": {},
         "id": "ITEM02",
         "links": [],
+        "numberMatched": 244,
+        "numberReturned": 245,
         "properties": {},
-        "type": "s9a"
+        "type": "sf7"
       }
     }
   },
   "new": {
     "item": {
       "item_ref01": {
+        "features": [],
         "geometry": {},
         "links": [],
+        "numberMatched": 324,
+        "numberReturned": 325,
         "properties": {},
-        "type": "scc"
+        "type": "s147"
       }
     }
   },
   "requests": {
+    "GET /collections/ch.meteoschweiz.ogd-smn/items": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
     "GET /collections/ch.meteoschweiz.ogd-smn/items/{itemId}": {
       "provenance": "operation-contract",
       "version": 2,

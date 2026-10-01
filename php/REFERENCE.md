@@ -45,10 +45,6 @@ $client = AutomaticWeatherStationsSDK::test();
 
 Create a new `CollectionEntity` instance. Pass `null` for no initial data.
 
-#### `FeatureCollection($data = null)`
-
-Create a new `FeatureCollectionEntity` instance. Pass `null` for no initial data.
-
 #### `Item($data = null)`
 
 Create a new `ItemEntity` instance. Pass `null` for no initial data.
@@ -136,62 +132,6 @@ Return the entity name.
 
 ---
 
-## FeatureCollectionEntity
-
-```php
-$feature_collection = $client->FeatureCollection();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `features` | `array` | Yes |  |
-| `links` | `array` | No |  |
-| `numberMatched` | `int` | No |  |
-| `numberReturned` | `int` | No |  |
-| `type` | `string` | Yes |  |
-
-### Operations
-
-#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
-
-List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
-
-```php
-$results = $client->FeatureCollection()->list();
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): FeatureCollectionEntity`
-
-Create a new `FeatureCollectionEntity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
 ## ItemEntity
 
 ```php
@@ -202,13 +142,24 @@ $item = $client->Item();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `features` | `array` | Yes |  |
 | `geometry` | `array` | Yes | GeoJSON Geometry |
 | `id` | `string` | No |  |
 | `links` | `array` | No |  |
+| `numberMatched` | `int` | No |  |
+| `numberReturned` | `int` | No |  |
 | `properties` | `array` | Yes | Weather station measurement properties |
 | `type` | `string` | Yes |  |
 
 ### Operations
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->Item()->list();
+```
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
 

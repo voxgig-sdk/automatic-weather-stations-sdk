@@ -15,9 +15,13 @@ predictable and low-friction for both humans and AI agents.
 
 ## Install
 This package is not yet published to npm. Install it from the GitHub
-release tag (`ts/vX.Y.Z`):
+release tag (`ts/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases)), or from a
+clone, which carries the compiled `dist/`:
 
-- Releases: [https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases)
+```bash
+git clone https://github.com/voxgig-sdk/automatic-weather-stations-sdk
+npm install ./automatic-weather-stations-sdk/ts
+```
 
 
 ## Tutorial: your first API call
@@ -54,10 +58,10 @@ Entity operations reject on failure, so wrap them in `try` / `catch`:
 
 ```ts
 try {
-  const item = await client.Item().load({ id: "example_id" })
-  console.log(item)
+  const collections = await client.Collection().list()
+  console.log(collections)
 } catch (err) {
-  console.error('load failed:', err)
+  console.error('list failed:', err)
 }
 ```
 
@@ -121,10 +125,10 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = AutomaticWeatherStationsSDK.test()
 
-const item = await client.Item().load({ id: 'test01' })
-// item is the entity, populated with mock response data
-// — call item.data() for the record itself
-console.log(item)
+const collection = await client.Collection().list()
+// collection is the entity, populated with mock response data
+// — call collection.data() for the record itself
+console.log(collection)
 ```
 
 You can also use the instance method:
@@ -139,14 +143,14 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.Item()
+const entity = client.Collection()
 
 // First call runs the operation and stores its result
-await entity.load({ id: 'example' })
+await entity.list()
 
 // Subsequent calls reuse the stored state
 const data = entity.data()
-console.log(data.id)
+console.log(data)
 ```
 
 ### Add custom middleware
@@ -223,7 +227,6 @@ new AutomaticWeatherStationsSDK(options?: {
 | `prepare(fetchargs?)` | `Promise<FetchDef>` | Build an HTTP request definition without sending it. |
 | `direct(fetchargs?)` | `Promise<DirectResult>` | Build and send an HTTP request. |
 | `Collection(data?)` | `CollectionEntity` | Create a Collection entity instance. |
-| `FeatureCollection(data?)` | `FeatureCollectionEntity` | Create a FeatureCollection entity instance. |
 | `Item(data?)` | `ItemEntity` | Create an Item entity instance. |
 | `tester(testopts?, sdkopts?)` | `AutomaticWeatherStationsSDK` | Create a test-mode client instance. |
 
@@ -301,33 +304,22 @@ Operations: list.
 
 API path: `/collections/ch.meteoschweiz.ogd-smn`
 
-#### FeatureCollection
-
-| Field | Description |
-| --- | --- |
-| `features` |  |
-| `links` |  |
-| `numberMatched` |  |
-| `numberReturned` |  |
-| `type` |  |
-
-Operations: list.
-
-API path: `/collections/ch.meteoschweiz.ogd-smn/items`
-
 #### Item
 
 | Field | Description |
 | --- | --- |
+| `features` |  |
 | `geometry` | GeoJSON Geometry |
 | `id` |  |
 | `links` |  |
+| `numberMatched` |  |
+| `numberReturned` |  |
 | `properties` | Weather station measurement properties |
 | `type` |  |
 
-Operations: load.
+Operations: list, load.
 
-API path: `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}`
+API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 
 
 
@@ -351,33 +343,6 @@ const collections = await client.Collection().list()
 ```
 
 
-### FeatureCollection
-
-Create an instance: `const feature_collection = client.FeatureCollection()`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `features` | `any[]` |  |
-| `links` | `any[]` |  |
-| `numberMatched` | `number` |  |
-| `numberReturned` | `number` |  |
-| `type` | `string` |  |
-
-#### Example: List
-
-```ts
-const feature_collections = await client.FeatureCollection().list()
-```
-
-
 ### Item
 
 Create an instance: `const item = client.Item()`
@@ -386,15 +351,19 @@ Create an instance: `const item = client.Item()`
 
 | Method | Description |
 | --- | --- |
+| `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `features` | `any[]` |  |
 | `geometry` | `Record<string, any>` | GeoJSON Geometry |
 | `id` | `string` |  |
 | `links` | `any[]` |  |
+| `numberMatched` | `number` |  |
+| `numberReturned` | `number` |  |
 | `properties` | `Record<string, any>` | Weather station measurement properties |
 | `type` | `string` |  |
 
@@ -402,6 +371,12 @@ Create an instance: `const item = client.Item()`
 
 ```ts
 const item = await client.Item().load({ id: 'item_id' })
+```
+
+#### Example: List
+
+```ts
+const items = await client.Item().list()
 ```
 
 ## Features
@@ -553,16 +528,16 @@ import { AutomaticWeatherStationsSDK } from '@voxgig-sdk/automatic-weather-stati
 
 ### Entity state
 
-Entity instances are stateful. After a successful `load`, the entity
+Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const item = client.Item()
-await item.load({ id: "example_id" })
+const collection = client.Collection()
+await collection.list()
 
-// item.data() now returns the item data from the last `load`
-// item.match() returns { id: "example_id" }
+// collection.data() now returns the collection data from the last `list`
+// collection.match() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

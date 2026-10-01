@@ -24,27 +24,8 @@ class CollectionListMatch(TypedDict):
     pass
 
 
-class FeatureCollectionRequired(TypedDict):
-    features: list
-    type: str
-
-
-class FeatureCollection(FeatureCollectionRequired, total=False):
-    links: list
-    numberMatched: int
-    numberReturned: int
-
-
-class FeatureCollectionListMatch(TypedDict, total=False):
-    bbox: list
-    datetime: str
-    granularity: str
-    limit: int
-    station: str
-    update_frequency: str
-
-
 class ItemRequired(TypedDict):
+    features: list
     geometry: dict
     properties: dict
     type: str
@@ -53,7 +34,18 @@ class ItemRequired(TypedDict):
 class Item(ItemRequired, total=False):
     id: str
     links: list
+    numberMatched: int
+    numberReturned: int
 
 
 class ItemLoadMatch(TypedDict):
     id: str
+
+
+class ItemListMatch(TypedDict, total=False):
+    bbox: list
+    datetime: str
+    granularity: str
+    limit: int
+    station: str
+    update_frequency: str

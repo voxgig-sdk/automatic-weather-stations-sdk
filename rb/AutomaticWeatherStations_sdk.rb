@@ -95,6 +95,17 @@ class AutomaticWeatherStationsSDK
     @_rootctx
   end
 
+  # The options and the root context both hold the credential, so the
+  # client's printed form is its name alone; `options_map` is the
+  # documented way to read them back.
+  def to_s
+    "AutomaticWeatherStations " + VoxgigStruct.jsonify({ "name" => "AutomaticWeatherStations" })
+  end
+
+  def inspect
+    to_s
+  end
+
   def prepare(fetchargs = {})
     utility = @_utility
     fetchargs ||= {}
@@ -202,7 +213,7 @@ class AutomaticWeatherStationsSDK
     url = fetchdef["url"] || ""
     fetched, fetch_err = utility.fetcher.call(ctx, url, fetchdef)
 
-    return { "ok" => false, "err" => fetch_err } if fetch_err
+    return { "ok" => false, "err" => utility.clean.call(ctx, fetch_err) } if fetch_err
 
     if fetched.nil?
       return {
@@ -293,13 +304,6 @@ class AutomaticWeatherStationsSDK
   def Collection(data = nil)
     require_relative 'entity/collection_entity'
     CollectionEntity.new(self, data)
-  end
-
-
-  # Canonical facade: client.FeatureCollection.list / client.FeatureCollection.load({ "id" => ... })
-  def FeatureCollection(data = nil)
-    require_relative 'entity/feature_collection_entity'
-    FeatureCollectionEntity.new(self, data)
   end
 
 

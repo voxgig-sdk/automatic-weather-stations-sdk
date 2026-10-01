@@ -60,18 +60,6 @@ Create a new `Collection` entity instance.
 
 **Returns:** `CollectionEntity` instance.
 
-#### `FeatureCollection(data?: object)`
-
-Create a new `FeatureCollection` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `FeatureCollectionEntity` instance.
-
 #### `Item(data?: object)`
 
 Create a new `Item` entity instance.
@@ -194,60 +182,6 @@ Return a copy of the entity options.
 
 ---
 
-## FeatureCollectionEntity
-
-```ts
-const feature_collection = client.FeatureCollection()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `features` | `any[]` | Yes |  |
-| `links` | `any[]` | No |  |
-| `numberMatched` | `number` | No |  |
-| `numberReturned` | `number` | No |  |
-| `type` | `string` | Yes |  |
-
-### Operations
-
-#### `list(match: object, ctrl?: object)`
-
-List entities matching the given criteria. Returns an array.
-
-```ts
-const results = await client.FeatureCollection().list()
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `FeatureCollectionEntity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `AutomaticWeatherStationsSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
 ## ItemEntity
 
 ```ts
@@ -258,13 +192,24 @@ const item = client.Item()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `features` | `any[]` | Yes |  |
 | `geometry` | `Record<string, any>` | Yes | GeoJSON Geometry |
 | `id` | `string` | No |  |
 | `links` | `any[]` | No |  |
+| `numberMatched` | `number` | No |  |
+| `numberReturned` | `number` | No |  |
 | `properties` | `Record<string, any>` | Yes | Weather station measurement properties |
 | `type` | `string` | Yes |  |
 
 ### Operations
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.Item().list()
+```
 
 #### `load(match: object, ctrl?: object)`
 

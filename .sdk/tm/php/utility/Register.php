@@ -37,6 +37,8 @@ require_once __DIR__ . '/TransformResponse.php';
 
 AutomaticWeatherStationsUtility::setRegistrar(function (AutomaticWeatherStationsUtility $u): void {
     $u->clean = [AutomaticWeatherStationsClean::class, 'call'];
+    $u->clean_add = [AutomaticWeatherStationsClean::class, 'add'];
+    $u->clean_explain = [AutomaticWeatherStationsDone::class, 'clean_explain'];
     $u->done = [AutomaticWeatherStationsDone::class, 'call'];
     $u->make_error = [AutomaticWeatherStationsMakeError::class, 'call'];
     $u->feature_add = [AutomaticWeatherStationsFeatureAdd::class, 'call'];

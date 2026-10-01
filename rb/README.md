@@ -12,9 +12,18 @@ The SDK exposes the API as capitalised, semantic **Entities** — for example `c
 
 ## Install
 This package is not yet published to RubyGems. Install it from the
-GitHub release tag (`rb/vX.Y.Z`):
+GitHub release tag (`rb/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases)), or
+from a clone:
 
-- Releases: [https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases)
+```bash
+git clone https://github.com/voxgig-sdk/automatic-weather-stations-sdk
+```
+
+Then add it to your `Gemfile` by path, and run `bundle install`:
+
+```ruby
+gem "voxgig-sdk-automatic-weather-stations-sdk", path: "./automatic-weather-stations-sdk/rb"
+```
 
 
 ## Tutorial: your first API call
@@ -51,9 +60,9 @@ Entity operations raise on failure, so rescue them:
 
 ```ruby
 begin
-  item = client.Item.load({ "id" => "example_id" })
+  collections = client.Collection.list()
 rescue => err
-  warn "load failed: #{err}"
+  warn "list failed: #{err}"
 end
 ```
 
@@ -114,18 +123,15 @@ end
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required. Seed fixture
-data via the `entity` option so offline calls resolve without a live server:
+Create a mock client for unit testing — no server required:
 
 ```ruby
-client = AutomaticWeatherStationsSDK.test({
-  "entity" => { "item" => { "test01" => { "id" => "test01" } } },
-})
+client = AutomaticWeatherStationsSDK.test
 
 # Entity ops return the ENTITY (raises on error);
 # call data_get for the mock record.
-item = client.Item.load({ "id" => "test01" })
-puts item
+collection = client.Collection.list()
+puts collection
 ```
 
 ### Use a custom fetch function
@@ -202,7 +208,6 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `prepare` | `(fetchargs) -> Hash` | Build an HTTP request definition without sending. Raises on error. |
 | `direct` | `(fetchargs) -> Hash` | Build and send an HTTP request. Returns a result hash (`result["ok"]`); does not raise. |
 | `Collection` | `(data) -> CollectionEntity` | Create a Collection entity instance. |
-| `FeatureCollection` | `(data) -> FeatureCollectionEntity` | Create a FeatureCollection entity instance. |
 | `Item` | `(data) -> ItemEntity` | Create an Item entity instance. |
 
 ### Entity interface
@@ -248,33 +253,22 @@ Operations: List.
 
 API path: `/collections/ch.meteoschweiz.ogd-smn`
 
-#### FeatureCollection
-
-| Field | Description |
-| --- | --- |
-| `features` |  |
-| `links` |  |
-| `numberMatched` |  |
-| `numberReturned` |  |
-| `type` |  |
-
-Operations: List.
-
-API path: `/collections/ch.meteoschweiz.ogd-smn/items`
-
 #### Item
 
 | Field | Description |
 | --- | --- |
+| `features` |  |
 | `geometry` | GeoJSON Geometry |
 | `id` |  |
 | `links` |  |
+| `numberMatched` |  |
+| `numberReturned` |  |
 | `properties` | Weather station measurement properties |
 | `type` |  |
 
-Operations: Load.
+Operations: List, Load.
 
-API path: `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}`
+API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 
 
 
@@ -299,34 +293,6 @@ collections = client.Collection.list
 ```
 
 
-### FeatureCollection
-
-Create an instance: `feature_collection = client.FeatureCollection`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `features` | `Array` |  |
-| `links` | `Array` |  |
-| `numberMatched` | `Integer` |  |
-| `numberReturned` | `Integer` |  |
-| `type` | `String` |  |
-
-#### Example: List
-
-```ruby
-# list returns an Array of FeatureCollection records (raises on error).
-feature_collections = client.FeatureCollection.list
-```
-
-
 ### Item
 
 Create an instance: `item = client.Item`
@@ -335,15 +301,19 @@ Create an instance: `item = client.Item`
 
 | Method | Description |
 | --- | --- |
+| `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `features` | `Array` |  |
 | `geometry` | `Hash` | GeoJSON Geometry |
 | `id` | `String` |  |
 | `links` | `Array` |  |
+| `numberMatched` | `Integer` |  |
+| `numberReturned` | `Integer` |  |
 | `properties` | `Hash` | Weather station measurement properties |
 | `type` | `String` |  |
 
@@ -352,6 +322,13 @@ Create an instance: `item = client.Item`
 ```ruby
 # load returns the ENTITY — call data_get for the Item record (raises on error).
 item = client.Item.load({ "id" => "item_id" })
+```
+
+#### Example: List
+
+```ruby
+# list returns an Array of Item records (raises on error).
+items = client.Item.list
 ```
 
 ## Features
@@ -512,15 +489,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `load`, the entity
+Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
-item = client.Item
-item.load({ "id" => "example_id" })
+collection = client.Collection
+collection.list()
 
-# item.data_get now returns the item data from the last load
-# item.match_get returns the last match criteria
+# collection.data_get now returns the collection data from the last list
+# collection.match_get returns the last match criteria
 ```
 
 Call `make` to create a fresh instance with the same configuration

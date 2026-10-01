@@ -138,7 +138,7 @@
             "ancestors": []
           }
         },
-        "feature_collection": {
+        "item": {
           "active": true,
           "alias": {
             "field": {}
@@ -150,6 +150,21 @@
               "n": "features",
               "r": true,
               "t": "`$ARRAY`"
+            },
+            "geometry": {
+              "a": true,
+              "h": "Geometry",
+              "n": "geometry",
+              "r": true,
+              "sh": "GeoJSON Geometry",
+              "t": "`$OBJECT`"
+            },
+            "id": {
+              "a": true,
+              "h": "Id",
+              "n": "id",
+              "r": false,
+              "t": "`$STRING`"
             },
             "links": {
               "a": true,
@@ -172,6 +187,14 @@
               "r": false,
               "t": "`$INTEGER`"
             },
+            "properties": {
+              "a": true,
+              "h": "Properties",
+              "n": "properties",
+              "r": true,
+              "sh": "Weather station measurement properties",
+              "t": "`$OBJECT`"
+            },
             "type": {
               "a": true,
               "h": "Type",
@@ -180,7 +203,11 @@
               "t": "`$STRING`"
             }
           },
-          "name": "feature_collection",
+          "id": {
+            "field": "id",
+            "name": "id"
+          },
+          "name": "item",
           "op": {
             "list": {
               "input": "data",
@@ -240,7 +267,7 @@
                         "a": true,
                         "k": "query",
                         "n": "update_frequency",
-                        "or": "update_frequency",
+                        "or": "updateFrequency",
                         "r": false,
                         "t": "`$STRING`"
                       }
@@ -277,62 +304,7 @@
                   }
                 }
               ]
-            }
-          },
-          "relations": {
-            "ancestors": []
-          }
-        },
-        "item": {
-          "active": true,
-          "alias": {
-            "field": {}
-          },
-          "fields": {
-            "geometry": {
-              "a": true,
-              "h": "Geometry",
-              "n": "geometry",
-              "r": true,
-              "sh": "GeoJSON Geometry",
-              "t": "`$OBJECT`"
             },
-            "id": {
-              "a": true,
-              "h": "Id",
-              "n": "id",
-              "r": false,
-              "t": "`$STRING`"
-            },
-            "links": {
-              "a": true,
-              "h": "Links",
-              "n": "links",
-              "r": false,
-              "t": "`$ARRAY`"
-            },
-            "properties": {
-              "a": true,
-              "h": "Properties",
-              "n": "properties",
-              "r": true,
-              "sh": "Weather station measurement properties",
-              "t": "`$OBJECT`"
-            },
-            "type": {
-              "a": true,
-              "h": "Type",
-              "n": "type",
-              "r": true,
-              "t": "`$STRING`"
-            }
-          },
-          "id": {
-            "field": "id",
-            "name": "id"
-          },
-          "name": "item",
-          "op": {
             "load": {
               "input": "data",
               "name": "load",
@@ -350,7 +322,7 @@
                         "a": true,
                         "k": "param",
                         "n": "id",
-                        "or": "item_id",
+                        "or": "itemId",
                         "r": true,
                         "t": "`$STRING`"
                       }
@@ -833,12 +805,12 @@
             }
           ]
         },
-        "BasicFeatureCollectionFlow": {
+        "BasicItemFlow": {
           "active": true,
-          "entity": "feature_collection",
-          "key$": "BasicFeatureCollectionFlow",
+          "entity": "item",
+          "key$": "BasicItemFlow",
           "kind": "basic",
-          "name": "BasicFeatureCollectionFlow",
+          "name": "BasicItemFlow",
           "param": {},
           "step": [
             {
@@ -852,21 +824,11 @@
                 {
                   "apply": "ItemExists",
                   "def": {
-                    "ref": "feature_collection_ref01"
+                    "ref": "item_ref01"
                   }
                 }
               ]
-            }
-          ]
-        },
-        "BasicItemFlow": {
-          "active": true,
-          "entity": "item",
-          "key$": "BasicItemFlow",
-          "kind": "basic",
-          "name": "BasicItemFlow",
-          "param": {},
-          "step": [
+            },
             {
               "a": true,
               "d": {},
@@ -931,7 +893,12 @@
         },
         "base": "http://localhost:8000",
         "clean": {
-          "keys": "key,token,id"
+          "active": true,
+          "hint": "0",
+          "keys": "key,secret,token,password,passwd,authorization,cookie,credential,signature",
+          "mask": "[redacted]",
+          "min": "4",
+          "values": ""
         },
         "entity": {
           "`$CHILD`": {

@@ -51,10 +51,6 @@ client := sdk.TestSDK(testopts, sdkopts)
 
 Create a new `Collection` entity instance. Pass `nil` for no initial data.
 
-#### `FeatureCollection(data map[string]any) AutomaticWeatherStationsEntity`
-
-Create a new `FeatureCollection` entity instance. Pass `nil` for no initial data.
-
 #### `Item(data map[string]any) AutomaticWeatherStationsEntity`
 
 Create a new `Item` entity instance. Pass `nil` for no initial data.
@@ -140,61 +136,6 @@ Return the entity name.
 
 ---
 
-## FeatureCollectionEntity
-
-```go
-featureCollection := client.FeatureCollection(nil)
-fmt.Println(featureCollection.GetName()) // "feature_collection"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `features` | `[]any` | Yes |  |
-| `links` | `[]any` | No |  |
-| `numberMatched` | `int` | No |  |
-| `numberReturned` | `int` | No |  |
-| `type` | `string` | Yes |  |
-
-### Operations
-
-#### `List(reqmatch, ctrl map[string]any) (any, error)`
-
-List entities matching the given criteria. Returns an array.
-
-```go
-results, err := client.FeatureCollection(nil).List(nil, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(results)
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `FeatureCollectionEntity` instance with the same client and
-options.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
 ## ItemEntity
 
 ```go
@@ -206,13 +147,28 @@ fmt.Println(item.GetName()) // "item"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `features` | `[]any` | Yes |  |
 | `geometry` | `map[string]any` | Yes | GeoJSON Geometry |
 | `id` | `string` | No |  |
 | `links` | `[]any` | No |  |
+| `numberMatched` | `int` | No |  |
+| `numberReturned` | `int` | No |  |
 | `properties` | `map[string]any` | Yes | Weather station measurement properties |
 | `type` | `string` | Yes |  |
 
 ### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.Item(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
 

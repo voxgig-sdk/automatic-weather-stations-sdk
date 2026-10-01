@@ -14,13 +14,13 @@ Metadata kindly supplied by [www.freepublicapis.com](https://www.freepublicapis.
 
 > TypeScript, Python, PHP, Golang, Ruby, Lua SDKs, a CLI with an interactive REPL, and an MCP server for AI agents — all generated from one OpenAPI spec by [@voxgig/sdkgen](https://github.com/voxgig/sdkgen).
 
-> **Features:** `undefined`, `undefined`, `undefined`, `undefined` — opt-in,
+> **Features:** `ratelimit`, `retry`, `test`, `timeout` — opt-in,
 > inactive until switched on, and configured per client. See the Features
 > section of any SDK README below for what each one does.
 
 ## Entities, not endpoints
 
-This SDK exposes the API as a small set of **semantic entities** — Collection, FeatureCollection and Item — that you
+This SDK exposes the API as a small set of **semantic entities** — Collection and Item — that you
 call directly, instead of assembling URL paths and query strings. Entities are
 **Capitalised** to mark them as the primary surface, each with the operations they
 support (`list`, `load`):
@@ -46,23 +46,23 @@ network, and no credentials:
 // Shape: { entity: { <entity-name>: { <id>: <record> } } }
 const client = AutomaticWeatherStationsSDK.test({
   entity: {
-    item: {
+    collection: {
       test01: { id: 'test01' },
     },
   },
 })
-const item = await client.Item().load({ id: 'test01' })
-// item is the Item entity, populated with mock data
-// — call item.data() for the record itself
-console.log(item)
+const collections = await client.Collection().list()
+// collections is an array of Collection entities, populated with mock data
+// — call collections[0].data() for the record itself
+console.log(collections)
 ```
 
 ### Python
 
 ```python
 client = AutomaticWeatherStationsSDK.test()
-item = client.Item().load({"id": "test01"})
-print(item)
+collections = client.Collection().list()
+print(collections)
 ```
 
 ### PHP
@@ -70,17 +70,17 @@ print(item)
 ```php
 // Seed fixture data so offline calls resolve without a live server.
 $client = AutomaticWeatherStationsSDK::test([
-    "entity" => ["item" => ["test01" => ["id" => "test01"]]],
+    "entity" => ["collection" => ["test01" => []]],
 ]);
-$item = $client->Item()->load(["id" => "test01"]);
+$collections = $client->Collection()->list();
 ```
 
 ### Golang
 
 ```go
 client := sdk.Test()
-result, err := client.Item(nil).Load(
-    map[string]any{"id": "test01"}, nil,
+result, err := client.Collection(nil).List(
+    nil, nil,
 )
 ```
 
@@ -89,28 +89,28 @@ result, err := client.Item(nil).Load(
 ```ruby
 # Seed fixture data so offline calls resolve without a live server.
 client = AutomaticWeatherStationsSDK.test({
-  "entity" => { "item" => { "test01" => { "id" => "test01" } } },
+  "entity" => { "collection" => { "test01" => {} } },
 })
-item = client.Item.load({ "id" => "test01" })
+collections = client.Collection.list()
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local result, err = client:Item():load({ id = "test01" })
+local results, err = client:Collection():list()
 ```
 
 ## Packages
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/automatic-weather-stations-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/tags) |
-| Python | `voxgig-sdk-automatic-weather-stations-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/tags) |
-| PHP | `voxgig-sdk/automatic-weather-stations-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/tags) |
+| TypeScript | `@voxgig-sdk/automatic-weather-stations-sdk` | publish pending — [install from source](ts/README.md#install) |
+| Python | `voxgig-sdk-automatic-weather-stations-sdk` | publish pending — [install from source](py/README.md#install) |
+| PHP | `voxgig-sdk/automatic-weather-stations-sdk` | publish pending — [install from source](php/README.md#install) |
 | Golang | `github.com/voxgig-sdk/automatic-weather-stations-sdk/go` | `go get github.com/voxgig-sdk/automatic-weather-stations-sdk/go@latest` |
-| Ruby | `voxgig-sdk-automatic-weather-stations-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/tags) |
-| Lua | `voxgig-sdk-automatic-weather-stations-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/tags) |
+| Ruby | `voxgig-sdk-automatic-weather-stations-sdk` | publish pending — [install from source](rb/README.md#install) |
+| Lua | `voxgig-sdk-automatic-weather-stations-sdk` | publish pending — [install from source](lua/README.md#install) |
 | Go CLI | `github.com/voxgig-sdk/automatic-weather-stations-sdk/go-cli` | `go install github.com/voxgig-sdk/automatic-weather-stations-sdk/go-cli/cmd/automatic-weather-stations@latest` |
 | Go MCP server | `github.com/voxgig-sdk/automatic-weather-stations-sdk/go-mcp` | `go get github.com/voxgig-sdk/automatic-weather-stations-sdk/go-mcp@latest` |
 
@@ -164,13 +164,12 @@ Then add it to your agent's MCP config (Claude Desktop, Cursor, etc.):
 
 ## Entities
 
-The API exposes 3 entities:
+The API exposes 2 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
 | **Collection** | The Collection entity (list). | `/collections/ch.meteoschweiz.ogd-smn` |
-| **FeatureCollection** | The FeatureCollection entity (list). | `/collections/ch.meteoschweiz.ogd-smn/items` |
-| **Item** | The Item entity (load). | `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}` |
+| **Item** | The Item entity (list, load). | `/collections/ch.meteoschweiz.ogd-smn/items` |
 
 The operations available across these entities are **load**, **list** — see each entity's
 own list above for exactly which it supports.

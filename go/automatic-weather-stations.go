@@ -44,9 +44,6 @@ func init() {
 	core.NewCollectionEntityFunc = func(client *core.AutomaticWeatherStationsSDK, entopts map[string]any) core.AutomaticWeatherStationsEntity {
 		return entity.NewCollectionEntity(client, entopts)
 	}
-	core.NewFeatureCollectionEntityFunc = func(client *core.AutomaticWeatherStationsSDK, entopts map[string]any) core.AutomaticWeatherStationsEntity {
-		return entity.NewFeatureCollectionEntity(client, entopts)
-	}
 	core.NewItemEntityFunc = func(client *core.AutomaticWeatherStationsSDK, entopts map[string]any) core.AutomaticWeatherStationsEntity {
 		return entity.NewItemEntity(client, entopts)
 	}

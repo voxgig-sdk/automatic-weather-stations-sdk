@@ -70,7 +70,6 @@ declare class Config {
         };
         entity: {
             collection: {};
-            feature_collection: {};
             item: {};
         };
     };
@@ -106,18 +105,30 @@ declare class Config {
                 ancestors: never[];
             };
         };
-        feature_collection: {
+        item: {
             fields: ({
                 name: string;
                 title: string;
                 type: string;
                 req: boolean;
+                short?: undefined;
+            } | {
+                name: string;
+                title: string;
+                type: string;
+                req: boolean;
+                short: string;
             } | {
                 name: string;
                 title: string;
                 type: string;
                 req?: undefined;
+                short?: undefined;
             })[];
+            id: {
+                field: string;
+                name: string;
+            };
             name: string;
             op: {
                 list: {
@@ -156,37 +167,6 @@ declare class Config {
                         };
                     }[];
                 };
-            };
-            relations: {
-                ancestors: never[];
-            };
-        };
-        item: {
-            fields: ({
-                name: string;
-                title: string;
-                type: string;
-                req: boolean;
-                short: string;
-            } | {
-                name: string;
-                title: string;
-                type: string;
-                req?: undefined;
-                short?: undefined;
-            } | {
-                name: string;
-                title: string;
-                type: string;
-                req: boolean;
-                short?: undefined;
-            })[];
-            id: {
-                field: string;
-                name: string;
-            };
-            name: string;
-            op: {
                 load: {
                     input: string;
                     name: string;

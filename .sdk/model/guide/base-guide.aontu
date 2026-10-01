@@ -4,7 +4,7 @@
 #   guide.aontu
 
 guide: {
-  metrics: count: entity: 3
+  metrics: count: entity: 2
   metrics: count: path: 3
   metrics: count: method: 3
 
@@ -15,13 +15,10 @@ guide: {
     }
   }
 
-  entity: feature_collection: {
+  entity: item: {
     path: "/collections/ch.meteoschweiz.ogd-smn/items": {
       op: list: method: *GET
     }
-  }
-
-  entity: item: {
     path: "/collections/ch.meteoschweiz.ogd-smn/items/{itemId}": {
       rename: param: "itemId": *"id"
       op: load: method: *GET

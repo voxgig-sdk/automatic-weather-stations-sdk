@@ -84,7 +84,6 @@ func MakeConfig() map[string]any {
 			},
 			"entity": map[string]any{
 				"collection": map[string]any{},
-				"feature_collection": map[string]any{},
 				"item": map[string]any{},
 			},
 		},
@@ -130,13 +129,25 @@ func MakeConfig() map[string]any {
 					"ancestors": []any{},
 				},
 			},
-			"feature_collection": map[string]any{
+			"item": map[string]any{
 				"fields": []any{
 					map[string]any{
 						"name": "features",
 						"title": "Features",
 						"type": "`$ARRAY`",
 						"req": true,
+					},
+					map[string]any{
+						"name": "geometry",
+						"title": "Geometry",
+						"type": "`$OBJECT`",
+						"req": true,
+						"short": "GeoJSON Geometry",
+					},
+					map[string]any{
+						"name": "id",
+						"title": "Id",
+						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "links",
@@ -154,13 +165,24 @@ func MakeConfig() map[string]any {
 						"type": "`$INTEGER`",
 					},
 					map[string]any{
+						"name": "properties",
+						"title": "Properties",
+						"type": "`$OBJECT`",
+						"req": true,
+						"short": "Weather station measurement properties",
+					},
+					map[string]any{
 						"name": "type",
 						"title": "Type",
 						"type": "`$STRING`",
 						"req": true,
 					},
 				},
-				"name": "feature_collection",
+				"id": map[string]any{
+					"field": "id",
+					"name": "id",
+				},
+				"name": "item",
 				"op": map[string]any{
 					"list": map[string]any{
 						"input": "data",
@@ -226,7 +248,7 @@ func MakeConfig() map[string]any {
 										},
 										map[string]any{
 											"name": "update_frequency",
-											"orig": "update_frequency",
+											"orig": "updateFrequency",
 											"type": "`$STRING`",
 											"kind": "query",
 										},
@@ -245,50 +267,6 @@ func MakeConfig() map[string]any {
 							},
 						},
 					},
-				},
-				"relations": map[string]any{
-					"ancestors": []any{},
-				},
-			},
-			"item": map[string]any{
-				"fields": []any{
-					map[string]any{
-						"name": "geometry",
-						"title": "Geometry",
-						"type": "`$OBJECT`",
-						"req": true,
-						"short": "GeoJSON Geometry",
-					},
-					map[string]any{
-						"name": "id",
-						"title": "Id",
-						"type": "`$STRING`",
-					},
-					map[string]any{
-						"name": "links",
-						"title": "Links",
-						"type": "`$ARRAY`",
-					},
-					map[string]any{
-						"name": "properties",
-						"title": "Properties",
-						"type": "`$OBJECT`",
-						"req": true,
-						"short": "Weather station measurement properties",
-					},
-					map[string]any{
-						"name": "type",
-						"title": "Type",
-						"type": "`$STRING`",
-						"req": true,
-					},
-				},
-				"id": map[string]any{
-					"field": "id",
-					"name": "id",
-				},
-				"name": "item",
-				"op": map[string]any{
 					"load": map[string]any{
 						"input": "data",
 						"name": "load",
@@ -330,7 +308,7 @@ func MakeConfig() map[string]any {
 									"params": []any{
 										map[string]any{
 											"name": "id",
-											"orig": "item_id",
+											"orig": "itemId",
 											"type": "`$STRING`",
 											"kind": "param",
 											"reqd": true,

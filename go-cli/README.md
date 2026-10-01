@@ -20,7 +20,7 @@ export AUTOMATIC_WEATHER_STATIONS_APIKEY=sk_live_xxx
 
 # 4. Each command line is ONE boru expression, run against the API:
 ./automatic-weather-stations-cli list collection
-./automatic-weather-stations-cli list feature_collection
+./automatic-weather-stations-cli list item
 
 # 5. Override the API base URL for a single call
 AUTOMATIC_WEATHER_STATIONS_BASE=https://api.example.com ./automatic-weather-stations-cli list collection
@@ -106,7 +106,7 @@ make build-all   # linux/darwin/windows x amd64/arm64, under dist/<os>-<arch>/
 ### Discover the available entities
 
 `/help` in the REPL prints the full entity list, or see [Entities](#entities)
-below — this SDK exposes 3 entities.
+below — this SDK exposes 2 entities.
 
 ## Reference
 
@@ -160,9 +160,9 @@ Meta-commands use the `/` prefix (everything else on a line is evaluated as boru
 
 ### Entities
 
-The 3 entities this SDK exposes (any is valid as `<entity>`):
+The 2 entities this SDK exposes (any is valid as `<entity>`):
 
-collection feature_collection item
+collection item
 
 ## Explanation
 

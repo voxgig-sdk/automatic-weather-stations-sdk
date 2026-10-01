@@ -16,10 +16,16 @@ end
 class CollectionListMatch
 end
 
-# FeatureCollection entity data model.
+# Item entity data model.
 #
 # @!attribute [rw] features
 #   @return [Array]
+#
+# @!attribute [rw] geometry
+#   @return [Hash]
+#
+# @!attribute [rw] id
+#   @return [String, nil]
 #
 # @!attribute [rw] links
 #   @return [Array, nil]
@@ -30,18 +36,33 @@ end
 # @!attribute [rw] numberReturned
 #   @return [Integer, nil]
 #
+# @!attribute [rw] properties
+#   @return [Hash]
+#
 # @!attribute [rw] type
 #   @return [String]
-FeatureCollection = Struct.new(
+Item = Struct.new(
   :features,
+  :geometry,
+  :id,
   :links,
   :numberMatched,
   :numberReturned,
+  :properties,
   :type,
   keyword_init: true
 )
 
-# Request payload for FeatureCollection#list.
+# Request payload for Item#load.
+#
+# @!attribute [rw] id
+#   @return [String]
+ItemLoadMatch = Struct.new(
+  :id,
+  keyword_init: true
+)
+
+# Request payload for Item#list.
 #
 # @!attribute [rw] bbox
 #   @return [Array, nil]
@@ -60,47 +81,13 @@ FeatureCollection = Struct.new(
 #
 # @!attribute [rw] update_frequency
 #   @return [String, nil]
-FeatureCollectionListMatch = Struct.new(
+ItemListMatch = Struct.new(
   :bbox,
   :datetime,
   :granularity,
   :limit,
   :station,
   :update_frequency,
-  keyword_init: true
-)
-
-# Item entity data model.
-#
-# @!attribute [rw] geometry
-#   @return [Hash]
-#
-# @!attribute [rw] id
-#   @return [String, nil]
-#
-# @!attribute [rw] links
-#   @return [Array, nil]
-#
-# @!attribute [rw] properties
-#   @return [Hash]
-#
-# @!attribute [rw] type
-#   @return [String]
-Item = Struct.new(
-  :geometry,
-  :id,
-  :links,
-  :properties,
-  :type,
-  keyword_init: true
-)
-
-# Request payload for Item#load.
-#
-# @!attribute [rw] id
-#   @return [String]
-ItemLoadMatch = Struct.new(
-  :id,
   keyword_init: true
 )
 

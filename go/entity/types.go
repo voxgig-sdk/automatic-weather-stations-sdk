@@ -20,20 +20,6 @@ type Collection struct {
 type CollectionListMatch struct {
 }
 
-// FeatureCollection is the typed data model for the feature_collection entity.
-type FeatureCollection struct {
-}
-
-// FeatureCollectionListMatch is the typed request payload for FeatureCollection.ListTyped.
-type FeatureCollectionListMatch struct {
-	Bbox *[]any `json:"bbox,omitempty"`
-	Datetime *string `json:"datetime,omitempty"`
-	Granularity *string `json:"granularity,omitempty"`
-	Limit *int `json:"limit,omitempty"`
-	Station *string `json:"station,omitempty"`
-	UpdateFrequency *string `json:"update_frequency,omitempty"`
-}
-
 // Item is the typed data model for the item entity.
 type Item struct {
 }
@@ -41,6 +27,16 @@ type Item struct {
 // ItemLoadMatch is the typed request payload for Item.LoadTyped.
 type ItemLoadMatch struct {
 	Id string `json:"id"`
+}
+
+// ItemListMatch is the typed request payload for Item.ListTyped.
+type ItemListMatch struct {
+	Bbox *[]any `json:"bbox,omitempty"`
+	Datetime *string `json:"datetime,omitempty"`
+	Granularity *string `json:"granularity,omitempty"`
+	Limit *int `json:"limit,omitempty"`
+	Station *string `json:"station,omitempty"`
+	UpdateFrequency *string `json:"update_frequency,omitempty"`
 }
 
 // asMap turns a typed request/data struct into the map[string]any the

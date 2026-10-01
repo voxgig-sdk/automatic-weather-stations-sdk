@@ -44,7 +44,6 @@ class ReadmeExamplesTest < Minitest::Test
   # Entity accessor (client.<Name>) => fixture storage key (lowercase name).
   ENTITIES = {
     "Collection" => "collection",
-    "FeatureCollection" => "feature_collection",
     "Item" => "item",
   }
 

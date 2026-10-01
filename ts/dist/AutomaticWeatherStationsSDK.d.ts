@@ -1,5 +1,4 @@
 import { CollectionEntity } from './entity/CollectionEntity';
-import { FeatureCollectionEntity } from './entity/FeatureCollectionEntity';
 import { ItemEntity } from './entity/ItemEntity';
 export type * from './AutomaticWeatherStationsTypes';
 import { inspect } from 'node:util';
@@ -21,33 +20,32 @@ declare class AutomaticWeatherStationsSDK {
     prepare(fetchargs?: any): Promise<any>;
     direct(fetchargs?: any): Promise<Error | {
         ok: boolean;
-        status: number;
-        headers: any;
-        data: any;
-        err?: undefined;
-    } | {
-        ok: boolean;
         err: any;
         status?: undefined;
         headers?: undefined;
         data?: undefined;
+    } | {
+        ok: boolean;
+        status: number;
+        headers: any;
+        data: any;
+        err?: undefined;
     }>;
     _rawRequest(fetchargs?: any): Promise<Error | {
         ok: boolean;
-        status: number;
-        headers: any;
-        data: any;
-        err?: undefined;
-    } | {
-        ok: boolean;
         err: any;
         status?: undefined;
         headers?: undefined;
         data?: undefined;
+    } | {
+        ok: boolean;
+        status: number;
+        headers: any;
+        data: any;
+        err?: undefined;
     }>;
     graphql(query: string, variables?: any, ctrl?: any): Promise<any>;
     Collection(entopts?: Record<string, any>): CollectionEntity;
-    FeatureCollection(entopts?: Record<string, any>): FeatureCollectionEntity;
     Item(entopts?: Record<string, any>): ItemEntity;
     static test(testoptsarg?: any, sdkoptsarg?: any): AutomaticWeatherStationsSDK;
     tester(testopts?: any, sdkopts?: any): AutomaticWeatherStationsSDK;

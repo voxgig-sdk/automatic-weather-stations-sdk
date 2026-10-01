@@ -109,7 +109,6 @@ def make_config():
       },
             "entity": {
                 "collection": {},
-                "feature_collection": {},
                 "item": {},
             },
         },
@@ -155,13 +154,25 @@ def make_config():
           "ancestors": [],
         },
       },
-      "feature_collection": {
+      "item": {
         "fields": [
           {
             "name": "features",
             "title": "Features",
             "type": "`$ARRAY`",
             "req": True,
+          },
+          {
+            "name": "geometry",
+            "title": "Geometry",
+            "type": "`$OBJECT`",
+            "req": True,
+            "short": "GeoJSON Geometry",
+          },
+          {
+            "name": "id",
+            "title": "Id",
+            "type": "`$STRING`",
           },
           {
             "name": "links",
@@ -179,13 +190,24 @@ def make_config():
             "type": "`$INTEGER`",
           },
           {
+            "name": "properties",
+            "title": "Properties",
+            "type": "`$OBJECT`",
+            "req": True,
+            "short": "Weather station measurement properties",
+          },
+          {
             "name": "type",
             "title": "Type",
             "type": "`$STRING`",
             "req": True,
           },
         ],
-        "name": "feature_collection",
+        "id": {
+          "field": "id",
+          "name": "id",
+        },
+        "name": "item",
         "op": {
           "list": {
             "input": "data",
@@ -251,7 +273,7 @@ def make_config():
                     },
                     {
                       "name": "update_frequency",
-                      "orig": "update_frequency",
+                      "orig": "updateFrequency",
                       "type": "`$STRING`",
                       "kind": "query",
                     },
@@ -270,50 +292,6 @@ def make_config():
               },
             ],
           },
-        },
-        "relations": {
-          "ancestors": [],
-        },
-      },
-      "item": {
-        "fields": [
-          {
-            "name": "geometry",
-            "title": "Geometry",
-            "type": "`$OBJECT`",
-            "req": True,
-            "short": "GeoJSON Geometry",
-          },
-          {
-            "name": "id",
-            "title": "Id",
-            "type": "`$STRING`",
-          },
-          {
-            "name": "links",
-            "title": "Links",
-            "type": "`$ARRAY`",
-          },
-          {
-            "name": "properties",
-            "title": "Properties",
-            "type": "`$OBJECT`",
-            "req": True,
-            "short": "Weather station measurement properties",
-          },
-          {
-            "name": "type",
-            "title": "Type",
-            "type": "`$STRING`",
-            "req": True,
-          },
-        ],
-        "id": {
-          "field": "id",
-          "name": "id",
-        },
-        "name": "item",
-        "op": {
           "load": {
             "input": "data",
             "name": "load",
@@ -355,7 +333,7 @@ def make_config():
                   "params": [
                     {
                       "name": "id",
-                      "orig": "item_id",
+                      "orig": "itemId",
                       "type": "`$STRING`",
                       "kind": "param",
                       "reqd": True,

@@ -7,6 +7,18 @@ main: kit: flow: BasicItemFlow:
   name: "BasicItemFlow",
   step: [
     {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "item_ref01"
+          }
+        }
+      ]
+    }
+
+    {
       i: {
         ref: "item_ref01",
         srcdatavar: "item_ref01_data",

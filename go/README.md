@@ -68,12 +68,12 @@ Every entity operation returns `(value, error)`. Check `err` before
 using the value — there is no exception to catch:
 
 ```go
-item, err := client.Item(nil).Load(map[string]any{"id": "example_id"}, nil)
+collections, err := client.Collection(nil).List(nil, nil)
 if err != nil {
     // handle err
     return
 }
-_ = item
+_ = collections
 ```
 
 `Direct` follows the same `(value, error)` convention:
@@ -137,13 +137,13 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-item, err := client.Item(nil).Load(
-    map[string]any{"id": "test01"}, nil,
+collection, err := client.Collection(nil).List(
+    nil, nil,
 )
 if err != nil {
     panic(err)
 }
-fmt.Println(item) // the returned mock data
+fmt.Println(collection) // the returned mock data
 ```
 
 ### Use a custom fetch function
@@ -221,7 +221,6 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `Prepare` | `(fetchargs map[string]any) (map[string]any, error)` | Build an HTTP request definition without sending. |
 | `Direct` | `(fetchargs map[string]any) (map[string]any, error)` | Build and send an HTTP request. |
 | `Collection` | `(data map[string]any) AutomaticWeatherStationsEntity` | Create a Collection entity instance. |
-| `FeatureCollection` | `(data map[string]any) AutomaticWeatherStationsEntity` | Create a FeatureCollection entity instance. |
 | `Item` | `(data map[string]any) AutomaticWeatherStationsEntity` | Create an Item entity instance. |
 
 ### Entity interface (AutomaticWeatherStationsEntity)
@@ -269,33 +268,22 @@ Operations: List.
 
 API path: `/collections/ch.meteoschweiz.ogd-smn`
 
-#### FeatureCollection
-
-| Field | Description |
-| --- | --- |
-| `"features"` |  |
-| `"links"` |  |
-| `"numberMatched"` |  |
-| `"numberReturned"` |  |
-| `"type"` |  |
-
-Operations: List.
-
-API path: `/collections/ch.meteoschweiz.ogd-smn/items`
-
 #### Item
 
 | Field | Description |
 | --- | --- |
+| `"features"` |  |
 | `"geometry"` | GeoJSON Geometry |
 | `"id"` |  |
 | `"links"` |  |
+| `"numberMatched"` |  |
+| `"numberReturned"` |  |
 | `"properties"` | Weather station measurement properties |
 | `"type"` |  |
 
-Operations: Load.
+Operations: List, Load.
 
-API path: `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}`
+API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 
 
 
@@ -323,37 +311,6 @@ fmt.Println(collections) // the array of records
 ```
 
 
-### FeatureCollection
-
-Create an instance: `featureCollection := client.FeatureCollection(nil)`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `List(match, ctrl)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `features` | `[]any` |  |
-| `links` | `[]any` |  |
-| `numberMatched` | `int` |  |
-| `numberReturned` | `int` |  |
-| `type` | `string` |  |
-
-#### Example: List
-
-```go
-featureCollections, err := client.FeatureCollection(nil).List(nil, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(featureCollections) // the array of records
-```
-
-
 ### Item
 
 Create an instance: `item := client.Item(nil)`
@@ -362,15 +319,19 @@ Create an instance: `item := client.Item(nil)`
 
 | Method | Description |
 | --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `features` | `[]any` |  |
 | `geometry` | `map[string]any` | GeoJSON Geometry |
 | `id` | `string` |  |
 | `links` | `[]any` |  |
+| `numberMatched` | `int` |  |
+| `numberReturned` | `int` |  |
 | `properties` | `map[string]any` | Weather station measurement properties |
 | `type` | `string` |  |
 
@@ -382,6 +343,16 @@ if err != nil {
     panic(err)
 }
 fmt.Println(item) // the loaded record
+```
+
+#### Example: List
+
+```go
+items, err := client.Item(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(items) // the array of records
 ```
 
 ## Features
@@ -538,15 +509,15 @@ like `core.ToMapAny`.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `Load`, the entity
+Entity instances are stateful. After a successful `List`, the entity
 stores the returned data and match criteria internally.
 
 ```go
-item := client.Item(nil)
-item.Load(map[string]any{"id": "example_id"}, nil)
+collection := client.Collection(nil)
+collection.List(nil, nil)
 
-// item.Data() now returns the item data from the last load
-// item.Match() returns the last match criteria
+// collection.Data() now returns the collection data from the last list
+// collection.Match() returns the last match criteria
 ```
 
 Call `Make()` to create a fresh instance with the same configuration

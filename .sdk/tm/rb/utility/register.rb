@@ -33,6 +33,8 @@ require_relative 'transform_response'
 
 AutomaticWeatherStationsUtility.registrar = ->(u) {
   u.clean = AutomaticWeatherStationsUtilities::Clean
+  u.clean_add = AutomaticWeatherStationsUtilities::CleanAdd
+  u.clean_explain = AutomaticWeatherStationsUtilities::CleanExplain
   u.done = AutomaticWeatherStationsUtilities::Done
   u.make_error = AutomaticWeatherStationsUtilities::MakeError
   u.feature_add = AutomaticWeatherStationsUtilities::FeatureAdd

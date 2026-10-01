@@ -12,9 +12,14 @@ The SDK exposes the API as capitalised, semantic **Entities** — for example `$
 
 ## Install
 This package is not yet published to Packagist. Install it from the
-GitHub release tag (`php/vX.Y.Z`):
+GitHub release tag (`php/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases)), or
+from a clone as a Composer path repository:
 
-- Releases: [https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases](https://github.com/voxgig-sdk/automatic-weather-stations-sdk/releases)
+```bash
+git clone https://github.com/voxgig-sdk/automatic-weather-stations-sdk
+composer config repositories.automatic-weather-stations-sdk path ./automatic-weather-stations-sdk/php
+composer require voxgig-sdk/automatic-weather-stations-sdk:@dev
+```
 
 
 ## Tutorial: your first API call
@@ -54,7 +59,7 @@ Entity operations throw a `\Throwable` on failure, so wrap them in
 
 ```php
 try {
-    $item = $client->Item()->load(["id" => "example_id"]);
+    $collections = $client->Collection()->list();
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -129,10 +134,10 @@ $client = AutomaticWeatherStationsSDK::test([
     "entity" => ["item" => ["test01" => ["id" => "test01"]]],
 ]);
 
-// Entity ops return the ENTITY (throws on error);
+// list() returns entity instances (throws on error);
 // call data_get() for the mock record.
-$item = $client->Item()->load(["id" => "test01"]);
-print_r($item->data_get());
+$item = $client->Item()->list();
+print_r(array_map(fn($item) => $item->data_get(), $item));
 ```
 
 ### Use a custom fetch function
@@ -212,7 +217,6 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `prepare` | `(array $fetchargs): array` | Build an HTTP request definition without sending. |
 | `direct` | `(array $fetchargs): array` | Build and send an HTTP request. |
 | `Collection` | `($data): CollectionEntity` | Create a Collection entity instance. |
-| `FeatureCollection` | `($data): FeatureCollectionEntity` | Create a FeatureCollection entity instance. |
 | `Item` | `($data): ItemEntity` | Create an Item entity instance. |
 
 ### Entity interface
@@ -259,33 +263,22 @@ Operations: List.
 
 API path: `/collections/ch.meteoschweiz.ogd-smn`
 
-#### FeatureCollection
-
-| Field | Description |
-| --- | --- |
-| `features` |  |
-| `links` |  |
-| `numberMatched` |  |
-| `numberReturned` |  |
-| `type` |  |
-
-Operations: List.
-
-API path: `/collections/ch.meteoschweiz.ogd-smn/items`
-
 #### Item
 
 | Field | Description |
 | --- | --- |
+| `features` |  |
 | `geometry` | GeoJSON Geometry |
 | `id` |  |
 | `links` |  |
+| `numberMatched` |  |
+| `numberReturned` |  |
 | `properties` | Weather station measurement properties |
 | `type` |  |
 
-Operations: Load.
+Operations: List, Load.
 
-API path: `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}`
+API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 
 
 
@@ -310,34 +303,6 @@ $collections = $client->Collection()->list();
 ```
 
 
-### FeatureCollection
-
-Create an instance: `$feature_collection = $client->FeatureCollection();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `features` | `array` |  |
-| `links` | `array` |  |
-| `numberMatched` | `int` |  |
-| `numberReturned` | `int` |  |
-| `type` | `string` |  |
-
-#### Example: List
-
-```php
-// list() returns an array of FeatureCollection records (throws on error).
-$feature_collections = $client->FeatureCollection()->list();
-```
-
-
 ### Item
 
 Create an instance: `$item = $client->Item();`
@@ -346,15 +311,19 @@ Create an instance: `$item = $client->Item();`
 
 | Method | Description |
 | --- | --- |
+| `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `features` | `array` |  |
 | `geometry` | `array` | GeoJSON Geometry |
 | `id` | `string` |  |
 | `links` | `array` |  |
+| `numberMatched` | `int` |  |
+| `numberReturned` | `int` |  |
 | `properties` | `array` | Weather station measurement properties |
 | `type` | `string` |  |
 
@@ -363,6 +332,13 @@ Create an instance: `$item = $client->Item();`
 ```php
 // load() returns the ENTITY — call data_get() for the Item record (throws on error).
 $item = $client->Item()->load(["id" => "item_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of Item records (throws on error).
+$items = $client->Item()->list();
 ```
 
 ## Features
@@ -523,15 +499,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `load`, the entity
+Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$item = $client->Item();
-$item->load(["id" => "example_id"]);
+$collection = $client->Collection();
+$collection->list();
 
-// $item->data_get() now returns the item data from the last load
-// $item->match_get() returns the last match criteria
+// $collection->data_get() now returns the collection data from the last list
+// $collection->match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

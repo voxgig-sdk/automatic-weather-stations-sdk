@@ -54,7 +54,7 @@ Entity operations return `(value, err)`. Check `err` before using
 the value:
 
 ```lua
-local item, err = client:Item():load({ id = "example_id" })
+local collections, err = client:Collection():list()
 if err then error(err) end
 ```
 
@@ -112,7 +112,7 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:Item():load({ id = "test01" })
+local result, err = client:Collection():list()
 -- result is the returned data; err is set on failure
 ```
 
@@ -192,7 +192,6 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `prepare` | `(fetchargs) -> table, err` | Build an HTTP request definition without sending. |
 | `direct` | `(fetchargs) -> table, err` | Build and send an HTTP request. |
 | `Collection` | `(data) -> CollectionEntity` | Create a Collection entity instance. |
-| `FeatureCollection` | `(data) -> FeatureCollectionEntity` | Create a FeatureCollection entity instance. |
 | `Item` | `(data) -> ItemEntity` | Create an Item entity instance. |
 
 ### Entity interface
@@ -240,33 +239,22 @@ Operations: List.
 
 API path: `/collections/ch.meteoschweiz.ogd-smn`
 
-#### FeatureCollection
-
-| Field | Description |
-| --- | --- |
-| `features` |  |
-| `links` |  |
-| `numberMatched` |  |
-| `numberReturned` |  |
-| `type` |  |
-
-Operations: List.
-
-API path: `/collections/ch.meteoschweiz.ogd-smn/items`
-
 #### Item
 
 | Field | Description |
 | --- | --- |
+| `features` |  |
 | `geometry` | GeoJSON Geometry |
 | `id` |  |
 | `links` |  |
+| `numberMatched` |  |
+| `numberReturned` |  |
 | `properties` | Weather station measurement properties |
 | `type` |  |
 
-Operations: Load.
+Operations: List, Load.
 
-API path: `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}`
+API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 
 
 
@@ -290,33 +278,6 @@ local collections, err = client:Collection():list()
 ```
 
 
-### FeatureCollection
-
-Create an instance: `local feature_collection = client:FeatureCollection(nil)`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `features` | `table` |  |
-| `links` | `table` |  |
-| `numberMatched` | `number` |  |
-| `numberReturned` | `number` |  |
-| `type` | `string` |  |
-
-#### Example: List
-
-```lua
-local feature_collections, err = client:FeatureCollection():list()
-```
-
-
 ### Item
 
 Create an instance: `local item = client:Item(nil)`
@@ -325,15 +286,19 @@ Create an instance: `local item = client:Item(nil)`
 
 | Method | Description |
 | --- | --- |
+| `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `features` | `table` |  |
 | `geometry` | `table` | GeoJSON Geometry |
 | `id` | `string` |  |
 | `links` | `table` |  |
+| `numberMatched` | `number` |  |
+| `numberReturned` | `number` |  |
 | `properties` | `table` | Weather station measurement properties |
 | `type` | `string` |  |
 
@@ -341,6 +306,12 @@ Create an instance: `local item = client:Item(nil)`
 
 ```lua
 local item, err = client:Item():load({ id = "item_id" })
+```
+
+#### Example: List
+
+```lua
+local items, err = client:Item():list()
 ```
 
 ## Features
@@ -501,15 +472,15 @@ when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `load`, the entity
+Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local item = client:Item()
-item:load({ id = "example_id" })
+local collection = client:Collection()
+collection:list()
 
--- item:data_get() now returns the item data from the last load
--- item:match_get() returns the last match criteria
+-- collection:data_get() now returns the collection data from the last list
+-- collection:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

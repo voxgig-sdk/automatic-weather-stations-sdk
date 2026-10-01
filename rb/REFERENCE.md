@@ -45,10 +45,6 @@ client = AutomaticWeatherStationsSDK.test
 
 Create a new `Collection` entity instance. Pass `nil` for no initial data.
 
-#### `FeatureCollection(data = nil)`
-
-Create a new `FeatureCollection` entity instance. Pass `nil` for no initial data.
-
 #### `Item(data = nil)`
 
 Create a new `Item` entity instance. Pass `nil` for no initial data.
@@ -137,62 +133,6 @@ Return the entity name.
 
 ---
 
-## FeatureCollectionEntity
-
-```ruby
-feature_collection = client.FeatureCollection
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `features` | `Array` | Yes |  |
-| `links` | `Array` | No |  |
-| `numberMatched` | `Integer` | No |  |
-| `numberReturned` | `Integer` | No |  |
-| `type` | `String` | Yes |  |
-
-### Operations
-
-#### `list(reqmatch = nil, ctrl = nil) -> Array`
-
-List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
-
-```ruby
-results = client.FeatureCollection.list
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `FeatureCollectionEntity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
 ## ItemEntity
 
 ```ruby
@@ -203,13 +143,24 @@ item = client.Item
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `features` | `Array` | Yes |  |
 | `geometry` | `Hash` | Yes | GeoJSON Geometry |
 | `id` | `String` | No |  |
 | `links` | `Array` | No |  |
+| `numberMatched` | `Integer` | No |  |
+| `numberReturned` | `Integer` | No |  |
 | `properties` | `Hash` | Yes | Weather station measurement properties |
 | `type` | `String` | Yes |  |
 
 ### Operations
+
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Raises on error.
+
+```ruby
+results = client.Item.list
+```
 
 #### `load(reqmatch, ctrl = nil) -> result`
 

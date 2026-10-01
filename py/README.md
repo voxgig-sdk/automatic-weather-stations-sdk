@@ -57,10 +57,10 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 
 ```python
 try:
-    item = client.Item().load({"id": "example_id"})
-    print(item)
+    collections = client.Collection().list()
+    print(collections)
 except Exception as err:
-    print(f"load failed: {err}")
+    print(f"list failed: {err}")
 ```
 
 `direct()` does **not** raise — it returns the result envelope. Branch
@@ -126,8 +126,8 @@ client = AutomaticWeatherStationsSDK.test()
 
 # Entity ops return the ENTITY and raises on error;
 # call data_get() for the record.
-item = client.Item().load({"id": "test01"})
-# item contains the mock response record
+collection = client.Collection().list()
+# collection contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -204,7 +204,6 @@ Creates a test-mode client with mock transport. Both arguments may be `None`.
 | `prepare` | `(fetchargs) -> dict` | Build an HTTP request definition without sending. Raises on error. |
 | `direct` | `(fetchargs) -> dict` | Build and send an HTTP request. Returns a result dict (branch on `ok`). |
 | `Collection` | `(data) -> CollectionEntity` | Create a Collection entity instance. |
-| `FeatureCollection` | `(data) -> FeatureCollectionEntity` | Create a FeatureCollection entity instance. |
 | `Item` | `(data) -> ItemEntity` | Create an Item entity instance. |
 
 ### Entity interface
@@ -251,33 +250,22 @@ Operations: List.
 
 API path: `/collections/ch.meteoschweiz.ogd-smn`
 
-#### FeatureCollection
-
-| Field | Description |
-| --- | --- |
-| `features` |  |
-| `links` |  |
-| `numberMatched` |  |
-| `numberReturned` |  |
-| `type` |  |
-
-Operations: List.
-
-API path: `/collections/ch.meteoschweiz.ogd-smn/items`
-
 #### Item
 
 | Field | Description |
 | --- | --- |
+| `features` |  |
 | `geometry` | GeoJSON Geometry |
 | `id` |  |
 | `links` |  |
+| `numberMatched` |  |
+| `numberReturned` |  |
 | `properties` | Weather station measurement properties |
 | `type` |  |
 
-Operations: Load.
+Operations: List, Load.
 
-API path: `/collections/ch.meteoschweiz.ogd-smn/items/{itemId}`
+API path: `/collections/ch.meteoschweiz.ogd-smn/items`
 
 
 
@@ -301,33 +289,6 @@ collections = client.Collection().list()
 ```
 
 
-### FeatureCollection
-
-Create an instance: `feature_collection = client.FeatureCollection()`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list()` | List entities, optionally matching the given criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `features` | `list` |  |
-| `links` | `list` |  |
-| `numberMatched` | `int` |  |
-| `numberReturned` | `int` |  |
-| `type` | `str` |  |
-
-#### Example: List
-
-```python
-feature_collections = client.FeatureCollection().list()
-```
-
-
 ### Item
 
 Create an instance: `item = client.Item()`
@@ -336,15 +297,19 @@ Create an instance: `item = client.Item()`
 
 | Method | Description |
 | --- | --- |
+| `list()` | List entities, optionally matching the given criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `features` | `list` |  |
 | `geometry` | `dict` | GeoJSON Geometry |
 | `id` | `str` |  |
 | `links` | `list` |  |
+| `numberMatched` | `int` |  |
+| `numberReturned` | `int` |  |
 | `properties` | `dict` | Weather station measurement properties |
 | `type` | `str` |  |
 
@@ -352,6 +317,12 @@ Create an instance: `item = client.Item()`
 
 ```python
 item = client.Item().load({"id": "item_id"})
+```
+
+#### Example: List
+
+```python
+items = client.Item().list()
 ```
 
 ## Features
@@ -511,15 +482,15 @@ Import entity or utility modules directly only when needed.
 
 ### Entity state
 
-Entity instances are stateful. After a successful `load`, the entity
+Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-item = client.Item()
-item.load({"id": "example_id"})
+collection = client.Collection()
+collection.list()
 
-# item.data_get() now returns the item data from the last load
-# item.match_get() returns the last match criteria
+# collection.data_get() now returns the collection data from the last list
+# collection.match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration
