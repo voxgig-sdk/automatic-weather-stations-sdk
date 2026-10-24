@@ -122,15 +122,15 @@ main: kit: entity: item: {
           }
           m: "GET"
           o: "/collections/ch.meteoschweiz.ogd-smn/items"
-          q: {
-            exist: [
-              "bbox"
-              "datetime"
-              "granularity"
-              "limit"
-              "station"
-              "update_frequency"
+          rs: {
+            alternatives: [
+              {
+                kind: "raw"
+                media: "text/csv"
+              }
             ]
+            kind: "json"
+            media: "application/json"
           }
           s: [
             {
@@ -181,6 +181,16 @@ main: kit: entity: item: {
             param: {
               itemId: "id"
             }
+          }
+          rs: {
+            alternatives: [
+              {
+                kind: "raw"
+                media: "text/csv"
+              }
+            ]
+            kind: "json"
+            media: "application/json"
           }
           s: [
             {

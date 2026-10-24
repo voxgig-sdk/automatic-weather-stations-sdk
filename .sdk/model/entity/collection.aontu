@@ -20,6 +20,10 @@ main: kit: entity: collection: {
           q: {
             "$action": "chmeteoschweizogd_smn"
           }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "collections"

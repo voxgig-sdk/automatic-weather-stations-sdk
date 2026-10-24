@@ -3,5 +3,16 @@
     "SUMMARY.md"
   ],
   "config": ".sdk/doc/qa/vale.ini",
-  "routes": {}
+  "routes": {},
+  "quoted": {
+    "SUMMARY.md": [
+      "FSDI REST API for Swiss Meteorological Data",
+      "GeoJSON Geometry",
+      "Successful response with collection metadata",
+      "Successful response with specific weather station data",
+      "Successful response with weather station data",
+      "The Automatic Weather Stations API provides access to data from around 160 automatic measurement stations within the SwissMetNet network. It delivers vital meteorological data including temperature, precipitation, wind speed, and humidity every 10 minutes to support weather forecasting and environmental monitoring.",
+      "Weather station measurement properties"
+    ]
+  }
 }

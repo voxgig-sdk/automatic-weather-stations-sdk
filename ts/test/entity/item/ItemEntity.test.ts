@@ -9,7 +9,7 @@ import { createLiveTransport } from '../../live-runner'
 import { runLiveEntity } from '../../live-entity'
 
 
-import { AutomaticWeatherStationsSDK, BaseFeature, stdutil } from '../../..'
+import { AutomaticWeatherStationsSDK, BaseFeature, config, stdutil } from '../../..'
 
 import {
   envOverride,
@@ -41,6 +41,64 @@ describe('ItemEntity', async () => {
   })
 
 
+  class FailHook extends BaseFeature {
+    name = 'failhook'
+    version = '0.0.1'
+    active = true
+    unexpected = 0
+    init() { }
+    PreSpec() { throw new Error('item hook failed') }
+    PreUnexpected() { this.unexpected++ }
+  }
+
+  test('stream-error', async () => {
+    const offline = { net: { offline: true } }
+    await assert.rejects(async () => {
+      for await (const _item of AutomaticWeatherStationsSDK.test(offline).Item().stream('list')) { }
+    }, /offline/)
+
+    for await (const _item of AutomaticWeatherStationsSDK.test(offline).Item()
+      .stream('list', undefined, { ctrl: { throw: false } })) { }
+
+    if (null != (config as any).feature?.rbac) {
+      const denied = AutomaticWeatherStationsSDK.test(undefined, { feature: { rbac: { active: true, deny: true } } })
+      await assert.rejects(async () => {
+        for await (const _item of denied.Item().stream('list')) { }
+      }, (err: any) => 'rbac_denied' === err.code)
+    }
+  })
+
+  test('stream-ctrl', async () => {
+    const explain: any = {}
+    const ctrl: any = { explain }
+    for await (const _item of AutomaticWeatherStationsSDK.test().Item().stream('list', undefined, { ctrl })) { }
+    assert.deepStrictEqual(Object.keys(ctrl), ['explain'])
+    assert(explain === ctrl.explain && 0 < Object.keys(explain).length)
+  })
+
+  test('unexpected', async () => {
+    const hook = new FailHook()
+    const client = new AutomaticWeatherStationsSDK({ feature: { test: { active: true } }, extend: [hook] })
+    await assert.rejects(client.Item().list(), /hook failed/)
+    assert(0 < hook.unexpected)
+
+    const fired = hook.unexpected
+    assert.strictEqual(await client.Item().list(undefined, { throw: false }), undefined)
+    assert(fired < hook.unexpected)
+  })
+
+  test('validate', async (t) => {
+    if (null == (config as any).feature?.validate) {
+      t.skip('feature not present in this SDK: validate')
+      return
+    }
+    const client = AutomaticWeatherStationsSDK.test(undefined, { feature: { validate: { active: true } } })
+    await assert.rejects(client.Item().list({"datetime":1} as any),
+      (err: any) => 'validate_failed' === err.code)
+  })
+
+
+
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.AUTOMATIC_WEATHER_STATIONS_TEST_LIVE
@@ -51,7 +109,7 @@ describe('ItemEntity', async () => {
     
     const setup = basicSetup()
     if (setup.live) {
-      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"features":{"a":true,"h":"Features","n":"features","r":true,"t":"`$ARRAY`","key$":"features","index$":0},"geometry":{"a":true,"h":"Geometry","n":"geometry","r":true,"sh":"GeoJSON Geometry","t":"`$OBJECT`","key$":"geometry","index$":1},"id":{"a":true,"h":"Id","n":"id","r":false,"t":"`$STRING`","key$":"id","index$":2},"links":{"a":true,"h":"Links","n":"links","r":false,"t":"`$ARRAY`","key$":"links","index$":3},"numberMatched":{"a":true,"h":"Number Matched","n":"numberMatched","r":false,"t":"`$INTEGER`","key$":"numberMatched","index$":4},"numberReturned":{"a":true,"h":"Number Returned","n":"numberReturned","r":false,"t":"`$INTEGER`","key$":"numberReturned","index$":5},"properties":{"a":true,"h":"Properties","n":"properties","r":true,"sh":"Weather station measurement properties","t":"`$OBJECT`","key$":"properties","index$":6},"type":{"a":true,"h":"Type","n":"type","r":true,"t":"`$STRING`","key$":"type","index$":7}},"id":{"field":"id","name":"id"},"name":"item","op":{"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /collections/ch.meteoschweiz.ogd-smn/items","source":"openapi3","version":2},"g":{"query":[{"a":true,"k":"query","n":"bbox","or":"bbox","r":false,"t":"`$ARRAY`","index$":0},{"a":true,"k":"query","n":"datetime","or":"datetime","r":false,"t":"`$STRING`","index$":1},{"a":true,"k":"query","n":"granularity","or":"granularity","r":false,"t":"`$STRING`","index$":2},{"a":true,"ex":10,"k":"query","n":"limit","or":"limit","r":false,"t":"`$INTEGER`","index$":3},{"a":true,"k":"query","n":"station","or":"station","r":false,"t":"`$STRING`","index$":4},{"a":true,"k":"query","n":"update_frequency","or":"updateFrequency","r":false,"t":"`$STRING`","index$":5}]},"k":"http","m":"GET","o":"/collections/ch.meteoschweiz.ogd-smn/items","q":{"exist":["bbox","datetime","granularity","limit","station","update_frequency"]},"r":{},"s":[{"lit":"collections"},{"lit":"ch.meteoschweiz.ogd-smn"},{"lit":"items"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"list"},"load":{"input":"data","name":"load","points":[{"a":true,"co":{"id":"GET /collections/ch.meteoschweiz.ogd-smn/items/{itemId}","source":"openapi3","version":2},"g":{"params":[{"a":true,"k":"param","n":"id","or":"itemId","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"GET","o":"/collections/ch.meteoschweiz.ogd-smn/items/{itemId}","q":{"exist":["id"]},"r":{"param":{"itemId":"id"}},"s":[{"lit":"collections"},{"lit":"ch.meteoschweiz.ogd-smn"},{"lit":"items"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"load"}},"relations":{"ancestors":[]},"key$":"item","name__orig":"item","Name":"Item","name_":"item","name-":"item","NAME":"ITEM","index$":1}, {"active":true,"entity":"item","key$":"BasicItemFlow","kind":"basic","name":"BasicItemFlow","param":{},"step":[{"a":true,"d":{},"i":{},"m":{},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"item_ref01"}}],"index$":0},{"a":true,"d":{},"i":{"ref":"item_ref01","srcdatavar":"item_ref01_data","suffix":"_dt0"},"m":{"id":"item01"},"o":"load","s":[],"v":[{"apply":"TextFieldMark","def":{"mark":"Mark01-item_ref01"}}],"index$":1}]}, 'Item', {"GET /collections/ch.meteoschweiz.ogd-smn/items":{"protocol":"http","parameters":[{"name":"bbox","in":"query","description":"Bounding box to filter stations by geographic area (minLon,minLat,maxLon,maxLat)","required":false,"schema":{"type":"array","items":{"type":"number"},"minItems":4,"maxItems":4},"style":"form","explode":false,"index$":0},{"name":"datetime","in":"query","description":"Filter by datetime or datetime range (ISO 8601 format)","required":false,"schema":{"type":"string"},"index$":1},{"name":"limit","in":"query","description":"Maximum number of items to return","required":false,"schema":{"type":"integer","minimum":1,"maximum":1000,"default":10},"index$":2},{"name":"station","in":"query","description":"Three-letter station identifier (e.g., BER for Bern/Zollikofen, LUG for Lugano)","required":false,"schema":{"type":"string","pattern":"^[A-Z]{3}$"},"index$":3},{"name":"granularity","in":"query","description":"Data granularity: 10-minute (t), hourly (h), daily (d), monthly (m), or yearly (y)","required":false,"schema":{"type":"string","enum":["t","h","d","m","y"]},"index$":4},{"name":"updateFrequency","in":"query","description":"Update frequency: current (now), recent, or historical data","required":false,"schema":{"type":"string","enum":["now","recent","historical"]},"index$":5}]},"GET /collections/ch.meteoschweiz.ogd-smn/items/{itemId}":{"protocol":"http","parameters":[{"name":"itemId","in":"path","description":"Unique identifier for the weather station data item","required":true,"schema":{"type":"string"},"index$":0}]}})
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"features":{"a":true,"h":"Features","n":"features","r":true,"t":"`$ARRAY`","key$":"features","index$":0},"geometry":{"a":true,"h":"Geometry","n":"geometry","r":true,"sh":"GeoJSON Geometry","t":"`$OBJECT`","key$":"geometry","index$":1},"id":{"a":true,"h":"Id","n":"id","r":false,"t":"`$STRING`","key$":"id","index$":2},"links":{"a":true,"h":"Links","n":"links","r":false,"t":"`$ARRAY`","key$":"links","index$":3},"numberMatched":{"a":true,"h":"Number Matched","n":"numberMatched","r":false,"t":"`$INTEGER`","key$":"numberMatched","index$":4},"numberReturned":{"a":true,"h":"Number Returned","n":"numberReturned","r":false,"t":"`$INTEGER`","key$":"numberReturned","index$":5},"properties":{"a":true,"h":"Properties","n":"properties","r":true,"sh":"Weather station measurement properties","t":"`$OBJECT`","key$":"properties","index$":6},"type":{"a":true,"h":"Type","n":"type","r":true,"t":"`$STRING`","key$":"type","index$":7}},"id":{"field":"id","name":"id"},"name":"item","op":{"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /collections/ch.meteoschweiz.ogd-smn/items","source":"openapi3","version":2},"g":{"query":[{"a":true,"k":"query","n":"bbox","or":"bbox","r":false,"t":"`$ARRAY`","index$":0},{"a":true,"k":"query","n":"datetime","or":"datetime","r":false,"t":"`$STRING`","index$":1},{"a":true,"k":"query","n":"granularity","or":"granularity","r":false,"t":"`$STRING`","index$":2},{"a":true,"ex":10,"k":"query","n":"limit","or":"limit","r":false,"t":"`$INTEGER`","index$":3},{"a":true,"k":"query","n":"station","or":"station","r":false,"t":"`$STRING`","index$":4},{"a":true,"k":"query","n":"update_frequency","or":"updateFrequency","r":false,"t":"`$STRING`","index$":5}]},"k":"http","m":"GET","o":"/collections/ch.meteoschweiz.ogd-smn/items","q":{},"r":{},"rs":{"alternatives":[{"kind":"raw","media":"text/csv"}],"kind":"json","media":"application/json"},"s":[{"lit":"collections"},{"lit":"ch.meteoschweiz.ogd-smn"},{"lit":"items"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"list"},"load":{"input":"data","name":"load","points":[{"a":true,"co":{"id":"GET /collections/ch.meteoschweiz.ogd-smn/items/{itemId}","source":"openapi3","version":2},"g":{"params":[{"a":true,"k":"param","n":"id","or":"itemId","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"GET","o":"/collections/ch.meteoschweiz.ogd-smn/items/{itemId}","q":{"exist":["id"]},"r":{"param":{"itemId":"id"}},"rs":{"alternatives":[{"kind":"raw","media":"text/csv"}],"kind":"json","media":"application/json"},"s":[{"lit":"collections"},{"lit":"ch.meteoschweiz.ogd-smn"},{"lit":"items"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"load"}},"relations":{"ancestors":[]},"key$":"item","name__orig":"item","Name":"Item","name_":"item","name-":"item","NAME":"ITEM","index$":1}, {"active":true,"entity":"item","key$":"BasicItemFlow","kind":"basic","name":"BasicItemFlow","param":{},"step":[{"a":true,"d":{},"i":{},"m":{},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"item_ref01"}}],"index$":0},{"a":true,"d":{},"i":{"ref":"item_ref01","srcdatavar":"item_ref01_data","suffix":"_dt0"},"m":{"id":"item01"},"o":"load","s":[],"v":[{"apply":"TextFieldMark","def":{"mark":"Mark01-item_ref01"}}],"index$":1}]}, 'Item', {"GET /collections/ch.meteoschweiz.ogd-smn/items":{"protocol":"http","parameters":[{"name":"bbox","in":"query","description":"Bounding box to filter stations by geographic area (minLon,minLat,maxLon,maxLat)","required":false,"schema":{"type":"array","items":{"type":"number"},"minItems":4,"maxItems":4},"style":"form","explode":false,"index$":0},{"name":"datetime","in":"query","description":"Filter by datetime or datetime range (ISO 8601 format)","required":false,"schema":{"type":"string"},"index$":1},{"name":"limit","in":"query","description":"Maximum number of items to return","required":false,"schema":{"type":"integer","minimum":1,"maximum":1000,"default":10},"index$":2},{"name":"station","in":"query","description":"Three-letter station identifier (e.g., BER for Bern/Zollikofen, LUG for Lugano)","required":false,"schema":{"type":"string","pattern":"^[A-Z]{3}$"},"index$":3},{"name":"granularity","in":"query","description":"Data granularity: 10-minute (t), hourly (h), daily (d), monthly (m), or yearly (y)","required":false,"schema":{"type":"string","enum":["t","h","d","m","y"]},"index$":4},{"name":"updateFrequency","in":"query","description":"Update frequency: current (now), recent, or historical data","required":false,"schema":{"type":"string","enum":["now","recent","historical"]},"index$":5}]},"GET /collections/ch.meteoschweiz.ogd-smn/items/{itemId}":{"protocol":"http","parameters":[{"name":"itemId","in":"path","description":"Unique identifier for the weather station data item","required":true,"schema":{"type":"string"},"index$":0}]}}, { strict: LIVE_STRICT, t })
     }
     const client = setup.client
     const struct = setup.struct
@@ -79,6 +137,12 @@ describe('ItemEntity', async () => {
 })
 
 
+
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
 
 function basicSetup(extra?: any) {
   // TODO: fix test def options

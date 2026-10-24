@@ -96,6 +96,7 @@ def make_config():
         },
         "optspec": {
           "clearTimer": "`$FUNCTION`",
+          "now": "`$FUNCTION`",
           "setTimer": "`$FUNCTION`",
         },
         "strict": False,
@@ -145,6 +146,10 @@ def make_config():
                 "args": {},
                 "select": {
                   "$action": "chmeteoschweizogd_smn",
+                },
+                "response": {
+                  "kind": "json",
+                  "media": "application/json",
                 },
               },
             ],
@@ -279,15 +284,16 @@ def make_config():
                     },
                   ],
                 },
-                "select": {
-                  "exist": [
-                    "bbox",
-                    "datetime",
-                    "granularity",
-                    "limit",
-                    "station",
-                    "update_frequency",
+                "select": {},
+                "response": {
+                  "alternatives": [
+                    {
+                      "kind": "raw",
+                      "media": "text/csv",
+                    },
                   ],
+                  "kind": "json",
+                  "media": "application/json",
                 },
               },
             ],
@@ -344,6 +350,16 @@ def make_config():
                   "exist": [
                     "id",
                   ],
+                },
+                "response": {
+                  "alternatives": [
+                    {
+                      "kind": "raw",
+                      "media": "text/csv",
+                    },
+                  ],
+                  "kind": "json",
+                  "media": "application/json",
                 },
               },
             ],

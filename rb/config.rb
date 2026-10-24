@@ -79,6 +79,7 @@ module AutomaticWeatherStationsConfig
           },
           "optspec" => {
             "clearTimer" => "`$FUNCTION`",
+            "now" => "`$FUNCTION`",
             "setTimer" => "`$FUNCTION`",
           },
           "strict" => false,
@@ -128,6 +129,10 @@ module AutomaticWeatherStationsConfig
                   "args" => {},
                   "select" => {
                     "$action" => "chmeteoschweizogd_smn",
+                  },
+                  "response" => {
+                    "kind" => "json",
+                    "media" => "application/json",
                   },
                 },
               ],
@@ -262,15 +267,16 @@ module AutomaticWeatherStationsConfig
                       },
                     ],
                   },
-                  "select" => {
-                    "exist" => [
-                      "bbox",
-                      "datetime",
-                      "granularity",
-                      "limit",
-                      "station",
-                      "update_frequency",
+                  "select" => {},
+                  "response" => {
+                    "alternatives" => [
+                      {
+                        "kind" => "raw",
+                        "media" => "text/csv",
+                      },
                     ],
+                    "kind" => "json",
+                    "media" => "application/json",
                   },
                 },
               ],
@@ -327,6 +333,16 @@ module AutomaticWeatherStationsConfig
                     "exist" => [
                       "id",
                     ],
+                  },
+                  "response" => {
+                    "alternatives" => [
+                      {
+                        "kind" => "raw",
+                        "media" => "text/csv",
+                      },
+                    ],
+                    "kind" => "json",
+                    "media" => "application/json",
                   },
                 },
               ],
